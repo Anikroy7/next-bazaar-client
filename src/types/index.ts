@@ -25,3 +25,16 @@ export interface ITextArea {
   disabled?: boolean;
   placeholder?: string
 }
+
+
+export type TProduct = {
+  id:number
+  name: string; 
+  categoryId: number; 
+  description: string; 
+  vendorId: number; 
+  images: string[];
+  price: number; 
+  discount: number; 
+  inventorCount: number; 
+};

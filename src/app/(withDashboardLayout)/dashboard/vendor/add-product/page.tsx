@@ -10,13 +10,14 @@ import { useGetAllCategories } from "@/src/hooks/category.hook";
 import NBSelect from "@/src/components/ui/form/NBSelect";
 import dynamic from "next/dynamic";
 import { MdClose, MdOutlineAttachment } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "@nextui-org/badge";
 import { Avatar } from "@nextui-org/avatar";
 import { createProductValidationSchema } from "@/src/validation/product.validation";
 import { useCreateProduct } from "@/src/hooks/product.hook";
 import { useGetLoogedUserInfo } from "@/src/hooks/user.hook";
 import { uploadMultipleImages } from "@/src/utils/uploadMultipleImages";
+import { useRouter } from "next/navigation";
 
 
 const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
@@ -25,6 +26,7 @@ const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'
 
 
 export default function Page() {
+    const router = useRouter()
     const [avatarPreview, setAvatarPreview] = useState<string[]>([]);
     const { data: loggedUser, isPending: userInfoPending } = useGetLoogedUserInfo()
     const [images, setImages] = useState<File[]>([]);
@@ -53,7 +55,11 @@ export default function Page() {
         ]);
         setImages([...images.filter((image, index) => index !== ind)]);
     };
-
+    useEffect(() => {
+        if (!createProductPending && createdProduct && createProductSuccess) {
+            router.push('/dashboard/vendor');
+        }
+    }, [createdProduct, createProductPending, createProductSuccess])
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         if (!images.length) {
@@ -62,7 +68,6 @@ export default function Page() {
         };
         console.log(data, images)
         const imageUrls = await uploadMultipleImages(images)
-        // console.log(imageUrls)
         handleCreateProduct({
             ...data,
             images: imageUrls,
@@ -70,9 +75,9 @@ export default function Page() {
             inventorCount: parseInt(data.inventorCount),
             price: parseInt(data.price),
             discount: data.discount ? parseInt(data.discount) : 0,
-            vendorId:  loggedUser?.data.id 
+            vendorId: loggedUser?.data.id
         })
-    }   
+    }
     if (isPending || userInfoPending) return <DynamicLoading />
     console.log(loggedUser, createdProduct, createProductPending, createProductSuccess)
     return (

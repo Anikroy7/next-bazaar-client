@@ -1,11 +1,7 @@
 import {  FaCreditCard, FaUsers, FaPen, FaStar, FaHistory, FaBoxOpen, FaPlusCircle } from "react-icons/fa";
 
 export const vendorMenuItems = [
-  {
-    path: "my-products",
-    label: "My Products",
-    icon: <FaBoxOpen className="h-5 w-5" />, 
-  },
+
   {
     path: "add-product",
     label: "Add Product",
