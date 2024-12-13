@@ -1,6 +1,8 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
+import { IUser } from "@/src/context/user.prodvier";
+import { logoutUser } from "@/src/services/auth.service";
+import { Avatar, AvatarIcon } from "@nextui-org/avatar";
 import {
     Dropdown,
     DropdownItem,
@@ -9,35 +11,45 @@ import {
 } from "@nextui-org/dropdown";
 
 import { useRouter } from "next/navigation";
+import React, { Dispatch, SetStateAction } from "react";
+
+type INavbarDropdown = {
+    user: IUser,
+    setIsLoading: Dispatch<SetStateAction<boolean>>
+}
 
 
-export default function NavbarDropdown() {
+const NavbarDropdown: React.FC<INavbarDropdown> = ({ user, setIsLoading }) => {
     const router = useRouter();
 
-    const handleNavigation = (pathname: string) => {
-        router.push(pathname);
-    };
+    const handleLogout = () => {
+        logoutUser();
+        router.push('/login');
+        setIsLoading(true)
+    }
 
     return (
-        <Dropdown>
+        <Dropdown placement="bottom-end">
             <DropdownTrigger>
-                <Button variant="bordered">SIGNUP</Button>
+                <div className="flex items-center cursor-pointer ">
+                    <h2 className="text-orange-600 underline">{user?.email}</h2>
+
+                </div>
             </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="profile" onClick={() => handleNavigation("/signup/vendor")}>
-                    As a Vendor
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="profile" className="h-14 gap-2">
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">{user?.email}</p>
                 </DropdownItem>
-                <DropdownItem key={"settings"} onClick={() => handleNavigation("/signup/customer")}>
-                    As a Customer
+                <DropdownItem key="settings" onClick={() => router.push('/profile')}>My Profile</DropdownItem>
+                <DropdownItem onClick={() => handleLogout()} key="logout" color="danger">
+                    Log Out
                 </DropdownItem>
-               {/*  <DropdownItem
-                    key="delete"
-                    className="text-danger"
-                    color="danger"
-                >
-                    Logout
-                </DropdownItem> */}
             </DropdownMenu>
         </Dropdown>
+
     );
 }
+
+
+export default NavbarDropdown;

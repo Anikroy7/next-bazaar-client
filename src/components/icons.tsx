@@ -111,29 +111,6 @@ export const MoonFilledIcon = ({
   </svg>
 );
 
-
-export const StarFilledIcon = ({
-  size = 24,
-  width,
-  height,
-  ...props
-}: IconSvgProps) => (
-  <svg
-    aria-hidden="true"
-    focusable="false"
-    height={size || height}
-    role="presentation"
-    viewBox="0 0 24 24"
-    width={size || width}
-    {...props}
-  >
-    <path
-      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
 export const SunFilledIcon = ({
   size = 24,
   width,
@@ -208,6 +185,29 @@ export const SearchIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
+export const StarFilledIcon = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    height={size || height}
+    role="presentation"
+    viewBox="0 0 24 24"
+    width={size || width}
+    {...props}
+  >
+    <path
+      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
 
 export const NextUILogo: React.FC<IconSvgProps> = (props) => {
   const { width, height = 40 } = props;

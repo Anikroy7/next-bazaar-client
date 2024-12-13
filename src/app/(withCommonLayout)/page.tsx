@@ -3,17 +3,19 @@ import Category from "@/src/components/ui/homepage/Category";
 import FlashSaleProducts from "@/src/components/ui/homepage/FlashSaleProducts";
 import RecomendedProduct from "@/src/components/ui/homepage/RecomendedProdut";
 import ScrollToTop from "@/src/components/ui/homepage/ScrollToTop";
+import { Toaster } from 'sonner';
 
 
 export default function Home() {
+  
   return (
     <>
       <Banner></Banner>
-      <Category/>
-      <RecomendedProduct/>
-      <FlashSaleProducts/>
-      <ScrollToTop/>
-    {/*   <div className="container mx-auto px-4 py-6">
+      <Category />
+      <RecomendedProduct />
+      <FlashSaleProducts />
+      <ScrollToTop />
+      {/*   <div className="container mx-auto px-4 py-6">
         <div className="mb-6">
           <h2 className="text-lg font-bold text-gray-700 mb-4">Categories</h2>
           <div className="flex gap-4 overflow-x-auto">
@@ -90,7 +92,7 @@ export default function Home() {
           ↑
         </button>
       </div> */}
-
+     
     </>
   );
 }

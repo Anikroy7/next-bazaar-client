@@ -6,6 +6,7 @@ import { Providers } from "../libs/providers";
 import { siteConfig } from "@/src/config/site";
 
 import { Inter } from 'next/font/google'
+import { Toaster } from "sonner";
  
 const roboto = Inter({
   weight: '400',
@@ -45,6 +46,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>
