@@ -9,7 +9,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { useUser } from "@/src/context/user.prodvier";
-import { adminMenuItems, userMenuItems } from "@/src/config/sidebarItems";
+import { adminMenuItems, vendorMenuItems } from "@/src/config/sidebarItems";
 
 
 const Sidebar = () => {
@@ -31,7 +31,7 @@ const Sidebar = () => {
             </div>
             <nav className="flex-1 mt-4">
                 <ul className="space-y-2">
-                    <li>
+                  {/*   <li>
                         <Link
                             className={`flex items-center px-4 py-2 hover:bg-gray-700  transition-colors`}
                             href="/dashboard"
@@ -39,7 +39,7 @@ const Sidebar = () => {
                             <FaTachometerAlt className="h-5 w-5" />
                             <span className="ml-2">Dashboard</span>
                         </Link>
-                    </li>
+                    </li> */}
                     {user?.role === "admin"
                         ? adminMenuItems.map((item, index) => (
                             <li key={index}>
@@ -52,11 +52,11 @@ const Sidebar = () => {
                                 </Link>
                             </li>
                         ))
-                        : userMenuItems.map((item, index) => (
+                        : vendorMenuItems.map((item, index) => (
                             <li key={index}>
                                 <Link
                                     className={` flex items-center px-4 py-2 hover:bg-gray-700 transition-colors`}
-                                    href={`/dashboard/${item.path}`}
+                                    href={`/dashboard/vendor/${item.path}`}
                                 >
                                     {item.icon}
                                     <span className="ml-2">{item.label}</span>

@@ -1,21 +1,26 @@
-import { FaEdit, FaCreditCard, FaUsers, FaPen, FaList } from "react-icons/fa";
+import {  FaCreditCard, FaUsers, FaPen, FaStar, FaHistory, FaBoxOpen, FaPlusCircle } from "react-icons/fa";
 
-export const userMenuItems = [
+export const vendorMenuItems = [
   {
-    path: "myPosts",
-    label: "My Posts",
-    icon: <FaEdit className="h-5 w-5" />,
+    path: "my-products",
+    label: "My Products",
+    icon: <FaBoxOpen className="h-5 w-5" />, 
   },
   {
-    path: "followingActivity",
-    label: "Following Activity",
-    icon: <FaList className="h-5 w-5" />,
+    path: "add-product",
+    label: "Add Product",
+    icon: <FaPlusCircle className="h-5 w-5" />, 
   },
   {
-    path: "paymentDetails",
-    label: "Payments",
-    icon: <FaCreditCard className="h-5 w-5" />,
+    path: "customer-review",
+    label: "Customer Reviews",
+    icon: <FaStar className="h-5 w-5" />,
   },
+  {
+    path: "order-history",
+    label: "Order History",
+    icon: <FaHistory className="h-5 w-5" />
+  }, 
 ];
 
 // Import the icons you want to use
