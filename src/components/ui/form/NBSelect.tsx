@@ -29,6 +29,7 @@ export default function NBSelect({
       variant={variant}
       placeholder="Select a category"
       defaultSelectedKeys={[options[0].id.toString() || 'No category found!!']}
+      
     >
       {options.map((option) => (
         <SelectItem key={option.id}>{option.name}</SelectItem>

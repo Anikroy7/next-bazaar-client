@@ -1,9 +1,11 @@
 import { Card, CardBody, CardHeader } from '@nextui-org/card'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StarFilledIcon } from '../icons'
 import { TProduct } from '@/src/types'
 import { useUser } from '@/src/context/user.prodvier'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useDeleteProduct } from '@/src/hooks/product.hook'
 
 type ProductCardProps = {
     product: TProduct
@@ -13,11 +15,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const { user } = useUser();
     const router = useRouter()
     let totalPrice = product.price;
+    const { data, mutate: handleDeleteProduct, isPending, isSuccess } = useDeleteProduct(product.id.toString())
 
     if (product.discount) {
         const discountAmount = (product.price * product.discount) / 100;
         totalPrice = product.price - discountAmount
     }
+
+    useEffect(() => {
+        if (!isPending && data && isSuccess) {
+            router.push('/dashboard/vendor');
+        }
+    }, [isSuccess, data, isPending])
+
+    const handleDelteProduct = () => {
+        console.log('dlete poroduct', product.id)
+        const isConfirm = confirm("Are you want to sure delete the product?")
+
+        if (isConfirm) {
+            handleDeleteProduct()
+        }
+    }
+    console.log('dekete', data, isPending, isSuccess)
 
     return (
         <Card
@@ -49,27 +68,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                             </span>
 
                             {/* Edit Button */}
-                            <span
-                                className="absolute top-2 right-12 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
-                                title="Edit product"
-                                onClick={() => router.push(`/dashboard/vendor/update-product/${product.id}`)}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
+                            <Link href={`/dashboard/vendor/update-product/${product.id}`}>
+                                <span
+                                    className="absolute top-2 right-12 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
+                                    title="Edit product"
+                                // onClick={() => router.push(`/dashboard/vendor/update-product/${product.id}`)}
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 3l5 5-10 10H6v-5L16 3z" />
-                                </svg>
-                            </span>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-4 w-4"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 3l5 5-10 10H6v-5L16 3z" />
+                                    </svg>
+                                </span>
 
+                            </Link>
                             {/* Delete Button */}
                             <span
                                 className="absolute top-2 right-20 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
                                 title="Delete product"
+                                onClick={() => handleDelteProduct()}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
