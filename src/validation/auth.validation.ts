@@ -40,3 +40,13 @@ export const updateUserValidationSchema = z.object({
 
 });
 
+
+
+export const updateVendorValidationSchema = z.object({
+    name: z.string().min(1, "Please enter your name!"),
+    phone: z
+        .string()
+        .regex(/^\d{11}$/, "Please enter a valid mobile number!"),
+    location: z.string().min(1, "Please enter your location!"),
+    description: z.string().min(1, "Please enter your description!"),
+});

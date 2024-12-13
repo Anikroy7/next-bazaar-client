@@ -10,8 +10,10 @@ import React from 'react'
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import Link from 'next/link';
 import { useGetLoogedUserInfo } from '@/src/hooks/user.hook';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
+    const router= useRouter()
     const { data, isPending } = useGetLoogedUserInfo();
     if (isPending) return <DynamicLoading />
     return (
@@ -34,17 +36,29 @@ export default function Header() {
                             radius="sm"
                             size="sm"
                             variant="flat"
+                            onClick={()=>router.push('/dashboard/vendor/edit')}
                         >
                             Edit
                         </Button>
                         <ThemeSwitch />
                     </div>
                     <p className="text-sm text-gray-600">
-                        {data?.data?.description.length>20?data?.data?.description.slice(0, 20):data?.data?.description}
+                        {data?.data?.description.length>20?`${data?.data?.description.slice(0, 20)}...`:data?.data?.description}
                     </p>
                 </div>
             </div>
 
+            <div className="ml-auto flex items-center gap-6">
+                <div className="flex flex-col items-center text-center">
+                    <p className="text-md font-bold">Phone</p>
+                    <p className="text-sm font-semibold">{data?.data?.phone}</p>
+                </div>
+                <div className="border-l border-gray-300 h-10"></div>
+                <div className="flex flex-col items-center text-center">
+                    <p className="text-md font-bold ">Address</p>
+                    <p className="text-sm font-semibold">{data?.data?.location}</p>
+                </div>
+            </div>
             <div className="ml-auto flex items-center gap-6">
                 <div className="flex flex-col items-center text-center">
                     <p className="text-sm font-bold">Followers</p>

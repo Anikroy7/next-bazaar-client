@@ -40,3 +40,13 @@ export const updateSingleUser = async (
         throw new Error(error);
     }
 };
+export const updateVendor = async (
+    userData: FieldValues
+) => {
+    try {
+        const { data } = await axiosInstance.patch("/users/update-vendor", userData);
+        return data;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+};
