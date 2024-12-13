@@ -22,9 +22,6 @@ import clsx from "clsx";
 
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
-import {
-  Logo,
-} from "@/src/components/icons";
 import { useRouter } from "next/navigation";
 import { useUser } from "../context/user.prodvier";
 import NavbarDropdown from './ui/NavbarDropdown';

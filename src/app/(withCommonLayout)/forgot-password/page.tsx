@@ -6,17 +6,10 @@ import { useForgetPassword } from "@/src/hooks/auth.hook";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 const ForgotPassword = () => {
     const router = useRouter()
     const { mutate: handleForgetPassword, data, isPending, isSuccess } = useForgetPassword()
-    useEffect(() => {
-        if (!isPending && data && isSuccess) {
-            router.push('/reset-password');
-            
-        }
-    }, [isSuccess, data, isPending])
     const onSubmit = (values: { email: string }) => {
         handleForgetPassword({ email: values.email })
     };
