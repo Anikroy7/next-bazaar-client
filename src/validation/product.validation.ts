@@ -5,14 +5,14 @@ export const createProductValidationSchema = z.object({
     name: z.string().min(1, "Please enter the product name!"),
     description: z.string().min(1, "Please enter the product description!"),
     inventorCount: z
-        .string().min(1,
+        .number().min(1,
             "Inventory count must be a provide!"
         )
     ,
     price: z
-        .string().min(1,
+        .number().min(1,
             "Price must be a provide!"
         ),
     discount: z
-        .string().optional()
+        .number().optional()
 });

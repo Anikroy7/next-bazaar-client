@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
-import { createProduct, getAllProducts } from "../services/product.service";
+import { createProduct, getAllProducts, getSingleProduct } from "../services/product.service";
 import { toast } from "sonner";
 
 export const useCreateProduct = () => {
@@ -29,6 +29,17 @@ export const useGetAllProducts = () => {
     queryKey: ["GET_ALL_PRODUCTS"],
     queryFn: async () => {
       const response = await getAllProducts()
+      return response
+    },
+  });
+}
+  
+export const useGetSingleProduct = (id:string) => {
+  
+  return useQuery({
+    queryKey: ["GET_SINGLE_PRODUCTS"],
+    queryFn: async () => {
+      const response = await getSingleProduct(id)
       return response
     },
   });

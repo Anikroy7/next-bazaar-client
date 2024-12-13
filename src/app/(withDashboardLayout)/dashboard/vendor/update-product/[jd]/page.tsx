@@ -10,14 +10,12 @@ import { useGetAllCategories } from "@/src/hooks/category.hook";
 import NBSelect from "@/src/components/ui/form/NBSelect";
 import dynamic from "next/dynamic";
 import { MdClose, MdOutlineAttachment } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Badge } from "@nextui-org/badge";
 import { Avatar } from "@nextui-org/avatar";
 import { createProductValidationSchema } from "@/src/validation/product.validation";
-import { useCreateProduct, useGetSingleProduct } from "@/src/hooks/product.hook";
-import { useGetLoogedUserInfo } from "@/src/hooks/user.hook";
-import { uploadMultipleImages } from "@/src/utils/uploadMultipleImages";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useGetSingleProduct } from "@/src/hooks/product.hook";
+import { useRouter } from "next/navigation";
 
 
 const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
@@ -25,17 +23,20 @@ const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'
 })
 
 
-export default function Page() {
+export default async function Page({
+    params,
+}: {
+    params: Promise<{ id: string }>
+}) {
+    
     const router = useRouter()
-    const queryParams = useSearchParams();
-    const [id, setId] = useState(queryParams.get('productLike'));
+    const id = (await params).id;
+    console.log('product id', id)
     const [avatarPreview, setAvatarPreview] = useState<string[]>([]);
-    const { data: productData, isPending: productPending } = id ? useGetSingleProduct(id) : { data: null, isPending: false };
-    const { data: loggedUser, isPending: userInfoPending } = useGetLoogedUserInfo()
+    const { data: productData, isPending: productPending } = useGetSingleProduct(id);
     const [images, setImages] = useState<File[]>([]);
     const { data, isPending } = useGetAllCategories();
 
-    const { mutate: handleCreateProduct, data: createdProduct, isPending: createProductPending, isSuccess: createProductSuccess } = useCreateProduct()
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const allFiles = e.target.files;
@@ -59,37 +60,19 @@ export default function Page() {
         ]);
         setImages([...images.filter((image, index) => index !== ind)]);
     };
-    useEffect(() => {
-        if (!createProductPending && createdProduct && createProductSuccess) {
-            router.push('/dashboard/vendor');
-        }
-    }, [createdProduct, createProductPending, createProductSuccess])
 
-    useEffect(() => {
-        if (!productPending && productData) {
-            // setId(id)
-            setId(productData.data.id)
-            console.log(id, productData)
-        }
-        console.log('come', id)
-    }, [parseInt(queryParams.get('productLike') as string), id])
+
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        if (!images.length) {
-            alert("At least one image must be provided!!")
-            return
-        };
-        const imageUrls = await uploadMultipleImages(images)
-        handleCreateProduct({
-            ...data,
-            images: imageUrls,
-            categoryId: parseInt(data.categoryId),
-            inventorCount: parseInt(data.inventorCount),
-            price: parseInt(data.price),
-            discount: data.discount ? parseInt(data.discount) : 0,
-            vendorId: loggedUser?.data.id
-        })
+        /*      if (!images.length) {
+                 alert("At least one image must be provided!!")
+                 return
+             };
+             const imageUrls = await uploadMultipleImages(images) */
+
+        console.log(data)
+
     }
-    if (isPending || userInfoPending || productPending) return <DynamicLoading />
+    if (isPending || productPending) return <DynamicLoading />
     return (
         <section className="flex justify-center items-center min-h-screen">
             <div className="w-[70%] p-6 rounded-lg shadow-lg">
@@ -109,7 +92,7 @@ export default function Page() {
                     }}
                 >
                     <div className="py-3">
-                        <NBSelect  options={data?.data} label="Category" name="categoryId" size="sm" />
+                        <NBSelect options={data?.data} label="Category" name="categoryId" size="sm" />
                     </div>
                     <div className="py-3">
                         <NBInput label="Name" name="name" size="sm" />
