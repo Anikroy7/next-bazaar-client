@@ -28,15 +28,15 @@ export interface ITextArea {
 
 
 export type TProduct = {
-  id:number
-  name: string; 
-  categoryId: number; 
-  description: string; 
-  vendorId: number; 
+  id: number
+  name: string;
+  categoryId: number;
+  description: string;
+  vendorId: number;
   images: string[];
-  price: number; 
-  discount: number; 
-  inventorCount: number; 
+  price: number;
+  discount: number;
+  inventorCount: number;
   createdAt: string
 };
 
@@ -76,7 +76,7 @@ export interface Vendor {
   isDeleted: boolean;
 }
 
-interface Customer {
+export interface Customer {
   password: string;
   name: string;
   profileImage: string;
@@ -84,3 +84,11 @@ interface Customer {
   phone: string;
   address: string;
 }
+
+
+export interface ICategory {
+  id: number;
+  name: string;
+  image: string
+}
+

@@ -8,10 +8,7 @@ export const siteConfig = {
       label: "Home",
       href: "/",
     },
-    {
-      label: "Signup",
-      href: "/signup",
-    },
+
     {
       label: "About",
       href: "/about",
@@ -30,10 +27,7 @@ export const siteConfig = {
       label: "Home",
       href: "/",
     },
-    {
-      label: "Signup",
-      href: "/signup",
-    },
+
     {
       label: "About",
       href: "/about",

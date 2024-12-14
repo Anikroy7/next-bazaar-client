@@ -1,7 +1,15 @@
+"use client"
+
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { StarFilledIcon } from "../../icons";
+import { useGetAllProducts } from "@/src/hooks/product.hook";
+import dynamic from "next/dynamic";
+import { TProduct } from "@/src/types";
 
-
+const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
+    ssr: false,
+})
+/* 
 const products = [
     {
         id: 1,
@@ -75,15 +83,20 @@ const products = [
         reviews: 923,
         image: "https://img.drz.lazcdn.com/static/bd/p/66162646534afce47cca3a81f106432d.jpg_400x400q80.jpg_.webp"
     },
-];
+]; */
 
 export default function RecomendedProduct() {
+    const { data, isPending } = useGetAllProducts()
+    if (isPending) return <DynamicLoading />
+
+    const products = data?.data || [];
+
     return (
         <div className=" py-10">
             <div className="container mx-auto px-6">
                 <h2 className="text-2xl font-semibold mb-6">Recommend For You</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                    {products.map((product) => (
+                    {products.length && products.map((product: TProduct) => (
                         <Card
                             key={product.id}
                             isPressable
@@ -91,7 +104,7 @@ export default function RecomendedProduct() {
                         >
                             <CardHeader className="p-0">
                                 <img
-                                    src={product.image}
+                                    src={product.images[0]}
                                     alt={product.name}
                                     className="w-full h-40 object-cover"
                                 />
@@ -102,21 +115,26 @@ export default function RecomendedProduct() {
                                 </h3>
                                 <div className="mt-2 flex items-center space-x-2">
                                     <span className="text-red-500 font-bold">{product.price}</span>
-                                    <span className="text-xs line-through">{`৳${Math.round(
-                                        parseFloat(product.price.replace("৳", "")) * 1.6
-                                    )}`}</span>
+                                    <span className="text-xs line-through">{`৳${product.price}`}</span>
                                     <span className="text-xs text-green-500">{product.discount}</span>
                                 </div>
                                 <div className="mt-1 flex items-center ">
 
-                                    {[...Array(5)].map((_, index) => (
+                                    {/* {[...Array(5)].map((_, index) => (
                                         <StarFilledIcon
                                             key={index}
                                             className={`w-3 h-3 ${product.rating > index ? "text-yellow-400" : "text-gray-300"
                                                 }`}
                                         />
+                                    ))} */}
+                                    {[...Array(5)].map((_, index) => (
+                                        <StarFilledIcon
+                                            key={index}
+                                            className={`w-3 h-3  "text-yellow-400"`}
+                                        />
                                     ))}
-                                    <span className="text-xs">({product.reviews})</span>
+
+                                    <span className="text-xs">(5)</span>
                                 </div>
                             </CardBody>
                         </Card>

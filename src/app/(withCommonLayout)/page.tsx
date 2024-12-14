@@ -1,3 +1,5 @@
+"use client"
+
 import Banner from "@/src/components/ui/homepage/Banner";
 import Category from "@/src/components/ui/homepage/Category";
 import FlashSaleProducts from "@/src/components/ui/homepage/FlashSaleProducts";

@@ -1,4 +1,12 @@
+"use client"
+import { useGetAllCategories } from "@/src/hooks/category.hook";
+import { ICategory } from "@/src/types";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import dynamic from "next/dynamic";
+
+const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
+    ssr: false,
+})
 
 const categories = [
     { id: 1, name: "Electronics", image: "https://img.drz.lazcdn.com/static/bd/p/f4d41b2adf02766c2042b1cd6d476e73.png_170x170q80.png" },
@@ -9,16 +17,19 @@ const categories = [
 ];
 
 export default function Category() {
+    const { data, isPending } = useGetAllCategories();
+    if (isPending) return <DynamicLoading />
+    console.log(data)
     return (
         <div className="py-10">
             <div className="container mx-auto px-6">
                 <h2 className="text-3xl font-bold mb-8">Shop by Category</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
-                    {categories.map((category) => (
+                    {(data?.data && data?.data.length) ? data?.data.map((category:ICategory) => (
                         <Card
                             key={category.id}
                             isPressable
-                            className=" hover:scale-105 transition-transform rounded-none p-3" 
+                            className=" hover:scale-105 transition-transform rounded-none p-3"
                         >
                             <CardHeader className="p-0 flex justify-center items-center">
                                 <img
@@ -31,13 +42,13 @@ export default function Category() {
                                 <h3 className="text-md font-semibold text-center">
                                     {category.name}
                                 </h3>
-                               {/*  <p className="text-sm text-gray-500 text-center mt-1">
+                                {/*  <p className="text-sm text-gray-500 text-center mt-1">
                                     Explore our best collection
                                 </p> */}
                             </CardBody>
                         </Card>
 
-                    ))}
+                    )) : ""}
                 </div>
             </div>
         </div>
