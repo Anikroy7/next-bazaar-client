@@ -53,7 +53,7 @@ export default function AllProducts() {
               <TableCell>{product.vendorId}</TableCell>
               <TableCell>{new Date(product.createdAt).toLocaleDateString()}</TableCell>
               <TableCell className="flex items-center gap-2">
-                <Tooltip content="Edit user">
+                <Tooltip content="Edit product">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                     <EditIcon  onClick={() => router.push(`/dashboard/admin/manage-products/edit/${product.id}`)}/>
                   </span>

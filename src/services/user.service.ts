@@ -104,3 +104,12 @@ export const vendorBlacklist = async (
     }
 };
 
+
+export const getSingleVendor = async (id: string) => {
+    try {
+        const { data } = await axiosInstance.get(`/users/vendor/${id}`);
+        return data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || error.message);
+    }
+};

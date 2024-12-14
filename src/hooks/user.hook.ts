@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
-import { allCustomerInfo, allVendorInfo, createVendor, loggedUserInfo, registerUser, updateRole, updateSingleUser, updateStatus, updateVendor, vendorBlacklist } from "../services/user.service";
+import { allCustomerInfo, allVendorInfo, createVendor, getSingleVendor, loggedUserInfo, registerUser, updateRole, updateSingleUser, updateStatus, updateVendor, vendorBlacklist } from "../services/user.service";
 import { toast } from "sonner";
 import { queryClient } from "../libs/providers";
 
@@ -173,5 +173,17 @@ export const useVendorBlacklist = () => {
   });
 
 };
+
+
+export const useGetSingleVendor = (id: string) => {
+
+  return useQuery({
+    queryKey: ["GET_SINGLE_VENDOR"],
+    queryFn: async () => {
+      const response = await getSingleVendor(id)
+      return response
+    },
+  });
+}
 
 

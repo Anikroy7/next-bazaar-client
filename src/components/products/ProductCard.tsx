@@ -43,6 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             key={product.id}
             isPressable
             className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px] relative"
+            onClick={()=>router.push(`/product/${product.id}`)}
         >
             <CardHeader className="p-0">
                 {/* Add the plus button and action buttons here */}

@@ -5,6 +5,8 @@ import { StarFilledIcon } from "../../icons";
 import { useGetAllProducts } from "@/src/hooks/product.hook";
 import dynamic from "next/dynamic";
 import { TProduct } from "@/src/types";
+import { useRouter } from "next/navigation";
+import ProductCard from "../../products/ProductCard";
 
 const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
     ssr: false,
@@ -86,7 +88,8 @@ const products = [
 ]; */
 
 export default function RecomendedProduct() {
-    const { data, isPending } = useGetAllProducts()
+    const { data, isPending } = useGetAllProducts();
+    const router = useRouter()
     if (isPending) return <DynamicLoading />
 
     const products = data?.data || [];
@@ -97,50 +100,53 @@ export default function RecomendedProduct() {
                 <h2 className="text-2xl font-semibold mb-6">Recommend For You</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
                     {products.length && products.map((product: TProduct) => (
-                        <Card
-                            key={product.id}
-                            isPressable
-                            className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px]"
-                        >
-                            <CardHeader className="p-0">
-                                <img
-                                    src={product.images[0]}
-                                    alt={product.name}
-                                    className="w-full h-40 object-cover"
-                                />
-                            </CardHeader>
-                            <CardBody className="p-4">
-                                <h3 className="text-sm font-semibold truncate">
-                                    {product.name}
-                                </h3>
-                                <div className="mt-2 flex items-center space-x-2">
-                                    <span className="text-red-500 font-bold">{product.price}</span>
-                                    <span className="text-xs line-through">{`৳${product.price}`}</span>
-                                    <span className="text-xs text-green-500">{product.discount}</span>
-                                </div>
-                                <div className="mt-1 flex items-center ">
-
-                                    {/* {[...Array(5)].map((_, index) => (
-                                        <StarFilledIcon
-                                            key={index}
-                                            className={`w-3 h-3 ${product.rating > index ? "text-yellow-400" : "text-gray-300"
-                                                }`}
-                                        />
-                                    ))} */}
-                                    {[...Array(5)].map((_, index) => (
-                                        <StarFilledIcon
-                                            key={index}
-                                            className={`w-3 h-3  "text-yellow-400"`}
-                                        />
-                                    ))}
-
-                                    <span className="text-xs">(5)</span>
-                                </div>
-                            </CardBody>
-                        </Card>
+                        <ProductCard key={product.id} product={product}/>
                     ))}
                 </div>
             </div>
         </div>
     );
 }
+
+// <Card
+//                             key={product.id}
+//                             isPressable
+//                             className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px]"
+//                             onClick={()=>router.push(`/product/${product.id}`)}
+//                         >
+//                             <CardHeader className="p-0">
+//                                 <img
+//                                     src={product.images[0]}
+//                                     alt={product.name}
+//                                     className="w-full h-40 object-cover"
+//                                 />
+//                             </CardHeader>
+//                             <CardBody className="p-4">
+//                                 <h3 className="text-sm font-semibold truncate">
+//                                     {product.name}
+//                                 </h3>
+//                                 <div className="mt-2 flex items-center space-x-2">
+//                                     <span className="text-red-500 font-bold">{product.price}</span>
+//                                     <span className="text-xs line-through">{`৳${product.price}`}</span>
+//                                     <span className="text-xs text-green-500">{product.discount}</span>
+//                                 </div>
+//                                 <div className="mt-1 flex items-center ">
+
+//                                     {/* {[...Array(5)].map((_, index) => (
+//                                         <StarFilledIcon
+//                                             key={index}
+//                                             className={`w-3 h-3 ${product.rating > index ? "text-yellow-400" : "text-gray-300"
+//                                                 }`}
+//                                         />
+//                                     ))} */}
+//                                     {[...Array(5)].map((_, index) => (
+//                                         <StarFilledIcon
+//                                             key={index}
+//                                             className={`w-3 h-3  "text-yellow-400"`}
+//                                         />
+//                                     ))}
+
+//                                     <span className="text-xs">(5)</span>
+//                                 </div>
+//                             </CardBody>
+//                         </Card>
