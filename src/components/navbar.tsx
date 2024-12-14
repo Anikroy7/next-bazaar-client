@@ -59,8 +59,35 @@ export const Navbar = () => {
               >
                 {item.label}
               </NextLink>
+
             </NavbarItem>
           ))}
+          {user?.role==="VENDOR"&&<NavbarItem >
+            <NextLink
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium",
+              )}
+              color="foreground"
+              href={'/dashboard/vendor'}
+            >
+              Vendor Dashboard
+            </NextLink>
+
+          </NavbarItem>}
+          {user?.role === 'ADMIN' && <NavbarItem >
+            <NextLink
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium",
+              )}
+              color="foreground"
+              href={'/dashboard/vendor'}
+            >
+              Admin Dashboard
+            </NextLink>
+
+          </NavbarItem>}
         </ul>
       </NavbarContent>
 

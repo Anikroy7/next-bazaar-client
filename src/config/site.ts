@@ -16,14 +16,14 @@ export const siteConfig = {
       label: "About",
       href: "/about",
     },
-    {
+   /*  {
       label: "V Dash",
       href: "/dashboard/vendor",
     },
     {
       label: "Admin Dash",
       href: "/dashboard/admin",
-    },
+    }, */
   ],
   navMenuItems: [
     {
@@ -38,10 +38,7 @@ export const siteConfig = {
       label: "About",
       href: "/about",
     },
-    {
-      label: "V Dash",
-      href: "/dashboard/vendor",
-    },
+    
   ],
 
 };
