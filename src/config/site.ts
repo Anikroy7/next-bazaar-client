@@ -20,6 +20,10 @@ export const siteConfig = {
       label: "V Dash",
       href: "/dashboard/vendor",
     },
+    {
+      label: "Admin Dash",
+      href: "/dashboard/admin",
+    },
   ],
   navMenuItems: [
     {

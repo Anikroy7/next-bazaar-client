@@ -40,7 +40,7 @@ const Sidebar = () => {
                             <span className="ml-2">Dashboard</span>
                         </Link>
                     </li> */}
-                    {user?.role === "admin"
+                    {user?.role === "ADMIN"
                         ? adminMenuItems.map((item, index) => (
                             <li key={index}>
                                 <Link

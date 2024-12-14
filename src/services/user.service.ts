@@ -50,3 +50,35 @@ export const updateVendor = async (
         throw new Error(error);
     }
 };
+export const updateStatus = async (
+    id : string,
+    userData: FieldValues
+) => {
+    try {
+        const { data } = await axiosInstance.patch(`/users/update-status/${id}`, userData);
+        return data;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+};
+export const updateRole = async (
+    id : string,
+    userData: FieldValues
+) => {
+    try {
+        const { data } = await axiosInstance.patch(`/users/update-role/${id}`, userData);
+        return data;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+};
+
+
+export const allCustomerInfo = async () => {
+    try {
+        const { data } = await axiosInstance.get("/users/cutomer/all");
+        return data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || error.message);
+    }
+};
