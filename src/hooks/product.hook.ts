@@ -67,10 +67,10 @@ export const useUpdateProduct = (id: string) => {
 }
 
 
-export const useDeleteProduct = (id: string) => {
-  return useMutation<any, Error>({
+export const useDeleteProduct = () => {
+  return useMutation<any, Error,FieldValues>({
     mutationKey: ["DELETE_PRODUCT"],
-    mutationFn: async () => {
+    mutationFn: async ({id}) => {
       return await deleteProduct(id)
     },
     onSuccess: (data) => {

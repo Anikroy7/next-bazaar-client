@@ -17,6 +17,7 @@ import { Avatar } from "@nextui-org/avatar";
 import { createProductValidationSchema } from "@/src/validation/product.validation";
 import { useGetSingleProduct, useUpdateProduct } from "@/src/hooks/product.hook";
 import { uploadMultipleImages } from "@/src/utils/uploadMultipleImages";
+import { useUser } from "@/src/context/user.prodvier";
 
 const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
     ssr: false,
@@ -24,9 +25,9 @@ const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'
 
 const UpdateProduct = ({ id }: { id: string }) => {
     const router = useRouter();
+    const { user } = useUser()
     const [avatarPreview, setAvatarPreview] = useState<string[]>([]);
     const [images, setImages] = useState<File[]>([]);
-    const [shouldReload, setShouldReload] = useState(false);
 
     const { data: productData, isPending: productPending } = useGetSingleProduct(id);
     const { data, isPending } = useGetAllCategories();
@@ -54,7 +55,11 @@ const UpdateProduct = ({ id }: { id: string }) => {
 
     useEffect(() => {
         if (!updateProductPending && updatedProductData) {
-            router.push('/dashboard/vendor');
+            if (user?.role === 'ADMIN') {
+                router.push('/dashboard/admin/manage-products')
+            } else {
+                router.push('/dashboard/vendor');
+            }
         }
     }, [updatedProductData, updateProductPending])
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {

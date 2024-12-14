@@ -15,7 +15,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const { user } = useUser();
     const router = useRouter()
     let totalPrice = product.price;
-    const { data, mutate: handleDeleteProduct, isPending, isSuccess } = useDeleteProduct(product.id.toString())
+    const { data, mutate: handleDeleteProduct, isPending, isSuccess } = useDeleteProduct()
 
     if (product.discount) {
         const discountAmount = (product.price * product.discount) / 100;
@@ -29,14 +29,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }, [isSuccess, data, isPending])
 
     const handleDelteProduct = () => {
-        console.log('dlete poroduct', product.id)
         const isConfirm = confirm("Are you want to sure delete the product?")
 
         if (isConfirm) {
-            handleDeleteProduct()
+            handleDeleteProduct({
+                id: product.id
+            })
         }
     }
-    console.log('dekete', data, isPending, isSuccess)
 
     return (
         <Card
@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                             </span>
 
                             {/* Edit Button */}
-                            <Link href={`/dashboard/vendor/update-product/${product.id}`}>
+                            <Link href={`/dashboard/update-product/${product.id}`}>
                                 <span
                                     className="absolute top-2 right-12 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
                                     title="Edit product"

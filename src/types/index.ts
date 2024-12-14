@@ -37,6 +37,7 @@ export type TProduct = {
   price: number; 
   discount: number; 
   inventorCount: number; 
+  createdAt: string
 };
 
 type UserRole = 'ADMIN' | 'VENDOR' | 'CUSTOMER';
