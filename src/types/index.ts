@@ -38,3 +38,48 @@ export type TProduct = {
   discount: number; 
   inventorCount: number; 
 };
+
+type UserRole = 'ADMIN' | 'VENDOR' | 'CUSTOMER';
+type UserStatus = 'ACTIVE' | 'INACTIVE';
+
+export interface User {
+  id: number;
+  email: string;
+  password: string;
+  role: UserRole;
+  status: UserStatus;
+  createdAt: Date;
+  updatedAt: Date;
+  admin?: Admin;
+  vendor?: Vendor;
+  customer?: Customer;
+}
+
+export interface Admin {
+  name: string;
+  profileImage: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
+export interface Vendor {
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+  logo: string;
+  description: string;
+  location: string;
+  isBlacklisted: boolean;
+  isDeleted: boolean;
+}
+
+interface Customer {
+  password: string;
+  name: string;
+  profileImage: string;
+  email: string;
+  phone: string;
+  address: string;
+}

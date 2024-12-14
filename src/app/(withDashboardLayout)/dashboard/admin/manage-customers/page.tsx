@@ -19,21 +19,20 @@ import { Tooltip } from "@nextui-org/tooltip";
 
 import { useAllCustomerInfo, useUpdateRole, useUpdateStatus } from "@/src/hooks/user.hook";
 import { DeleteIcon } from "@/src/components/icons";
+import { User } from "@/src/types";
 
 export default function ALlUsersTable() {
   const { data, isPending } = useAllCustomerInfo();
-  const { mutate: handleUserStatusUpdate, data: userStatusData, isPending: userStatusPending } = useUpdateStatus()
-  const { mutate: handleUserRoleUpdate, data: userRoleData, isPending: userRolePending } = useUpdateRole()
+  const { mutate: handleUserStatusUpdate } = useUpdateStatus()
+  const { mutate: handleUserRoleUpdate } = useUpdateRole()
 
 
-  const handleUpdateUserStatus = (id: string, status: "ACTIVE" | "BLOCKED") => {
+  const handleUpdateUserStatus = (id: number, status: "ACTIVE" | "BLOCKED") => {
     handleUserStatusUpdate({ userData: { status }, id: id });
   };
-  const handleUpdateUserRole = (id: string, role: "ADMIN" | "CUSTOMER") => {
+  const handleUpdateUserRole = (id: number, role: "ADMIN" | "CUSTOMER") => {
     handleUserRoleUpdate({ userData: { role }, id: id });
-    // console.log(role)
   };
-  console.log(userStatusData, userStatusPending, data)
   return (
     <>
       {isPending && <DynamicLoading />}
@@ -49,7 +48,7 @@ export default function ALlUsersTable() {
           <TableColumn>ACTION</TableColumn>
         </TableHeader>
         <TableBody>
-          {data?.data?.map((user) => (
+          {data?.data?.map((user: User) => (
             <TableRow key={user.id}>
               <TableCell>
                 <Avatar

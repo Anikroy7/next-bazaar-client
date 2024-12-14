@@ -82,3 +82,25 @@ export const allCustomerInfo = async () => {
         throw new Error(error.response?.data?.message || error.message);
     }
 };
+export const allVendorInfo = async () => {
+    try {
+        const { data } = await axiosInstance.get("/users/vendor/all");
+        return data;
+    } catch (error: any) {
+        throw new Error(error.response?.data?.message || error.message);
+    }
+};
+
+
+export const vendorBlacklist = async (
+    id : string,
+    userData: FieldValues
+) => {
+    try {
+        const { data } = await axiosInstance.patch(`/users/vendor/blacklist/${id}`, userData);
+        return data;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+};
+
