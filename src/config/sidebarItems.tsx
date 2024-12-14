@@ -1,4 +1,4 @@
-import { FaCreditCard, FaUsers, FaPen, FaStar, FaHistory, FaBoxOpen, FaPlusCircle } from "react-icons/fa";
+import { FaCreditCard, FaUsers, FaPen, FaStar, FaHistory, FaPlusCircle } from "react-icons/fa";
 
 export const vendorMenuItems = [
 
@@ -30,6 +30,11 @@ export const adminMenuItems = [
   {
     path: "manage-vendors",
     label: "Manage Vendors",
+    icon: <FaPen className="h-5 w-5" />,
+  },
+  {
+    path: "manage-categories",
+    label: "Manage Categories",
     icon: <FaPen className="h-5 w-5" />,
   },
   {

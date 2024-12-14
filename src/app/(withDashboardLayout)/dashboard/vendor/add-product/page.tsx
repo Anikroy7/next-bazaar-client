@@ -71,7 +71,6 @@ export default function Page() {
             setId(productData.data.id)
             console.log(id, productData)
         }
-        console.log('come', id)
     }, [parseInt(queryParams.get('productLike') as string), id])
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         if (!images.length) {

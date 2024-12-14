@@ -1,6 +1,7 @@
+import { FieldValues } from "react-hook-form";
 import axiosInstance from "../libs/AxiosInstance";
 
-export const getALlCategories = async () => {
+export const getAllCategories = async () => {
     try {
         const { data } = await axiosInstance.get("/categories");
         return data;
@@ -9,14 +10,12 @@ export const getALlCategories = async () => {
     }
 };
 
-export const deleteCategory = async (
-    id: string,
-   
-) => {
+
+export const createCategories = async (bodyData: FieldValues) => {
     try {
-        const { data } = await axiosInstance.delete(`/categories/${id}`);
+        const { data } = await axiosInstance.post("/categories", bodyData);
         return data;
     } catch (error: any) {
-        throw new Error(error);
+        throw new Error(error.response?.data?.message || error.message);
     }
 };
