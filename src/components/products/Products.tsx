@@ -8,16 +8,20 @@ import { useGetAllProducts } from '@/src/hooks/product.hook'
 import React from 'react'
 import ProductCard from "./ProductCard";
 import { TProduct } from "@/src/types";
+import { useGetLoogedUserInfo, useGetSingleVendor } from "@/src/hooks/user.hook";
 
 function Products() {
-    const { data, isPending } = useGetAllProducts();
-    if (isPending) return <DynamicLoading />
+    const { data:loogedData, isPending: loogedPending } = useGetLoogedUserInfo();
+    // console.log(data)
+    const { data, isPending } = useGetSingleVendor(loogedData?.data?.id)
+    if (loogedPending || isPending) return <DynamicLoading />
+    console.log(data, loogedData)
     return (
         <div>
             <h2 className="text-2xl text-center font-semibold py-6">My Products</h2>
-            {data?.data && data?.data.length ? (
+            {data?.data && data?.data.products.length ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {data.data.map((product: TProduct) => (
+                    {data.data.products.map((product: TProduct) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>

@@ -38,6 +38,7 @@ export type TProduct = {
   discount: number;
   inventorCount: number;
   createdAt: string
+  vendor?: Vendor
 };
 
 type UserRole = 'ADMIN' | 'VENDOR' | 'CUSTOMER';
@@ -92,3 +93,34 @@ export interface ICategory {
   image: string
 }
 
+
+export type TOrderedProduct = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+};
+
+export type TPayment = {
+  id: number;
+  orderId: number;
+  paymentStatus: string;
+  transactionId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TOrder = {
+  id: number;
+  customerId: number;
+  vendorId: number;
+  totalQunatity: number;
+  totalPrice: number;
+  customerName: string;
+  customerEmail: string;
+  customerAddress: string;
+  createdAt: string;
+  updatedAt: string;
+  products: TOrderedProduct[];
+  payment: TPayment;
+};

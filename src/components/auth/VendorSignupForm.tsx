@@ -11,12 +11,20 @@ import { Avatar } from "@nextui-org/avatar";
 import { vendorSignupValidationSchema } from "@/src/validation/auth.validation";
 import NBTextArea from "../ui/form/NBTextArea";
 import { useCreateVendor } from "@/src/hooks/user.hook";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 
 
 export default function VendorRegisterPage() {
 
-    const {mutate:handleCreateVendor, isPending, isSuccess, data}= useCreateVendor()
+    const { mutate: handleCreateVendor, isPending, isSuccess, data } = useCreateVendor();
+    const router = useRouter()
+    useEffect(() => {
+        if (!isPending && data && isSuccess) {
+            router.push('/login')
+        }
+    }, [isSuccess, data, isPending])
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         const vendorData = {
             ...data,
@@ -24,8 +32,6 @@ export default function VendorRegisterPage() {
         };
         handleCreateVendor(vendorData)
     };
-
-    console.log({ isPending, isSuccess, data})
 
 
     return (

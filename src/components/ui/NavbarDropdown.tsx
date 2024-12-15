@@ -41,7 +41,7 @@ const NavbarDropdown: React.FC<INavbarDropdown> = ({ user, setIsLoading }) => {
                     <p className="font-semibold">Signed in as</p>
                     <p className="font-semibold">{user?.email}</p>
                 </DropdownItem>
-                <DropdownItem key="settings" onClick={() => router.push('/profile')}>My Profile</DropdownItem>
+                <DropdownItem className={`${user?.role!=="CUTOMER" && "hidden"}`} key="settings" onClick={() => router.push('/profile')}>My Profile</DropdownItem>
                 <DropdownItem onClick={() => handleLogout()} key="logout" color="danger">
                     Log Out
                 </DropdownItem>

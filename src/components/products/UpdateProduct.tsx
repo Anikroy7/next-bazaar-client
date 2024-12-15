@@ -14,7 +14,6 @@ import dynamic from "next/dynamic";
 import { MdClose, MdOutlineAttachment } from "react-icons/md";
 import { Badge } from "@nextui-org/badge";
 import { Avatar } from "@nextui-org/avatar";
-import { createProductValidationSchema } from "@/src/validation/product.validation";
 import { useGetSingleProduct, useUpdateProduct } from "@/src/hooks/product.hook";
 import { uploadMultipleImages } from "@/src/utils/uploadMultipleImages";
 import { useUser } from "@/src/context/user.prodvier";

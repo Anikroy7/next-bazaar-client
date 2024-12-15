@@ -1,4 +1,4 @@
-'use client';  // Mark the component as a Client Component
+'use client'; 
 
 import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
@@ -6,25 +6,19 @@ import { useEffect, useState } from "react";
 const ScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
 
-    // Function to scroll to top
     const scrollToTops = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    // Track scroll position
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 300) {
-                setIsVisible(true);  // Show button when scrolled down 300px
+                setIsVisible(true); 
             } else {
-                setIsVisible(false);  // Hide button when at the top
+                setIsVisible(false);
             }
         };
-
-        // Add event listener for scroll
         window.addEventListener("scroll", handleScroll);
-
-        // Cleanup event listener on component unmount
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };

@@ -17,28 +17,33 @@ export async function middleware(request: NextRequest) {
         if (AuthRoutes.includes(pathname)) {
             return NextResponse.next();
         } else {
+            if (pathname.includes('/checkout')) {
+                return NextResponse.redirect(
+                    new URL(`/login`, request.url),
+                );
+            }
             return NextResponse.redirect(
                 new URL(`/`, request.url),
             );
         }
     }
 
-    if (user.role === 'CUSTOMER' ) {
-        if (pathname.includes('/dashboard/admin')|| pathname.includes('/dashboard/vendor')) {
+    if (user.role === 'CUSTOMER') {
+        if (pathname.includes('/dashboard/admin') || pathname.includes('/dashboard/vendor')) {
             return NextResponse.redirect(
                 new URL(`/`, request.url),
             );
         }
     }
-    if (user.role === 'VENDOR' ) {
-        if (pathname.includes('/dashboard/admin')|| pathname.includes('/dashboard/customer')) {
+    if (user.role === 'VENDOR') {
+        if (pathname.includes('/dashboard/admin') || pathname.includes('/dashboard/customer')) {
             return NextResponse.redirect(
                 new URL(`/`, request.url),
             );
         }
     }
-    if (user.role === 'ADMIN' ) {
-        if (pathname.includes('/dashboard/vendor')|| pathname.includes('/dashboard/customer')) {
+    if (user.role === 'ADMIN') {
+        if (pathname.includes('/dashboard/vendor') || pathname.includes('/dashboard/customer')) {
             return NextResponse.redirect(
                 new URL(`/`, request.url),
             );
@@ -53,5 +58,6 @@ export const config = {
         "/login",
         "/signup",
         "/dashboard/:page*",
+        '/checkout'
     ],
 };

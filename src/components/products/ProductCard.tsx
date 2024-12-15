@@ -38,17 +38,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         }
     }
 
+    console.log(product, user)
+
     return (
         <Card
             key={product.id}
             isPressable
             className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px] relative"
-            onClick={()=>router.push(`/product/${product.id}`)}
+            onClick={() => router.push(`/product/${product.id}`)}
         >
             <CardHeader className="p-0">
                 {/* Add the plus button and action buttons here */}
                 {
-                    (user?.role === 'VENDOR' || user?.role === "ADMIN") && (
+                    (user?.role === 'VENDOR' || user?.role === "ADMIN") && (product.vendor?.email === user.email) && (
                         <>
                             {/* Duplicate Button */}
                             <span

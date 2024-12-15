@@ -5,7 +5,10 @@ import React, { useState } from "react";
 import { useGetSingleProduct } from "@/src/hooks/product.hook";
 import dynamic from "next/dynamic";
 import { Avatar } from "@nextui-org/avatar";
-import Link from "next/link";
+import { useCart } from "@/src/context/cart.provider";
+import { Button } from "@nextui-org/button";
+import { StarIcon } from "../../icons";
+import { Textarea } from "@nextui-org/input";
 const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
   ssr: false,
 })
@@ -14,39 +17,91 @@ const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'
 
 const ProductDetails = ({ id }: { id: string }) => {
   const { data, isPending } = useGetSingleProduct(id);
-  const [displayImage, setDisplayImage] = useState(data?.data?.images[0])
+  const [displayImage, setDisplayImage] = useState<null | string>(null);
+  const { dispatch, cart } = useCart()
+
+  const addToCartHandler = () => {
+    if (cart.length === 0) {
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: {
+          id: data?.data?.id,
+          name: data?.data?.name,
+          price: data?.data?.price,
+          quantity: 1,
+          image: data?.data?.images[0],
+          vendorId: data?.data?.vendorId
+        },
+      });
+    } else {
+      const cartVendorId = cart[0].vendorId
+      if (data?.data?.vendorId !== cartVendorId) {
+        const isConfirm = confirm("Replace the cart with the new product(s). Retain the current cart and cancel the addition.");
+        if (isConfirm) {
+          dispatch({
+            type: "CLEAR_CART"
+          })
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: {
+              id: data?.data?.id,
+              name: data?.data?.name,
+              price: data?.data?.price,
+              quantity: 1,
+              image: data?.data?.images[0],
+              vendorId: data?.data?.vendorId
+            },
+          })
+        }
+        return
+      }
+      else {
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: {
+            id: data?.data?.id,
+            name: data?.data?.name,
+            price: data?.data?.price,
+            quantity: 1,
+            image: data?.data?.images[0],
+            vendorId: data?.data?.vendorId
+          },
+        });
+      }
+    }
+
+  }
+
   if (isPending) return <DynamicLoading />
-  console.log(data)
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="flex flex-col md:flex-row -mx-4">
-        {/* Image Carousel Section */}
         <div className="md:flex-1 p-6">
-          <div className="h-64 md:h-80 rounded-lg mb-4 flex items-center justify-center">
+          <div className="h-64 md:h-80 w-56 rounded-lg mb-4 flex items-center justify-center">
             <img src={displayImage || data?.data?.images[0]} alt="" />
           </div>
 
-          <div className="flex mb-4 gap-3 mt-14">
-            {data?.data?.images.map((image: string) => (
+          <div className="flex mb-4 gap-3 mt-10">
+            {data?.data?.images.map((image:string) => (
               <Avatar
                 key={image}
                 onClick={() => setDisplayImage(image)}
-                className="w-20 h-20 text-large"
+                className="w-20 h-20 text-large cursor-pointer"
                 radius="sm"
-                isBordered={image===displayImage}
+                isBordered={image === displayImage}
                 src={image}
               />
             ))}
           </div>
         </div>
 
-        {/* Product Details Section */}
         <div className="md:flex-1 px-4">
           <h2 className="mb-2 leading-tight tracking-tight font-bold text-2xl md:text-3xl">
             {data?.data.name}
           </h2>
           <p className="text-gray-500 text-sm">
-            By <Link href={`/vendor/${data?.data?.vendor.id}`} className="text-indigo-600 hover:underline">{data?.data?.vendor.name}</Link>
+            By <a href={`/vendor/${data?.data?.vendor.id}`} className="text-indigo-600 hover:underline">{data?.data?.vendor.name}</a>
           </p>
 
           <div className="flex items-center space-x-4 my-4">
@@ -56,10 +111,12 @@ const ProductDetails = ({ id }: { id: string }) => {
                 <span className="font-bold text-indigo-600 text-3xl">{data?.data?.price}</span>
               </div>
             </div>
-            {data?.data?.discount > 0 && <div className="flex-1">
-              <p className="text-green-500 text-xl font-semibold">Discount {data?.data?.discount}%</p>
-              <p className="text-gray-400 text-sm">Inclusive of all features.</p>
-            </div>}
+            {data?.data?.discount > 0 && (
+              <div className="flex-1">
+                <p className="text-green-500 text-xl font-semibold">Discount {data?.data?.discount}%</p>
+                <p className="text-gray-400 text-sm">Inclusive of all features.</p>
+              </div>
+            )}
           </div>
 
           <p className="text-gray-500">
@@ -67,35 +124,66 @@ const ProductDetails = ({ id }: { id: string }) => {
           </p>
 
           <div className="flex py-4 space-x-4">
-            <div className="relative">
-              <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
-                Qty
-              </div>
-              <select className="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
-                {[1, 2, 3, 4, 5].map((qty) => (
-                  <option key={qty}>{qty}</option>
-                ))}
-              </select>
-              <svg
-                className="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-              </svg>
-            </div>
-
-            <button
-              type="button"
-              className="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
+            <Button
+              onClick={addToCartHandler}
+              className="my-3 rounded-md bg-default-900 text-default"
             >
               Add to Cart
-            </button>
+            </Button>
           </div>
         </div>
       </div>
+
+     {/*  <div className="mt-12 bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Leave a Review</h2>
+
+        <div className="flex items-center mb-4">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <StarIcon
+              key={star}
+              className={`h-6 w-6 cursor-pointe`}
+            />
+          ))}
+        </div>
+
+        <Textarea
+          placeholder="Write your review here..."
+        
+          className="mb-4"
+        />
+
+        <Button className="rounded-md bg-indigo-600 text-white">
+          Submit Review
+        </Button>
+      </div>
+
+      <div className="mt-12">
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Customer Reviews</h2>
+        <div className="space-y-4">
+          {[{
+            name: "John Doe",
+            rating: 5,
+            comment: "Excellent product! Highly recommend.",
+            date: "2024-12-15",
+          }].map((review, idx) => (
+            <div key={idx} className="bg-gray-100 p-4 rounded-lg shadow">
+              <div className="flex items-center mb-2">
+                <h3 className="font-bold text-gray-800 mr-2">{review.name}</h3>
+                <span className="text-gray-500 text-sm">{review.date}</span>
+              </div>
+              <div className="flex items-center mb-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <StarIcon
+                    key={star}
+                    className={`h-5 w-5 ${star <= review.rating ? "text-yellow-500" : "text-gray-300"}`}
+                  />
+                ))}
+              </div>
+              <p className="text-gray-700">{review.comment}</p>
+            </div>
+          ))}
+        </div>
+      </div> */}
     </div>
   );
 };

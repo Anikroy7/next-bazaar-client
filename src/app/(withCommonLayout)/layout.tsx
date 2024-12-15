@@ -1,5 +1,6 @@
 
 import { Navbar } from "@/src/components/navbar";
+import Cart from "@/src/components/ui/cart/Cart";
 
 export default function AboutLayout({
   children,
@@ -9,6 +10,7 @@ export default function AboutLayout({
   return (
     <>
       <Navbar />
+      <Cart/>
       {children}
     </>
   );
