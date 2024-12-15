@@ -1,4 +1,3 @@
-
 // src/layouts/layout.tsx
 
 import Sidebar from "@/src/components/dashboard/Sidebar";

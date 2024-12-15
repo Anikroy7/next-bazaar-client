@@ -7,6 +7,7 @@ import { NextUIProvider } from "@nextui-org/system";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import UserProvider from "../context/user.prodvier";
 import { CartProvider } from "../context/cart.provider";
 
@@ -23,7 +24,7 @@ declare module "@react-types/shared" {
   }
 }
 
-export const queryClient = new QueryClient()
+export const queryClient = new QueryClient();
 
 export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
@@ -38,6 +39,5 @@ export function Providers({ children, themeProps }: ProvidersProps) {
         </UserProvider>
       </CartProvider>
     </QueryClientProvider>
-
   );
 }

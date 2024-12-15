@@ -21,7 +21,7 @@ const uploadImage = async (imageFile: File) => {
       // console.error("Error from imgbb:", imgData.error.message);
     }
   } catch (err) {
-    // console.error("Error uploading image:", err);
+    confirm(JSON.stringify(err));
   }
 
   return newImageUrl;

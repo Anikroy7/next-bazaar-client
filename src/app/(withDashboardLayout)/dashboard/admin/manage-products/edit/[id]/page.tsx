@@ -1,12 +1,15 @@
-import UpdateProduct from "@/src/components/products/UpdateProduct"
+import UpdateProduct from "@/src/components/products/UpdateProduct";
 
 export default async function Page({
-    params,
+  params,
 }: {
-    params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) {
-    const id = (await params).id
-    return <>
-        <UpdateProduct id={id} key={id} />
+  const id = (await params).id;
+
+  return (
+    <>
+      <UpdateProduct key={id} id={id} />
     </>
+  );
 }

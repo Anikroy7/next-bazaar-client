@@ -2,21 +2,21 @@ import * as React from "react";
 
 import { IconSvgProps } from "@/src/types";
 
-export const StarIcon: React.FC<IconSvgProps>  = (props) => {
+export const StarIcon: React.FC<IconSvgProps> = (props) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill={ "none"}
+      fill={"none"}
       stroke="currentColor"
       strokeWidth={2}
+      viewBox="0 0 24 24"
       width="1em"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
+        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.148 6.59a1 1 0 00.95.69h6.905c.969 0 1.371 1.24.588 1.81l-5.564 4.028a1 1 0 00-.364 1.118l2.147 6.59c.3.921-.755 1.688-1.54 1.118l-5.565-4.028a1 1 0 00-1.175 0l-5.565 4.028c-.784.57-1.838-.197-1.539-1.118l2.147-6.59a1 1 0 00-.364-1.118L2.32 12.017c-.783-.57-.38-1.81.588-1.81h6.905a1 1 0 00.95-.69l2.148-6.59z"
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.148 6.59a1 1 0 00.95.69h6.905c.969 0 1.371 1.24.588 1.81l-5.564 4.028a1 1 0 00-.364 1.118l2.147 6.59c.3.921-.755 1.688-1.54 1.118l-5.565-4.028a1 1 0 00-1.175 0l-5.565 4.028c-.784.57-1.838-.197-1.539-1.118l2.147-6.59a1 1 0 00-.364-1.118L2.32 12.017c-.783-.57-.38-1.81.588-1.81h6.905a1 1 0 00.95-.69l2.148-6.59z"
       />
     </svg>
   );
@@ -314,7 +314,6 @@ export const StarFilledIcon = ({
     />
   </svg>
 );
-
 
 export const NextUILogo: React.FC<IconSvgProps> = (props) => {
   const { width, height = 40 } = props;

@@ -1,16 +1,19 @@
-"use client"
+"use client";
 
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import { StarFilledIcon } from "../../icons";
-import { useGetAllProducts } from "@/src/hooks/product.hook";
 import dynamic from "next/dynamic";
-import { TProduct } from "@/src/types";
 import { useRouter } from "next/navigation";
+
 import ProductCard from "../../products/ProductCard";
 
-const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
+import { useGetAllProducts } from "@/src/hooks/product.hook";
+import { TProduct } from "@/src/types";
+
+const DynamicLoading = dynamic(
+  () => import("@/src/components/ui/shared/Loading"),
+  {
     ssr: false,
-})
+  },
+);
 /* 
 const products = [
     {
@@ -88,24 +91,26 @@ const products = [
 ]; */
 
 export default function RecomendedProduct() {
-    const { data, isPending } = useGetAllProducts();
-    const router = useRouter()
-    if (isPending) return <DynamicLoading />
+  const { data, isPending } = useGetAllProducts();
+  const router = useRouter();
 
-    const products = data?.data || [];
+  if (isPending) return <DynamicLoading />;
 
-    return (
-        <div className=" py-10">
-            <div className="container mx-auto px-6">
-                <h2 className="text-2xl font-semibold mb-6">Recommend For You</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                    {products.length && products.map((product: TProduct) => (
-                        <ProductCard key={product.id} product={product}/>
-                    ))}
-                </div>
-            </div>
+  const products = data?.data || [];
+
+  return (
+    <div className=" py-10">
+      <div className="container mx-auto px-6">
+        <h2 className="text-2xl font-semibold mb-6">Recommend For You</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          {products.length &&
+            products.map((product: TProduct) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 // <Card

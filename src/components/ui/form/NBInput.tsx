@@ -14,7 +14,7 @@ export default function NBInput({
   type = "text",
   label,
   name,
-  disabled=false
+  disabled = false,
 }: IProps) {
   const {
     register,
@@ -27,13 +27,13 @@ export default function NBInput({
     <Input
       {...register(name)}
       errorMessage={errorMessage || ""}
+      isDisabled={disabled}
       isInvalid={!!errors?.[name]}
       label={label}
       required={required}
       size={size}
       type={type}
       variant={variant}
-      isDisabled={disabled}
     />
   );
 }

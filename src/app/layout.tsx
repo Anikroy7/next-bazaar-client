@@ -1,19 +1,17 @@
 import "@/src/styles/globals.css";
 import { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 
 import { Providers } from "../libs/providers";
 
 import { siteConfig } from "@/src/config/site";
 
-import { Inter } from 'next/font/google'
-import { Toaster } from "sonner";
- 
 const roboto = Inter({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-})
-  
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -41,9 +39,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head />
-      <body
-        className={roboto.className}
-      >
+      <body className={roboto.className}>
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           {children}
           <Toaster />

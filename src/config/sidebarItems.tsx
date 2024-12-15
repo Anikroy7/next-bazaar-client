@@ -1,7 +1,13 @@
-import { FaCreditCard, FaUsers, FaPen, FaStar, FaHistory, FaPlusCircle } from "react-icons/fa";
+import {
+  FaCreditCard,
+  FaUsers,
+  FaPen,
+  FaStar,
+  FaHistory,
+  FaPlusCircle,
+} from "react-icons/fa";
 
 export const vendorMenuItems = [
-
   {
     path: "add-product",
     label: "Add Product",
@@ -15,7 +21,7 @@ export const vendorMenuItems = [
   {
     path: "order-history",
     label: "Order History",
-    icon: <FaHistory className="h-5 w-5" />
+    icon: <FaHistory className="h-5 w-5" />,
   },
 ];
 
@@ -50,6 +56,6 @@ export const adminMenuItems = [
   {
     path: "order-history",
     label: "Order History",
-    icon: <FaHistory className="h-5 w-5" />
+    icon: <FaHistory className="h-5 w-5" />,
   },
 ];

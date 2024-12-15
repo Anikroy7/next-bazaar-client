@@ -5,42 +5,42 @@ import { useFormContext } from "react-hook-form";
 
 import { ITextArea } from "@/src/types";
 
-interface IProps extends ITextArea { }
+interface IProps extends ITextArea {}
 
 export default function NBTextArea({
-    variant = "bordered",
-    size = "md",
-    required = false,
-    type = "text",
-    label,
-    name,
-    disabled = false,
-    placeholder = "Enter your description"
+  variant = "bordered",
+  size = "md",
+  required = false,
+  type = "text",
+  label,
+  name,
+  disabled = false,
+  placeholder = "Enter your description",
 }: IProps) {
-    const {
-        register,
-        formState: { errors },
-    } = useFormContext();
-    const errorMessage = errors?.[name]?.message as string | undefined;
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const errorMessage = errors?.[name]?.message as string | undefined;
 
-    return (
-        <Textarea
-            disableAnimation
-            disableAutosize
-            classNames={{
-                base: "w-[100%]",
-                input: "resize-y min-h-[40px]",
-            }}
-            {...register(name)}
-            errorMessage={errorMessage || ""}
-            isInvalid={!!errors?.[name]}
-            label={label}
-            required={required}
-            size={size}
-            type={type}
-            variant={variant}
-            isDisabled={disabled}
-            placeholder={placeholder}
-        />
-    );
+  return (
+    <Textarea
+      disableAnimation
+      disableAutosize
+      classNames={{
+        base: "w-[100%]",
+        input: "resize-y min-h-[40px]",
+      }}
+      {...register(name)}
+      errorMessage={errorMessage || ""}
+      isDisabled={disabled}
+      isInvalid={!!errors?.[name]}
+      label={label}
+      placeholder={placeholder}
+      required={required}
+      size={size}
+      type={type}
+      variant={variant}
+    />
+  );
 }

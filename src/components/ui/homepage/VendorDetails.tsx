@@ -1,31 +1,37 @@
-"use client"
+"use client";
 
-import { useGetSingleVendor } from "@/src/hooks/user.hook";
 import React from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { TProduct } from "@/src/types";
+
 import ProductCard from "../../products/ProductCard";
 
-const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
-  ssr: false,
-})
+import { TProduct } from "@/src/types";
+import { useGetSingleVendor } from "@/src/hooks/user.hook";
+
+const DynamicLoading = dynamic(
+  () => import("@/src/components/ui/shared/Loading"),
+  {
+    ssr: false,
+  },
+);
 
 const VendorDetails = ({ id }: { id: string }) => {
-  const { data, isPending } = useGetSingleVendor(id)
-  if (isPending) return <DynamicLoading />
-  console.log('vendor data', data)
+  const { data, isPending } = useGetSingleVendor(id);
+
+  if (isPending) return <DynamicLoading />;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className=" shadow rounded-lg p-6">
         {/* Vendor Header Section */}
         <div className="flex items-center mb-6">
           <Image
-            src={data?.data?.logo}
             alt="Vendor Logo"
-            width={80}
-            height={80}
             className="w-20 h-20 rounded-full border border-gray-200"
+            height={80}
+            src={data?.data?.logo}
+            width={80}
           />
           <div className="ml-4">
             <h1 className="text-2xl font-bold">{data?.data?.name}</h1>
@@ -37,15 +43,17 @@ const VendorDetails = ({ id }: { id: string }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h2 className="text-lg font-semibold">Description</h2>
-            <p className=" mt-2">
-              {data?.data?.description}
-            </p>
+            <p className=" mt-2">{data?.data?.description}</p>
           </div>
           <div>
             <h2 className="text-lg font-semibold">Contact Information</h2>
             <ul className="mt-2 space-y-1">
-              <li><strong>Email:</strong> {data?.data?.email}</li>
-              <li><strong>Phone:</strong> {data?.data?.phone}</li>
+              <li>
+                <strong>Email:</strong> {data?.data?.email}
+              </li>
+              <li>
+                <strong>Phone:</strong> {data?.data?.phone}
+              </li>
             </ul>
           </div>
         </div>
@@ -74,7 +82,9 @@ const VendorDetails = ({ id }: { id: string }) => {
                 ))}
               </div>
             ) : (
-              <p className="text-center text-xl text-gray-600">No products found!!</p>
+              <p className="text-center text-xl text-gray-600">
+                No products found!!
+              </p>
             )}
           </div>
         </div>

@@ -1,28 +1,30 @@
+import axios from "axios";
+import { toast } from "sonner";
 
-
-import axios from 'axios';
-import { getAccessToken } from '../config/cookie';
-import { toast } from 'sonner';
+import { getAccessToken } from "../config/cookie";
 
 const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_API}/api`,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 axiosInstance.interceptors.request.use(
   async function (config) {
-    const accessToken = await getAccessToken()
+    const accessToken = await getAccessToken();
+
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+
     return config;
   },
   function (error) {
-    toast.error(error.message)
+    toast.error(error.message);
+
     return Promise.reject(error);
-  }
+  },
 );
 
 /* axiosInstance.interceptors.response.use(

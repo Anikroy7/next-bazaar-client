@@ -1,12 +1,15 @@
-import ProductDetails from "@/src/components/ui/homepage/ProductDetails"
+import ProductDetails from "@/src/components/ui/homepage/ProductDetails";
 
 export default async function Page({
-    params,
+  params,
 }: {
-    params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) {
-    const id = (await params).id
-    return <>
-        <ProductDetails id={id} key={id} />
+  const id = (await params).id;
+
+  return (
+    <>
+      <ProductDetails key={id} id={id} />
     </>
+  );
 }

@@ -4,8 +4,6 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-
-
 export interface IInput {
   variant?: "flat" | "bordered" | "faded" | "underlined";
   size?: "sm" | "md" | "lg";
@@ -23,12 +21,11 @@ export interface ITextArea {
   label: string;
   name: string;
   disabled?: boolean;
-  placeholder?: string
+  placeholder?: string;
 }
 
-
 export type TProduct = {
-  id: number
+  id: number;
   name: string;
   categoryId: number;
   description: string;
@@ -37,12 +34,12 @@ export type TProduct = {
   price: number;
   discount: number;
   inventorCount: number;
-  createdAt: string
-  vendor?: Vendor
+  createdAt: string;
+  vendor?: Vendor;
 };
 
-type UserRole = 'ADMIN' | 'VENDOR' | 'CUSTOMER';
-type UserStatus = 'ACTIVE' | 'INACTIVE';
+type UserRole = "ADMIN" | "VENDOR" | "CUSTOMER";
+type UserStatus = "ACTIVE" | "INACTIVE";
 
 export interface User {
   id: number;
@@ -86,13 +83,11 @@ export interface Customer {
   address: string;
 }
 
-
 export interface ICategory {
   id: number;
   name: string;
-  image: string
+  image: string;
 }
-
 
 export type TOrderedProduct = {
   id: number;

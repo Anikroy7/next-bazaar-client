@@ -1,10 +1,11 @@
-import Products from '@/src/components/products/Products'
-import React from 'react'
+import React from "react";
+
+import Products from "@/src/components/products/Products";
 
 export default function page() {
   return (
     <>
       <Products />
     </>
-  )
+  );
 }

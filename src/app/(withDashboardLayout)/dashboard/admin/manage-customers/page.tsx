@@ -1,12 +1,9 @@
 "use client";
+
+import dynamic from "next/dynamic";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
-import dynamic from "next/dynamic";
-
-const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
-  ssr: false,
-})
 import {
   Table,
   TableBody,
@@ -17,15 +14,23 @@ import {
 } from "@nextui-org/table";
 import { Tooltip } from "@nextui-org/tooltip";
 
-import { useAllCustomerInfo, useUpdateRole, useUpdateStatus } from "@/src/hooks/user.hook";
 import { DeleteIcon } from "@/src/components/icons";
+import {
+  useAllCustomerInfo,
+  useUpdateRole,
+  useUpdateStatus,
+} from "@/src/hooks/user.hook";
 import { User } from "@/src/types";
+
+const DynamicLoading = dynamic(
+  () => import("@/src/components/ui/shared/Loading"),
+  { ssr: false },
+);
 
 export default function ALlUsersTable() {
   const { data, isPending } = useAllCustomerInfo();
-  const { mutate: handleUserStatusUpdate } = useUpdateStatus()
-  const { mutate: handleUserRoleUpdate } = useUpdateRole()
-
+  const { mutate: handleUserStatusUpdate } = useUpdateStatus();
+  const { mutate: handleUserRoleUpdate } = useUpdateRole();
 
   const handleUpdateUserStatus = (id: number, status: "ACTIVE" | "BLOCKED") => {
     handleUserStatusUpdate({ userData: { status }, id: id });
@@ -33,6 +38,7 @@ export default function ALlUsersTable() {
   const handleUpdateUserRole = (id: number, role: "ADMIN" | "CUSTOMER") => {
     handleUserRoleUpdate({ userData: { role }, id: id });
   };
+
   return (
     <>
       {isPending && <DynamicLoading />}
@@ -60,9 +66,7 @@ export default function ALlUsersTable() {
               <TableCell>{user?.email}</TableCell>
               <TableCell>{user?.customer?.address}</TableCell>
               <TableCell>{user?.customer?.phone}</TableCell>
-              <TableCell className="uppercase">
-                CUSTOMER
-              </TableCell>
+              <TableCell className="uppercase">CUSTOMER</TableCell>
               <TableCell>
                 <Chip
                   className="capitalize"
@@ -96,9 +100,7 @@ export default function ALlUsersTable() {
                       radius="full"
                       size="sm"
                       variant="solid"
-                      onClick={() =>
-                        handleUpdateUserStatus(user?.id, "ACTIVE")
-                      }
+                      onClick={() => handleUpdateUserStatus(user?.id, "ACTIVE")}
                     >
                       Active
                     </Button>

@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import { Card, CardBody } from "@nextui-org/card";
 import { Tab, Tabs } from "@nextui-org/tabs";
 
-export default function Navigation () {
+export default function Navigation() {
   let tabs = [
     {
       id: "photos",
@@ -27,7 +27,7 @@ export default function Navigation () {
 
   return (
     <div className="flex w-full flex-col">
-      <Tabs className="w-full" aria-label="Dynamic tabs" items={tabs}>
+      <Tabs aria-label="Dynamic tabs" className="w-full" items={tabs}>
         {(item) => (
           <Tab key={item.id} title={item.label}>
             <Card>

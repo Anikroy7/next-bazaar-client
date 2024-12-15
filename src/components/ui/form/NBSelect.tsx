@@ -24,12 +24,11 @@ export default function NBSelect({
       isRequired
       {...register(name)}
       className="min-w-full sm:min-w-[225px]"
+      defaultSelectedKeys={[options[0].id.toString() || "No category found!!"]}
       isDisabled={disabled}
       label={label}
-      variant={variant}
       placeholder="Select a category"
-      defaultSelectedKeys={[options[0].id.toString() || 'No category found!!']}
-      
+      variant={variant}
     >
       {options.map((option) => (
         <SelectItem key={option.id}>{option.name}</SelectItem>
@@ -37,7 +36,6 @@ export default function NBSelect({
     </Select>
   );
 }
-
 
 /* 
 

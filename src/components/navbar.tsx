@@ -1,10 +1,11 @@
-'use client'
+"use client";
 
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-const DynamicLoading = dynamic(() => import('./ui/shared/Loading'), {
+const DynamicLoading = dynamic(() => import("./ui/shared/Loading"), {
   ssr: false,
-})
+});
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -19,29 +20,34 @@ import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import { useUser } from "../context/user.prodvier";
+
+import NavbarDropdown from "./ui/NavbarDropdown";
 
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
-import { useRouter } from "next/navigation";
-import { useUser } from "../context/user.prodvier";
-import NavbarDropdown from './ui/NavbarDropdown';
-import Image from 'next/image';
 
 export const Navbar = () => {
   const router = useRouter();
   const { user, isLoading, setIsLoading } = useUser();
 
-  if (isLoading) return <DynamicLoading />
+  if (isLoading) return <DynamicLoading />;
+
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Image
-              src={'https://pbs.twimg.com/profile_images/1565710214019444737/if82cpbS_400x400.jpg'}
-              width={50}
-              height={50}
               alt={"NEXT BAZAR"}
+              height={50}
+              src={
+                "https://pbs.twimg.com/profile_images/1565710214019444737/if82cpbS_400x400.jpg"
+              }
+              width={50}
             />
             <p className="font-bold text-inherit">BAZAR</p>
           </NextLink>
@@ -59,35 +65,36 @@ export const Navbar = () => {
               >
                 {item.label}
               </NextLink>
-
             </NavbarItem>
           ))}
-          {user?.role==="VENDOR"&&<NavbarItem >
-            <NextLink
-              className={clsx(
-                linkStyles({ color: "foreground" }),
-                "data-[active=true]:text-primary data-[active=true]:font-medium",
-              )}
-              color="foreground"
-              href={'/dashboard/vendor'}
-            >
-              Vendor Dashboard
-            </NextLink>
-
-          </NavbarItem>}
-          {user?.role === 'ADMIN' && <NavbarItem >
-            <NextLink
-              className={clsx(
-                linkStyles({ color: "foreground" }),
-                "data-[active=true]:text-primary data-[active=true]:font-medium",
-              )}
-              color="foreground"
-              href={'/dashboard/admin'}
-            >
-              Admin Dashboard
-            </NextLink>
-
-          </NavbarItem>}
+          {user?.role === "VENDOR" && (
+            <NavbarItem>
+              <NextLink
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                )}
+                color="foreground"
+                href={"/dashboard/vendor"}
+              >
+                Vendor Dashboard
+              </NextLink>
+            </NavbarItem>
+          )}
+          {user?.role === "ADMIN" && (
+            <NavbarItem>
+              <NextLink
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                )}
+                color="foreground"
+                href={"/dashboard/admin"}
+              >
+                Admin Dashboard
+              </NextLink>
+            </NavbarItem>
+          )}
         </ul>
       </NavbarContent>
 
@@ -99,37 +106,37 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
-          {
-            (user && user.email) ? <NavbarDropdown user={user} setIsLoading={setIsLoading} /> : <>
+          {user && user.email ? (
+            <NavbarDropdown setIsLoading={setIsLoading} user={user} />
+          ) : (
+            <>
               <Button
                 isExternal
                 as={Link}
+                variant="flat"
                 className="text-sm font-normal text-default-600 bg-default-100 me-3"
                 // href={siteConfig.links.sponsor}
                 onClick={() => router.push('/signup')}
-                variant="flat"
               >
                 Signup
               </Button>
               <Button
                 isExternal
                 as={Link}
+                variant="flat"
                 className="text-sm font-normal text-default-600 bg-default-100"
                 // href={siteConfig.links.sponsor}
                 onClick={() => router.push('/login')}
-                variant="flat"
               >
                 Login
               </Button>
             </>
-          }
+          )}
           {/* <NavbarDropdown/> */}
-
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

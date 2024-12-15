@@ -7,15 +7,14 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getCurrentUser } from "../services/auth.service";
 
+import { getCurrentUser } from "../services/auth.service";
 
 export type IUser = {
   _id?: string;
   userId: string;
   email: string;
   role: string;
-  
 };
 
 const UserContext = createContext<IUserProviderValues | undefined>(undefined);
@@ -25,7 +24,7 @@ interface IUserProviderValues {
   isLoading: boolean;
   setUser: (user: IUser | null) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
-  carItems?: string[]
+  carItems?: string[];
 }
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -45,13 +44,9 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-
-      <UserContext.Provider
-        value={{ user, setUser, isLoading, setIsLoading,  }}
-      >
+      <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
         {children}
       </UserContext.Provider>
-
     </>
   );
 };

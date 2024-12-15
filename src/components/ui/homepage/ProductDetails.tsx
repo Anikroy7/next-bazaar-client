@@ -1,24 +1,24 @@
-"use client"
-
+"use client";
 
 import React, { useState } from "react";
-import { useGetSingleProduct } from "@/src/hooks/product.hook";
 import dynamic from "next/dynamic";
 import { Avatar } from "@nextui-org/avatar";
-import { useCart } from "@/src/context/cart.provider";
 import { Button } from "@nextui-org/button";
-import { StarIcon } from "../../icons";
-import { Textarea } from "@nextui-org/input";
-const DynamicLoading = dynamic(() => import('@/src/components/ui/shared/Loading'), {
-  ssr: false,
-})
 
-
+import { useCart } from "@/src/context/cart.provider";
+import { useGetSingleProduct } from "@/src/hooks/product.hook";
+import Image from "next/image";
+const DynamicLoading = dynamic(
+  () => import("@/src/components/ui/shared/Loading"),
+  {
+    ssr: false,
+  },
+);
 
 const ProductDetails = ({ id }: { id: string }) => {
   const { data, isPending } = useGetSingleProduct(id);
   const [displayImage, setDisplayImage] = useState<null | string>(null);
-  const { dispatch, cart } = useCart()
+  const { dispatch, cart } = useCart();
 
   const addToCartHandler = () => {
     if (cart.length === 0) {
@@ -30,17 +30,21 @@ const ProductDetails = ({ id }: { id: string }) => {
           price: data?.data?.price,
           quantity: 1,
           image: data?.data?.images[0],
-          vendorId: data?.data?.vendorId
+          vendorId: data?.data?.vendorId,
         },
       });
     } else {
-      const cartVendorId = cart[0].vendorId
+      const cartVendorId = cart[0].vendorId;
+
       if (data?.data?.vendorId !== cartVendorId) {
-        const isConfirm = confirm("Replace the cart with the new product(s). Retain the current cart and cancel the addition.");
+        const isConfirm = confirm(
+          "Replace the cart with the new product(s). Retain the current cart and cancel the addition.",
+        );
+
         if (isConfirm) {
           dispatch({
-            type: "CLEAR_CART"
-          })
+            type: "CLEAR_CART",
+          });
           dispatch({
             type: "ADD_TO_CART",
             payload: {
@@ -49,13 +53,13 @@ const ProductDetails = ({ id }: { id: string }) => {
               price: data?.data?.price,
               quantity: 1,
               image: data?.data?.images[0],
-              vendorId: data?.data?.vendorId
+              vendorId: data?.data?.vendorId,
             },
-          })
+          });
         }
-        return
-      }
-      else {
+
+        return;
+      } else {
         dispatch({
           type: "ADD_TO_CART",
           payload: {
@@ -64,33 +68,32 @@ const ProductDetails = ({ id }: { id: string }) => {
             price: data?.data?.price,
             quantity: 1,
             image: data?.data?.images[0],
-            vendorId: data?.data?.vendorId
+            vendorId: data?.data?.vendorId,
           },
         });
       }
     }
+  };
 
-  }
-
-  if (isPending) return <DynamicLoading />
+  if (isPending) return <DynamicLoading />;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="flex flex-col md:flex-row -mx-4">
         <div className="md:flex-1 p-6">
           <div className="h-64 md:h-80 w-56 rounded-lg mb-4 flex items-center justify-center">
-            <img src={displayImage || data?.data?.images[0]} alt="" />
+            <Image height={100} width={100} alt="" src={displayImage || data?.data?.images[0]} />
           </div>
 
           <div className="flex mb-4 gap-3 mt-10">
-            {data?.data?.images.map((image:string) => (
+            {data?.data?.images.map((image: string) => (
               <Avatar
                 key={image}
-                onClick={() => setDisplayImage(image)}
                 className="w-20 h-20 text-large cursor-pointer"
-                radius="sm"
                 isBordered={image === displayImage}
+                radius="sm"
                 src={image}
+                onClick={() => setDisplayImage(image)}
               />
             ))}
           </div>
@@ -101,32 +104,42 @@ const ProductDetails = ({ id }: { id: string }) => {
             {data?.data.name}
           </h2>
           <p className="text-gray-500 text-sm">
-            By <a href={`/vendor/${data?.data?.vendor.id}`} className="text-indigo-600 hover:underline">{data?.data?.vendor.name}</a>
+            By{" "}
+            <a
+              className="text-indigo-600 hover:underline"
+              href={`/vendor/${data?.data?.vendor.id}`}
+            >
+              {data?.data?.vendor.name}
+            </a>
           </p>
 
           <div className="flex items-center space-x-4 my-4">
             <div>
               <div className="rounded-lg bg-gray-100 flex py-2 px-3">
                 <span className="text-indigo-400 mr-1 mt-1">$</span>
-                <span className="font-bold text-indigo-600 text-3xl">{data?.data?.price}</span>
+                <span className="font-bold text-indigo-600 text-3xl">
+                  {data?.data?.price}
+                </span>
               </div>
             </div>
             {data?.data?.discount > 0 && (
               <div className="flex-1">
-                <p className="text-green-500 text-xl font-semibold">Discount {data?.data?.discount}%</p>
-                <p className="text-gray-400 text-sm">Inclusive of all features.</p>
+                <p className="text-green-500 text-xl font-semibold">
+                  Discount {data?.data?.discount}%
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Inclusive of all features.
+                </p>
               </div>
             )}
           </div>
 
-          <p className="text-gray-500">
-            {data?.data?.description}
-          </p>
+          <p className="text-gray-500">{data?.data?.description}</p>
 
           <div className="flex py-4 space-x-4">
             <Button
-              onClick={addToCartHandler}
               className="my-3 rounded-md bg-default-900 text-default"
+              onClick={addToCartHandler}
             >
               Add to Cart
             </Button>
@@ -134,7 +147,7 @@ const ProductDetails = ({ id }: { id: string }) => {
         </div>
       </div>
 
-     {/*  <div className="mt-12 bg-white p-6 rounded-lg shadow-lg">
+      {/*  <div className="mt-12 bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-xl font-bold text-gray-800 mb-4">Leave a Review</h2>
 
         <div className="flex items-center mb-4">
