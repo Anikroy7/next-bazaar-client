@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
@@ -8,6 +8,10 @@ import { Button } from "@nextui-org/button";
 import { useCart } from "@/src/context/cart.provider";
 import { useGetSingleProduct } from "@/src/hooks/product.hook";
 import Image from "next/image";
+import ProductReview from "../../products/ProductReview";
+import { useGetMyOrderInfo } from "@/src/hooks/order.hook";
+import { useUser } from "@/src/context/user.prodvier";
+import { TOrderedProduct } from "@/src/types";
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
   {
@@ -16,9 +20,12 @@ const DynamicLoading = dynamic(
 );
 
 const ProductDetails = ({ id }: { id: string }) => {
+  const { user } = useUser();
   const { data, isPending } = useGetSingleProduct(id);
+  const { data: myOrders, isPending: oPPending, isSuccess } = useGetMyOrderInfo()
   const [displayImage, setDisplayImage] = useState<null | string>(null);
   const { dispatch, cart } = useCart();
+  const [orderedProduct, setOrderedProduct] = useState<TOrderedProduct[]>([])
 
   const addToCartHandler = () => {
     if (cart.length === 0) {
@@ -75,8 +82,21 @@ const ProductDetails = ({ id }: { id: string }) => {
     }
   };
 
+
+
+  useEffect(() => {
+    if (!oPPending && myOrders && isSuccess) {
+      myOrders?.data?.forEach((element: any) => {
+        setOrderedProduct([...orderedProduct, ...element.products])
+      });
+
+    }
+  }, [oPPending, isSuccess, myOrders]);
+
   if (isPending) return <DynamicLoading />;
 
+
+  console.log('myOrders', data?.data?.id, orderedProduct, orderedProduct.find((pd: TOrderedProduct) => pd.id === 2))
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="flex flex-col md:flex-row -mx-4">
@@ -146,57 +166,8 @@ const ProductDetails = ({ id }: { id: string }) => {
           </div>
         </div>
       </div>
+      {(user?.email && orderedProduct.length > 0 && orderedProduct.find((pd: TOrderedProduct) => pd.id === data?.data?.id)) && < ProductReview productId={data?.data?.id} />}
 
-      {/*  <div className="mt-12 bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Leave a Review</h2>
-
-        <div className="flex items-center mb-4">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <StarIcon
-              key={star}
-              className={`h-6 w-6 cursor-pointe`}
-            />
-          ))}
-        </div>
-
-        <Textarea
-          placeholder="Write your review here..."
-        
-          className="mb-4"
-        />
-
-        <Button className="rounded-md bg-indigo-600 text-white">
-          Submit Review
-        </Button>
-      </div>
-
-      <div className="mt-12">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Customer Reviews</h2>
-        <div className="space-y-4">
-          {[{
-            name: "John Doe",
-            rating: 5,
-            comment: "Excellent product! Highly recommend.",
-            date: "2024-12-15",
-          }].map((review, idx) => (
-            <div key={idx} className="bg-gray-100 p-4 rounded-lg shadow">
-              <div className="flex items-center mb-2">
-                <h3 className="font-bold text-gray-800 mr-2">{review.name}</h3>
-                <span className="text-gray-500 text-sm">{review.date}</span>
-              </div>
-              <div className="flex items-center mb-2">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <StarIcon
-                    key={star}
-                    className={`h-5 w-5 ${star <= review.rating ? "text-yellow-500" : "text-gray-300"}`}
-                  />
-                ))}
-              </div>
-              <p className="text-gray-700">{review.comment}</p>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };
