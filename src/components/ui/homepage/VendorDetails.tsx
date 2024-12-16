@@ -1,13 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
 import ProductCard from "../../products/ProductCard";
 
 import { TProduct } from "@/src/types";
-import { useGetSingleVendor } from "@/src/hooks/user.hook";
+import { useGetLoogedUserInfo, useGetSingleVendor } from "@/src/hooks/user.hook";
+import { Button } from "@nextui-org/button";
+import { useCreateVendorFollow, useIsVendorFollow, useRemoveVendorFollow } from "@/src/hooks/vendorFollow.hook";
+import { useUser } from "@/src/context/user.prodvier";
 
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
@@ -17,10 +20,53 @@ const DynamicLoading = dynamic(
 );
 
 const VendorDetails = ({ id }: { id: string }) => {
+  const { user } = useUser();
+  const { data: loogedUser, isPending: loogedUserPending } = useGetLoogedUserInfo()
   const { data, isPending } = useGetSingleVendor(id);
+  const [isFollowed, setIsFollowed] = React.useState(false);
+  const { mutate: handleCreateVFHandler, isError: isErrorCVF } = useCreateVendorFollow()
+  const { mutate: handleRemoveVFHandler, isError: isErrorRVF } = useRemoveVendorFollow()
 
-  if (isPending) return <DynamicLoading />;
+  const { mutate: handleIsFollwed, data: isFollowedData, isPending: isFollwedPending } = useIsVendorFollow();
 
+
+  useEffect(() => {
+    if (data?.data?.id && loogedUser?.data?.id) {
+      handleIsFollwed({
+        vendorId: data?.data?.id,
+        customerId: loogedUser?.data?.id,
+      });
+    }
+    if (isErrorCVF || isErrorRVF) {
+      setIsFollowed(!isFollowed)
+    }
+  }, [data, loogedUser, handleIsFollwed]);
+
+  useEffect(() => {
+    if (isFollowedData?.data) {
+      setIsFollowed(true)
+    }
+  }, [isFollwedPending, isFollowedData])
+
+  const handleCreateVF = () => {
+    if (isFollowed) {
+      handleRemoveVFHandler({
+        vendorId: data?.data?.id,
+        customerId: loogedUser?.data?.id
+      })
+    } else {
+      handleCreateVFHandler({
+        vendorId: data?.data?.id,
+        customerId: loogedUser?.data?.id
+      })
+    }
+    setIsFollowed(!isFollowed)
+
+  }
+
+
+
+  if (isPending || loogedUserPending) return <DynamicLoading />;
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className=" shadow rounded-lg p-6">
@@ -37,6 +83,33 @@ const VendorDetails = ({ id }: { id: string }) => {
             <h1 className="text-2xl font-bold">{data?.data?.name}</h1>
             <p className="text-gray-400">{data?.data?.location}</p>
           </div>
+          {user?.role === "CUSTOMER" && <div className="ml-4">
+            {
+              isFollowed ? <Button
+                className={"bg-transparent text-foreground border-default-200"}
+                color="primary"
+                radius="full"
+                size="lg"
+                variant={"faded"}
+                onClick={() => handleCreateVF()}
+              // onPress={() => setIsFollowed(!isFollowed)}
+              >
+                Unfollow
+              </Button> : <Button
+                className={""}
+                color="primary"
+                radius="full"
+                size="lg"
+                variant={"solid"}
+                onClick={() => handleCreateVF()}
+              // onPress={() => setIsFollowed(!isFollowed)}
+              >
+                Follow
+              </Button>
+            }
+
+
+          </div>}
         </div>
 
         {/* Vendor Details Section */}
@@ -58,18 +131,6 @@ const VendorDetails = ({ id }: { id: string }) => {
           </div>
         </div>
 
-        {/* Action Section */}
-        <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-4">Actions</h2>
-          <div className="flex space-x-4">
-            <button className="px-6 py-2 font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-500">
-              Follow Vendor
-            </button>
-            <button className="px-6 py-2 font-semibold rounded-lg bg-red-600 text-white hover:bg-red-500">
-              Report Vendor
-            </button>
-          </div>
-        </div>
 
         {/* Vendor Products Section */}
         <div className="mt-8">

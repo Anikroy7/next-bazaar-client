@@ -121,6 +121,17 @@ export type TOrder = {
 };
 
 
+export type TVendorOrder = {
+  id: number;
+  orderId: number;
+  transactionId: string;
+  paymentStatus: string;
+  createdAt: string;
+  updatedAt: string;
+  order: TOrder;
+};
+
+
 export type TReview = {
   id: number;
   productId: number;

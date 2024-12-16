@@ -68,61 +68,82 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       isPressable
       className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px] relative"
       role="button"
-      tabIndex={0} // make it focusable
-      onClick={() => router.push(`/product/${product.id}`)}
+      tabIndex={0}
+      onClick={() => {
+        if (user?.role === 'CUSTOMER') {
+          router.push(`/product/${product.id}`)
+        }
+      }}
       onKeyDown={handleKeyPress}
     >
       <CardHeader className="p-0">
         {(user?.role === "VENDOR" || user?.role === "ADMIN") &&
           product.vendor?.email === user.email && (
             <>
-              {/* Duplicate Button */}
-              <span
-                className="absolute top-2 right-2 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
-                role="button"
-                tabIndex={0}
-                title="Duplicate product"
-                onClick={() =>
-                  router.push(
-                    `/dashboard/vendor/add-product?productLike=${product.id}`,
-                  )
-                }
-                onKeyDown={(e) =>
-                  handleActionKeyPress(e, () =>
-                    router.push(
-                      `/dashboard/vendor/add-product?productLike=${product.id}`,
-                    ),
-                  )
-                }
-              >
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+              {/* View Details Button */}
+              <Link href={`/product/${product.id}`}>
+                <span
+                  className="absolute top-2 right-28 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
+                  role="button"
+                  tabIndex={0}
+                  title="View product details"
                 >
-                  <path
-                    d="M12 4v16m8-8H4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-.274.871-.682 1.701-1.208 2.458C18.268 16.057 14.477 19 12 19s-6.268-2.943-7.542-6A10.94 10.94 0 012.458 12z"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </Link>
+              {/* Duplicate Button */}
+              <Link href={`/dashboard/vendor/add-product?productLike=${product.id}`}>
+                <span
+                  className="absolute top-2 right-2 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
+                  role="button"
+                  tabIndex={0}
+                  title="Duplicate product"
 
+
+
+                >
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 4v16m8-8H4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </Link>
               {/* Edit Button */}
-              <Link href={`/dashboard/update-product/${product.id}`}>
+              <Link href={`/dashboard/vendor/update-product/${product.id}`}>
                 <span
                   className="absolute top-2 right-12 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
                   role="button"
                   tabIndex={0}
                   title="Edit product"
-                  onKeyDown={(e) =>
-                    handleActionKeyPress(e, () =>
-                      router.push(`/dashboard/update-product/${product.id}`),
-                    )
-                  }
+
                 >
                   <svg
                     className="h-4 w-4"

@@ -30,7 +30,7 @@ export default function Header() {
             alt="Shop Icon"
             className="object-cover rounded-full"
             height={50}
-            src="https://www.shutterstock.com/image-vector/shop-icon-store-symbol-flat-600w-293567324.jpg"
+            src={data?.data?.logo||"https://www.shutterstock.com/image-vector/shop-icon-store-symbol-flat-600w-293567324.jpg"}
             width={50}
           />
         </Link>

@@ -11,6 +11,7 @@ import { useCreateProductReview, useGetProductReviews } from '@/src/hooks/produc
 import dynamic from 'next/dynamic'
 import { useGetLoogedUserInfo } from '@/src/hooks/user.hook'
 import { TReview } from '@/src/types'
+import { useUser } from '@/src/context/user.prodvier'
 
 const DynamicLoading = dynamic(
     () => import("@/src/components/ui/shared/Loading"),
@@ -18,7 +19,7 @@ const DynamicLoading = dynamic(
 );
 
 export default function ProductReview({ productId }: { productId: number }) {
-
+    const { user } = useUser()
     const { data: loogedUserData, isPending: loogedUserPending } = useGetLoogedUserInfo()
     const { mutate: handleCreatePr, data, isPending } = useCreateProductReview();
     const { data: productReviews, isPending: productReviewsPending } = useGetProductReviews(`${productId}`)
@@ -31,8 +32,6 @@ export default function ProductReview({ productId }: { productId: number }) {
             ratings: parseInt(data.ratings)
 
         }
-
-        console.log(prData)
         handleCreatePr(prData)
     }
     if (isPending || loogedUserPending || productReviewsPending) return <DynamicLoading />
@@ -40,41 +39,43 @@ export default function ProductReview({ productId }: { productId: number }) {
     return (
         <>
             <div className="mt-12  p-6 rounded-lg shadow-lg">
-                <h2 className="text-xl font-bold mb-4">Leave a Review</h2>
-                <NBForm
-                    onSubmit={onSubmit}
-                >
-                    <div className="w-1/2 my-3">
-                        <NBInput
-                            name="ratings"
-                            required
-                            label="Ratings (out of 5)"
-                        />
-                    </div>
-                    <div className="w-1/2 my-3">
-                        <NBTextArea
-                            label="Customer review"
-                            name="description"
-                            placeholder="Enter your review"
-                            required
-                            variant="faded"
-                        />
-                    </div>
-                    <Button
-                        className="my-3 rounded-md bg-default-900 text-default"
-                        size="sm"
-                        type="submit"
+                {(user?.role === "ADMIN" || user?.role === "CUSTOMER") && <>
+                    <h2 className="text-xl font-bold mb-4">Leave a Review</h2>
+                    <NBForm
+                        onSubmit={onSubmit}
                     >
-                        Send
-                    </Button>
-                </NBForm>
+                        <div className="w-1/2 my-3">
+                            <NBInput
+                                name="ratings"
+                                required
+                                label="Ratings (out of 5)"
+                            />
+                        </div>
+                        <div className="w-1/2 my-3">
+                            <NBTextArea
+                                label="Customer review"
+                                name="description"
+                                placeholder="Enter your review"
+                                required
+                                variant="faded"
+                            />
+                        </div>
+                        <Button
+                            className="my-3 rounded-md bg-default-900 text-default"
+                            size="sm"
+                            type="submit"
+                        >
+                            Send
+                        </Button>
+                    </NBForm>
+                </>}
             </div>
 
             <div className="mt-12">
                 <h2 className="text-2xl font-bold mb-6 ">Customer Reviews</h2>
                 {productReviews?.data?.length ? (
                     <div className="space-y-6">
-                        {productReviews?.data?.map((data:TReview) => (
+                        {productReviews?.data?.map((data: TReview) => (
                             <div
                                 key={data?.review.id}
                                 className="p-6  rounded-lg shadow-md hover:shadow-lg transition-shadow"

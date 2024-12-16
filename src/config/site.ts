@@ -13,10 +13,10 @@ export const siteConfig = {
       label: "About",
       href: "/about",
     },
-    {
+    /* {
       label: "My Orders",
       href: "/order-history",
-    },
+    }, */
   ],
   navMenuItems: [
     {
@@ -28,9 +28,9 @@ export const siteConfig = {
       label: "About",
       href: "/about",
     },
-    {
+    /* {
       label: "My Orders",
       href: "/order-history",
-    },
+    }, */
   ],
 };

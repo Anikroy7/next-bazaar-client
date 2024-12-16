@@ -59,6 +59,7 @@ export const useUpdateProduct = (id: string) => {
     onSuccess: (data) => {
       if (data) {
         queryClient.invalidateQueries({ queryKey: ["GET_ALL_PRODUCTS"] });
+        queryClient.invalidateQueries({ queryKey: ["GET_SINGLE_VENDOR"] });
         toast.success(data.message);
       }
     },
@@ -77,6 +78,8 @@ export const useDeleteProduct = () => {
     onSuccess: (data) => {
       if (data) {
         queryClient.invalidateQueries({ queryKey: ["GET_ALL_PRODUCTS"] });
+        queryClient.invalidateQueries({ queryKey: ["GET_SINGLE_VENDOR"] });
+
         toast.success(data.message);
       }
     },

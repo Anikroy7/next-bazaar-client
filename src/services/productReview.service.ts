@@ -11,7 +11,7 @@ export const createProductReview = async (reviewData: FieldValues) => {
   }
 };
 
-export const getProductReviews  = async (id:string) => {
+export const getProductReviews = async (id: string) => {
   try {
     const { data } = await axiosInstance.get(`/productReviews/${id}`);
 
@@ -20,3 +20,5 @@ export const getProductReviews  = async (id:string) => {
     throw new Error(error.response?.data?.message || error.message);
   }
 };
+
+

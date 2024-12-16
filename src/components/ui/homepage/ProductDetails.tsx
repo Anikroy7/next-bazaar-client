@@ -96,13 +96,12 @@ const ProductDetails = ({ id }: { id: string }) => {
   if (isPending) return <DynamicLoading />;
 
 
-  console.log('myOrders', data?.data?.id, orderedProduct, orderedProduct.find((pd: TOrderedProduct) => pd.id === 2))
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="flex flex-col md:flex-row -mx-4">
         <div className="md:flex-1 p-6">
           <div className="h-64 md:h-80 w-56 rounded-lg mb-4 flex items-center justify-center">
-            <Image height={100} width={100} alt="" src={displayImage || data?.data?.images[0]} />
+            <Image height={400} width={400} alt="" src={data?.data?.images[0] || "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"} />
           </div>
 
           <div className="flex mb-4 gap-3 mt-10">
@@ -156,18 +155,18 @@ const ProductDetails = ({ id }: { id: string }) => {
 
           <p className="text-gray-500">{data?.data?.description}</p>
 
-          <div className="flex py-4 space-x-4">
+          {user?.role == "CUSTOMER" &&  <div className="flex py-4 space-x-4">
             <Button
               className="my-3 rounded-md bg-default-900 text-default"
               onClick={addToCartHandler}
             >
               Add to Cart
             </Button>
-          </div>
+          </div>}
         </div>
       </div>
       {(user?.email && orderedProduct.length > 0 && orderedProduct.find((pd: TOrderedProduct) => pd.id === data?.data?.id)) && < ProductReview productId={data?.data?.id} />}
-
+      {user?.role === "VENDOR" && <ProductReview productId={data?.data?.id} />}
     </div>
   );
 };
