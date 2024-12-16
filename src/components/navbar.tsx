@@ -35,7 +35,7 @@ export const Navbar = () => {
   const { user, isLoading, setIsLoading } = useUser();
 
   if (isLoading) return <DynamicLoading />;
-
+  console.log(user) 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -53,18 +53,7 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {user?.role === "CUSTOMER" && <NavbarItem>
-            <NextLink
-              className={clsx(
-                linkStyles({ color: "foreground" }),
-                "data-[active=true]:text-primary data-[active=true]:font-medium",
-              )}
-              color="foreground"
-              href={"/dashboard/vendor"}
-            >
-              Vendor Dashboard
-            </NextLink>
-          </NavbarItem>}
+         
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -107,6 +96,18 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           )}
+           {user?.role === "CUSTOMER" && <NavbarItem>
+            <NextLink
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium",
+              )}
+              color="foreground"
+              href={"/order-history"}
+            >
+              Order History
+            </NextLink>
+          </NavbarItem>}
         </ul>
       </NavbarContent>
 

@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-
+import { AiFillCheckCircle } from 'react-icons/ai';
 import ProductCard from "../../products/ProductCard";
 
 import { TProduct } from "@/src/types";
@@ -82,20 +82,29 @@ const VendorDetails = ({ id }: { id: string }) => {
           <div className="ml-4">
             <h1 className="text-2xl font-bold">{data?.data?.name}</h1>
             <p className="text-gray-400">{data?.data?.location}</p>
+            {user?.role === "CUSTOMER" && isFollowed && <div className="flex items-center space-x-2">
+              <AiFillCheckCircle className="h-5 w-5 text-green-600" />
+              <span className="text-sm text-green-600">Following</span>
+            </div>}
           </div>
           {user?.role === "CUSTOMER" && <div className="ml-4">
             {
-              isFollowed ? <Button
-                className={"bg-transparent text-foreground border-default-200"}
-                color="primary"
-                radius="full"
-                size="lg"
-                variant={"faded"}
-                onClick={() => handleCreateVF()}
-              // onPress={() => setIsFollowed(!isFollowed)}
-              >
-                Unfollow
-              </Button> : <Button
+              isFollowed ? <section className="flex items-center gap-3">
+                <div>
+                  <Button
+                    className={"bg-transparent text-foreground border-default-200"}
+                    color="primary"
+                    radius="full"
+                    size="lg"
+                    variant={"faded"}
+                    onClick={() => handleCreateVF()}
+                  // onPress={() => setIsFollowed(!isFollowed)}
+                  >
+                    Unfollow
+                  </Button>
+                </div>
+
+              </section> : <Button
                 className={""}
                 color="primary"
                 radius="full"

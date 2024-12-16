@@ -96,14 +96,7 @@ export type TOrderedProduct = {
   quantity: number;
 };
 
-export type TPayment = {
-  id: number;
-  orderId: number;
-  paymentStatus: string;
-  transactionId: string;
-  createdAt: string;
-  updatedAt: string;
-};
+
 
 export type TOrder = {
   id: number;
@@ -157,3 +150,14 @@ export type TReview = {
   }
 
 };
+
+
+export interface TPayment {
+  id: number;
+  orderId: number;
+  createdAt: string;
+  updatedAt: string;
+  order: TOrder
+  transactionId: string;
+  paymentStatus: string;
+}

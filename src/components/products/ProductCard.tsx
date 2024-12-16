@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       role="button"
       tabIndex={0}
       onClick={() => {
-        if (user?.role === 'CUSTOMER') {
+        if (user?.role !== 'VENDOR') {
           router.push(`/product/${product.id}`)
         }
       }}

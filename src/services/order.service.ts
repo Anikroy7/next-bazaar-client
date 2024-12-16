@@ -1,7 +1,7 @@
 import { FieldValues } from "react-hook-form";
 
 import axiosInstance from "../libs/AxiosInstance";
-import { useQuery } from "@tanstack/react-query";
+
 
 export const createOrder = async (orderData: FieldValues) => {
   try {

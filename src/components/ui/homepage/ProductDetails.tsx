@@ -101,13 +101,13 @@ const ProductDetails = ({ id }: { id: string }) => {
       <div className="flex flex-col md:flex-row -mx-4">
         <div className="md:flex-1 p-6">
           <div className="h-64 md:h-80 w-56 rounded-lg mb-4 flex items-center justify-center">
-            <Image height={400} width={400} alt="" src={data?.data?.images[0] || "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"} />
+            <Image height={400} width={400} alt="" src={displayImage || "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"} />
           </div>
 
           <div className="flex mb-4 gap-3 mt-10">
-            {data?.data?.images.map((image: string) => (
+            {data?.data?.images.map((image: string,index:number) => (
               <Avatar
-                key={image}
+                key={index}
                 className="w-20 h-20 text-large cursor-pointer"
                 isBordered={image === displayImage}
                 radius="sm"

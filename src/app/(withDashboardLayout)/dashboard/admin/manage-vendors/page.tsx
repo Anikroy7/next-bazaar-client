@@ -31,7 +31,7 @@ export default function ALlUsersTable() {
     // handleUserStatusUpdate({ userData: { status }, id: id });
     handleBlacklist({ userData: { isBlacklisted }, id: id });
   };
-
+  console.log('useAllVendorInfo',data)
   return (
     <>
       {isPending && <DynamicLoading />}
@@ -73,33 +73,6 @@ export default function ALlUsersTable() {
               <TableCell>
                 <div className="relative flex items-center gap-2">
                   {/* <UpdateUserForm user={user} /> */}
-                  {/* {user?.status === "ACTIVE" ? (
-                                        <Button
-                                            isIconOnly
-                                            className="bg-transparent"
-                                            onClick={() =>
-                                                handleUpdateUserStatus(user?.id, "BLOCKED")
-                                            }
-                                        >
-                                            <Tooltip color="warning" content="Block vendor">
-                                                <span className="text-lg text-warning-500 cursor-pointer active:opacity-50">
-                                                    <DeleteIcon />
-                                                </span>
-                                            </Tooltip>
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            color="success"
-                                            radius="full"
-                                            size="sm"
-                                            variant="solid"
-                                            onClick={() =>
-                                                handleUpdateUserStatus(user?.id, "ACTIVE")
-                                            }
-                                        >
-                                            Active
-                                        </Button>
-                                    )} */}
                   {!user?.vendor?.isBlacklisted ? (
                     <Button
                       isIconOnly

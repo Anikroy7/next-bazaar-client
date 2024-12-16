@@ -49,8 +49,8 @@ export const adminMenuItems = [
     icon: <FaPlusCircle className="h-5 w-5" />,
   },
   {
-    path: "manage-payments",
-    label: "Manage Payments",
+    path: "manage-transactions",
+    label: "Manage Transactions",
     icon: <FaCreditCard className="h-5 w-5" />,
   },
   {
