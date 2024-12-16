@@ -41,7 +41,6 @@ export default function Page() {
 
   return (
     <>
-      {isPending && <DynamicLoading />}
 
       <Table aria-label="Order Payment Information Table">
         <TableHeader>

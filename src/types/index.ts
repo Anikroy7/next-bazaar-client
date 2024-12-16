@@ -125,31 +125,6 @@ export type TVendorOrder = {
 };
 
 
-export type TReview = {
-  id: number;
-  productId: number;
-  review: {
-    id: number;
-    description: string;
-    ratings: number;
-    isDeleted: boolean;
-    createdAt: string;
-    updatedAt: string;
-    customerId: number;
-    customer: {
-      id: number;
-      name: string;
-      email: string;
-      phone: string;
-      address: string;
-      profileImage: string;
-      isDeleted: boolean;
-      createdAt: string;
-      updatedAt: string;
-    };
-  }
-
-};
 
 
 export interface TPayment {
@@ -160,4 +135,17 @@ export interface TPayment {
   order: TOrder
   transactionId: string;
   paymentStatus: string;
+
 }
+
+
+export type TReview = {
+  id: number;
+  description: string;
+  ratings: number;
+  customerId: number;
+  customer: Customer;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+};

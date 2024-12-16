@@ -1,10 +1,11 @@
 import {
   FaCreditCard,
   FaUsers,
-  FaPen,
   FaStar,
   FaHistory,
   FaPlusCircle,
+  FaUserTie,
+  FaListAlt,
 } from "react-icons/fa";
 
 export const vendorMenuItems = [
@@ -25,7 +26,6 @@ export const vendorMenuItems = [
   },
 ];
 
-// Import the icons you want to use
 
 export const adminMenuItems = [
   {
@@ -36,12 +36,12 @@ export const adminMenuItems = [
   {
     path: "manage-vendors",
     label: "Manage Vendors",
-    icon: <FaPen className="h-5 w-5" />,
+    icon: <FaUserTie className="h-5 w-5" />,
   },
   {
     path: "manage-categories",
     label: "Manage Categories",
-    icon: <FaPen className="h-5 w-5" />,
+    icon: <FaListAlt className="h-5 w-5" />,
   },
   {
     path: "manage-products",
@@ -54,8 +54,9 @@ export const adminMenuItems = [
     icon: <FaCreditCard className="h-5 w-5" />,
   },
   {
-    path: "order-history",
-    label: "Order History",
-    icon: <FaHistory className="h-5 w-5" />,
-  },
+    path: "manage-reviews",
+    label: "Manage Reviews",
+    icon: <FaStar className="h-5 w-5" />
+  }
+  
 ];

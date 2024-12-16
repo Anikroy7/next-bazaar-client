@@ -22,3 +22,23 @@ export const getProductReviews = async (id: string) => {
 };
 
 
+
+export const getALLProductReviews = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/productReviews`);
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || error.message);
+  }
+};
+
+
+export const deleteProductReviews = async (id:string) => {
+  try {
+    const { data } = await axiosInstance.delete(`/productReviews/${id}`);
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || error.message);
+  }
+};
