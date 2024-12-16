@@ -1,9 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
-import { Chip } from "@nextui-org/chip";
 import {
   Table,
   TableBody,
@@ -15,7 +13,7 @@ import {
 import { Tooltip } from "@nextui-org/tooltip";
 
 import { DeleteIcon } from "@/src/components/icons";
-import { useGetAllPaymentInfo } from "@/src/hooks/payment.hook";
+import { useCancelPaymentByAdmin, useGetAllPaymentInfo } from "@/src/hooks/payment.hook";
 import { TPayment } from "@/src/types";
 
 
@@ -25,9 +23,22 @@ const DynamicLoading = dynamic(
 );
 
 export default function Page() {
-  const { data, isPending } = useGetAllPaymentInfo()
+  const { data, isPending } = useGetAllPaymentInfo();
+  const { mutate: cancelPaymentHandler, data: cancelPaymentData, isPending: cancelPaymentPending } = useCancelPaymentByAdmin();
+  const handleCancelPayment = (orderId: number) => {
+    const isConfirm = confirm("Payment and order will be deelted?")
+    if (isConfirm) {
+      cancelPaymentHandler({
+        id: orderId
+      })
+    }
+
+  }
+
+
   if (isPending) return <DynamicLoading />
-  console.log(data)
+  console.log('cljags', cancelPaymentData, cancelPaymentPending)
+
   return (
     <>
       {isPending && <DynamicLoading />}
@@ -45,7 +56,7 @@ export default function Page() {
           <TableColumn>Actions</TableColumn>
         </TableHeader>
         <TableBody>
-          {data?.data?.map((item:TPayment) => (
+          {data?.data?.map((item: TPayment) => (
             <TableRow key={item.id}>
               <TableCell>{item?.id}</TableCell>
               <TableCell>{item?.order?.customerName}</TableCell>
@@ -59,10 +70,11 @@ export default function Page() {
                 <Button
                   isIconOnly
                   className="bg-transparent"
+
                 >
                   <Tooltip color="danger" content="Cancel Payment">
                     <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => handleCancelPayment(item?.order?.id)} />
                     </span>
                   </Tooltip>
                 </Button>

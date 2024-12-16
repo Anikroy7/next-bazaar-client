@@ -9,3 +9,13 @@ export const getAllPaymentInfo = async () => {
         throw new Error(error.response?.data?.message || error.message);
     }
 };
+
+
+export const cancelPaymentByAdmin = async (id: string) => {
+    try {
+        const { data } = await axiosInstance.patch(`/payment/admin/cancel/${id}`);
+        return data;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+};
