@@ -11,6 +11,8 @@ import {
 import dynamic from "next/dynamic";
 
 import { useUser } from "@/src/context/user.prodvier";
+import { useRouter } from "next/navigation";
+import { logoutUser } from "@/src/services/auth.service";
 
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
@@ -31,8 +33,14 @@ export const AcmeLogo = () => {
 };
 
 export default function AdminHeader() {
-  const { user, isLoading } = useUser();
+  const router = useRouter();
 
+  const { user, isLoading, setIsLoading } = useUser();
+  const handleLogout = () => {
+    logoutUser();
+    router.push("/login");
+    setIsLoading(true);
+  };
   if (isLoading) return <DynamicLoading />;
 
   return (
@@ -56,7 +64,7 @@ export default function AdminHeader() {
               <p className="font-semibold">{user?.email}</p>
             </DropdownItem>
 
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem onClick={()=>handleLogout()} key="logout" color="danger">
               Log Out
             </DropdownItem>
           </DropdownMenu>
