@@ -23,11 +23,15 @@ export interface ITextArea {
   disabled?: boolean;
   placeholder?: string;
 }
-
+export type TCategory = {
+  name: string;
+  id: number
+}
 export type TProduct = {
   id: number;
   name: string;
   categoryId: number;
+  category:TCategory;
   description: string;
   vendorId: number;
   images: string[];
