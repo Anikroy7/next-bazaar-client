@@ -119,3 +119,30 @@ export type TOrder = {
   products: TOrderedProduct[];
   payment: TPayment;
 };
+
+
+export type TReview = {
+  id: number;
+  productId: number;
+  review: {
+    id: number;
+    description: string;
+    ratings: number;
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+    customerId: number;
+    customer: {
+      id: number;
+      name: string;
+      email: string;
+      phone: string;
+      address: string;
+      profileImage: string;
+      isDeleted: boolean;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }
+
+};
