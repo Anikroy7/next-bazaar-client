@@ -28,7 +28,7 @@ export default function AllProducts() {
   const router = useRouter();
   const { mutate: deleteProduct } = useDeleteProduct();
 
-  const products = data?.data || [];
+  const products = data?.data?.data || [];
 
   const handleDeleteProduct = (id: number) => {
     const isConfirm = confirm("Are you want to sure delete the product?");
