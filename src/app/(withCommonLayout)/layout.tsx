@@ -12,7 +12,7 @@ export default function AboutLayout({
       <Navbar />
       <Cart />
       {children}
-      <Footer/>
+      <Footer />
     </>
   );
 }

@@ -1,53 +1,78 @@
-# Next.js & NextUI Template
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
-https://github.com/Apollo-Level2-Web-Dev/b3-assignment-9
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+![Logo](https://pbs.twimg.com/profile_images/1565710214019444737/if82cpbS_400x400.jpg)
 
-## Technologies Used
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+# NEXT BAZAAR
 
-## How to Use
+Next bazaar is designed to provide a complete online shopping experience for users, vendors, and administrators. It serves as a platform where users can browse and purchase products, vendors can manage their shops and inventories, and administrators can control and monitor the entire system. The application focuses on being intuitive, responsive, and secure, providing a seamless experience for all user roles. The core of this project is to build a scalable, high-performance system using modern web development technologies. It leverages Node.js and Express.js for the backend, React.js (or Next.js) for the front end, and PostgreSQL for data storage. The application integrates with third-party services for payments and file storage, ensuring a professional, enterprise-grade solution.
 
-### Use the template with create-next-app
+## Live Link (FRONTEND)
 
-To create a new project based on this template using `create-next-app`, run the following command:
+https://next-bazaar-client.vercel.app
 
-```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
-```
 
-### Install dependencies
+## Live Link (BACKEND)
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+https://next-bazaar-server-sigma.vercel.app
+## Tech Stack
+
+**Client:** Typescript, Next js, Next ui, Tanstack query.
+
+**Server:** Node js, Express js, PostgreSQL, Primsa
+
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm install
+  git clone https://github.com/Anikroy7/next_bazaar_server
 ```
 
-### Run the development server
+Go to the project directory
 
 ```bash
-npm run dev
+  cd next_bazaar_server
 ```
 
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+Install dependencies
 
 ```bash
-public-hoist-pattern[]=*@nextui-org/*
+  npm install
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+Start the server
 
-## License
+```bash
+  npm run dev
+```
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+
+## Features
+
+- Light/dark mode toggle
+- Secure authentication
+- Advanced product search & filters
+- Cart and secure checkout
+- Real-time order tracking
+- Vendor dashboard & inventory management
+- Server-side rendering (SSR)
+- Scalable and high-performance architecture
+
+## Issues
+
+- Make the full site responsive
+- Secure local storage data using jwt
+- Admin crediantial need to set on server running process 
+
+
+## 🛠 Skills
+Javascript, HTML, CSS...
+
+
+
+
+## Authors
+
+- [@anikroy](https://github.com/Anikroy7)
+

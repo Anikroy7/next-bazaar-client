@@ -1,71 +1,70 @@
-import { Button } from "@nextui-org/button";
+"use client";
+
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import { Link } from "@nextui-org/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+
+import { TProduct } from "@/src/types";
+import { useGetAllProducts } from "@/src/hooks/product.hook";
+
+const DynamicLoading = dynamic(
+  () => import("@/src/components/ui/shared/Loading"),
+  { ssr: false },
+);
 
 const FlashSaleProducts = () => {
-  const flashSaleProducts = [
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: "৳2499",
-      discount: "30%",
-      image:
-        "https://img.drz.lazcdn.com/g/kf/S845f70adde8c42d2b30742023a242411s.jpg_400x400q80.jpg_.webp",
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      price: "৳1599",
-      discount: "25%",
-      image:
-        "https://img.drz.lazcdn.com/static/bd/p/567a885ee126e80c14fc81ece53c5990.jpg_400x400q80.jpg_.webp",
-    },
-    {
-      id: 3,
-      name: "Portable Speaker",
-      price: "৳1299",
-      discount: "40%",
-      image:
-        "https://img.drz.lazcdn.com/g/kf/S0e10e7ba0ea243558debc785b925d53cT.jpg_400x400q80.jpg_.webp",
-    },
-    // Add more products as needed
-  ];
+  const { data, isPending } = useGetAllProducts();
+
+  if (isPending) <DynamicLoading />;
+
+  const prouducts: TProduct[] = data?.data?.data || [];
 
   return (
     <div className="py-16 ">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl font-bold text-center mb-8">Flash Sale</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {flashSaleProducts.map(({ name, price, discount }) => (
-            <Card key={name} className="py-4">
-              <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                <p className="text-tiny uppercase font-bold">{name}</p>
-                <small className="text-default-500">$ {price}</small>
-                <h4 className="font-bold text-large">{discount}%</h4>
-              </CardHeader>
-              <CardBody className="overflow-visible py-2">
-                <Image
-                  alt="Card background"
-                  className="object-cover rounded-xl"
-                  height={170}
-                  src={"https://nextui.org/images/hero-card-complete.jpeg"}
-                  width={270}
-                />
-              </CardBody>
-            </Card>
-          ))}
+          {prouducts
+            ?.slice(0, 4)
+            .map(({ id, name, price, discount, images }) => (
+              <Link key={id} href={`/product/${id}`}>
+                <Card key={name} className="py-4 cursor-pointer">
+                  <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                    <p className="text-tiny uppercase font-bold">{name}</p>
+                    <small className="text-default-500">$ {price}</small>
+                    <h4 className="font-bold text-large">{discount}%</h4>
+                  </CardHeader>
+                  <CardBody className="py-2 flex justify-center items-center">
+                    <Image
+                      alt="Card background"
+                      className="rounded-xl object-cover"
+                      height={150}
+                      src={
+                        images[0] ||
+                        "https://nextui.org/images/hero-card-complete.jpeg"
+                      }
+                      width={150}
+                    />
+                  </CardBody>
+                </Card>
+              </Link>
+            ))}
         </div>
-        <div className="text-center">
-          <Button className="my-10" color="primary" size="sm" variant="flat">
-            <Link
+        <div className="text-center py-6">
+          <Link
+            className="my-10 p-3 bg-default-900 text-default"
+            color="primary"
+            href={"/all-flash-products"}
+          >
+            {/* <Link
               isExternal
               showAnchorIcon
               href="https://github.com/nextui-org/nextui"
-            >
-              Visit All
-            </Link>
-          </Button>
+            > */}
+            Visit All
+            {/* </Link> */}
+          </Link>
         </div>
       </div>
     </div>

@@ -45,7 +45,7 @@ export default function Banner() {
               backgroundImage:
                 "url('/path-to-your-black-background-image.jpg')",
               height: "100%",
-              marginTop: "180px",
+              marginTop: "300px",
             }}
           >
             <div className="bg-black/50 h-full flex flex-col justify-center items-center p-6">

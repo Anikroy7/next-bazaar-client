@@ -14,7 +14,7 @@ export const vendorMenuItems = [
     label: "Add Product",
     icon: <FaPlusCircle className="h-5 w-5" />,
   },
- /*  {
+  /*  {
     path: "customer-review",
     label: "Customer Reviews",
     icon: <FaStar className="h-5 w-5" />,
@@ -25,7 +25,6 @@ export const vendorMenuItems = [
     icon: <FaHistory className="h-5 w-5" />,
   },
 ];
-
 
 export const adminMenuItems = [
   {
@@ -56,7 +55,6 @@ export const adminMenuItems = [
   {
     path: "manage-reviews",
     label: "Manage Reviews",
-    icon: <FaStar className="h-5 w-5" />
-  }
-  
+    icon: <FaStar className="h-5 w-5" />,
+  },
 ];

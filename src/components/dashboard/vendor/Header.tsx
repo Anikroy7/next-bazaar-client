@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import { useGetLoogedUserInfo } from "@/src/hooks/user.hook";
 
-
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
   {
@@ -20,8 +19,7 @@ const DynamicLoading = dynamic(
 export default function Header() {
   const router = useRouter();
   const { data, isPending } = useGetLoogedUserInfo();
-  
-  
+
   if (isPending) return <DynamicLoading />;
 
   return (
@@ -32,7 +30,10 @@ export default function Header() {
             alt="Shop Icon"
             className="object-cover rounded-full"
             height={50}
-            src={data?.data?.logo||"https://www.shutterstock.com/image-vector/shop-icon-store-symbol-flat-600w-293567324.jpg"}
+            src={
+              data?.data?.logo ||
+              "https://www.shutterstock.com/image-vector/shop-icon-store-symbol-flat-600w-293567324.jpg"
+            }
             width={50}
           />
         </Link>

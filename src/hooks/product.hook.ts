@@ -31,8 +31,8 @@ export const useCreateProduct = () => {
 export const useGetAllProducts = () => {
   return useQuery({
     queryKey: ["GET_ALL_PRODUCTS"],
-    queryFn: async () => {
-      const response = await getAllProducts();
+    queryFn: async (filters) => {
+      const response = await getAllProducts(filters);
 
       return response;
     },
@@ -61,6 +61,22 @@ export const useUpdateProduct = (id: string) => {
         queryClient.invalidateQueries({ queryKey: ["GET_ALL_PRODUCTS"] });
         queryClient.invalidateQueries({ queryKey: ["GET_SINGLE_VENDOR"] });
         toast.success(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useGetSearchedProduct = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationKey: ["GET_SEARCHED_PRODUCT"],
+    mutationFn: async (filters) => {
+      return await getAllProducts(filters);
+    },
+    onSuccess: (data) => {
+      if (data) {
+        return;
       }
     },
     onError: (error) => {

@@ -2,7 +2,6 @@ import { FieldValues } from "react-hook-form";
 
 import axiosInstance from "../libs/AxiosInstance";
 
-
 export const createOrder = async (orderData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/orders", orderData);
@@ -23,11 +22,10 @@ export const getMyOrderInfo = async () => {
   }
 };
 
-
-
 export const getOrdersForVendor = async (id: string) => {
   try {
     const { data } = await axiosInstance.get(`/orders/vendor-order/${id}`);
+
     return data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || error.message);

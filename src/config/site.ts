@@ -13,6 +13,14 @@ export const siteConfig = {
       label: "About",
       href: "/about",
     },
+    {
+      label: "Recent products",
+      href: "/recent-products",
+    },
+    {
+      label: "Compare",
+      href: "/product-compare",
+    },
     /* {
       label: "My Orders",
       href: "/order-history",
@@ -27,6 +35,10 @@ export const siteConfig = {
     {
       label: "About",
       href: "/about",
+    },
+    {
+      label: "Recent products",
+      href: "/recent-products",
     },
     /* {
       label: "My Orders",

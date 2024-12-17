@@ -31,7 +31,7 @@ export default function ALlUsersTable() {
     // handleUserStatusUpdate({ userData: { status }, id: id });
     handleBlacklist({ userData: { isBlacklisted }, id: id });
   };
-  console.log('useAllVendorInfo',data)
+
   return (
     <>
       {isPending && <DynamicLoading />}

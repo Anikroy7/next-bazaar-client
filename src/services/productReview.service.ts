@@ -1,4 +1,5 @@
 import { FieldValues } from "react-hook-form";
+
 import axiosInstance from "../libs/AxiosInstance";
 
 export const createProductReview = async (reviewData: FieldValues) => {
@@ -21,8 +22,6 @@ export const getProductReviews = async (id: string) => {
   }
 };
 
-
-
 export const getALLProductReviews = async () => {
   try {
     const { data } = await axiosInstance.get(`/productReviews`);
@@ -33,10 +32,10 @@ export const getALLProductReviews = async () => {
   }
 };
 
-
-export const deleteProductReviews = async (id:string) => {
+export const deleteProductReviews = async (id: string) => {
   try {
     const { data } = await axiosInstance.delete(`/productReviews/${id}`);
+
     return data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || error.message);

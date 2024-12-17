@@ -20,7 +20,6 @@ import {
 
 function Products() {
   const { data: loogedData, isPending: loogedPending } = useGetLoogedUserInfo();
-  // console.log(data)
   const { data, isPending } = useGetSingleVendor(loogedData?.data?.id);
 
   if (loogedPending || isPending) return <DynamicLoading />;

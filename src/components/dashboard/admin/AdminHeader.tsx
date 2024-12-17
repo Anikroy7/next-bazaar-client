@@ -9,9 +9,9 @@ import {
   DropdownTrigger,
 } from "@nextui-org/dropdown";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 import { useUser } from "@/src/context/user.prodvier";
-import { useRouter } from "next/navigation";
 import { logoutUser } from "@/src/services/auth.service";
 
 const DynamicLoading = dynamic(
@@ -41,6 +41,7 @@ export default function AdminHeader() {
     router.push("/login");
     setIsLoading(true);
   };
+
   if (isLoading) return <DynamicLoading />;
 
   return (
@@ -64,7 +65,11 @@ export default function AdminHeader() {
               <p className="font-semibold">{user?.email}</p>
             </DropdownItem>
 
-            <DropdownItem onClick={()=>handleLogout()} key="logout" color="danger">
+            <DropdownItem
+              key="logout"
+              color="danger"
+              onClick={() => handleLogout()}
+            >
               Log Out
             </DropdownItem>
           </DropdownMenu>

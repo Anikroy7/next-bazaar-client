@@ -2,7 +2,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-import { createOrder, getMyOrderInfo, getOrdersForVendor } from "../services/order.service";
+import {
+  createOrder,
+  getMyOrderInfo,
+  getOrdersForVendor,
+} from "../services/order.service";
 
 export const useCreateOrder = () => {
   return useMutation<any, Error, FieldValues>({
@@ -32,12 +36,12 @@ export const useGetMyOrderInfo = () => {
   });
 };
 
-
 export const useGetOrdersForVendor = (id: string) => {
   return useQuery({
     queryKey: ["GET_ORDERS_FOR_VENDOR"],
     queryFn: async () => {
       const response = await getOrdersForVendor(id);
+
       return response;
     },
   });

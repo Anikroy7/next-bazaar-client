@@ -1,22 +1,28 @@
 "use client";
 
-import { useGetOrdersForVendor } from "@/src/hooks/order.hook";
-import { useGetLoogedUserInfo } from "@/src/hooks/user.hook";
-import { TVendorOrder } from "@/src/types";
 import { Badge } from "@nextui-org/badge";
 import dynamic from "next/dynamic";
 import React from "react";
 
-const DynamicLoading = dynamic(() => import("@/src/components/ui/shared/Loading"), {
-  ssr: false,
-});
+import { useGetOrdersForVendor } from "@/src/hooks/order.hook";
+import { useGetLoogedUserInfo } from "@/src/hooks/user.hook";
+import { TVendorOrder } from "@/src/types";
+
+const DynamicLoading = dynamic(
+  () => import("@/src/components/ui/shared/Loading"),
+  {
+    ssr: false,
+  },
+);
 
 export default function OrderHistoryPage() {
   const { data, isPending } = useGetLoogedUserInfo();
-  const { data: orders, isPending: ordersPending } = useGetOrdersForVendor(data?.data?.id);
+  const { data: orders, isPending: ordersPending } = useGetOrdersForVendor(
+    data?.data?.id,
+  );
 
   if (isPending || ordersPending) return <DynamicLoading />;
-console.log(orders)
+
   if (!orders?.data?.length) {
     return (
       <div className="flex items-center justify-center h-[80vh]">
@@ -29,15 +35,13 @@ console.log(orders)
     <div className="container mx-auto mt-8 p-4">
       <h1 className="text-2xl font-bold  mb-6">Order History</h1>
       <div className="grid gap-6 lg:grid-cols-2">
-        {orders.data.map((order:TVendorOrder) => (
+        {orders.data.map((order: TVendorOrder) => (
           <div
             key={order.id}
             className="p-6  rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold ">
-                Order #{order.id}
-              </h2>
+              <h2 className="text-lg font-semibold ">Order #{order.id}</h2>
               <Badge
                 color={order.paymentStatus === "SUCCESS" ? "success" : "danger"}
                 variant="flat"

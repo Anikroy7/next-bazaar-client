@@ -11,14 +11,14 @@ import {
 import { useDisclosure } from "@nextui-org/modal";
 import { useRouter } from "next/navigation";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import Image from "next/image";
 
 import { useCart } from "@/src/context/cart.provider";
-import Image from "next/image";
 import { useUser } from "@/src/context/user.prodvier";
 
 export default function Cart() {
   const router = useRouter();
-  const { user } = useUser()
+  const { user } = useUser();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { cart, dispatch } = useCart();
   const totalQuantity = cart.reduce((acc, curr) => {
@@ -67,7 +67,6 @@ export default function Cart() {
       payload: id,
     });
   };
-
 
   return (
     <>
@@ -128,11 +127,11 @@ export default function Cart() {
                         className="flex items-center justify-between py-4 border-b"
                       >
                         <Image
-                          height={64}
-                          width={64}
                           alt={item.name}
                           className="w-16 h-16 rounded-md"
+                          height={64}
                           src={item.image}
+                          width={64}
                         />
                         <div className="flex-1 ml-4">
                           <p className="font-semibold">{item.name}</p>
@@ -186,12 +185,14 @@ export default function Cart() {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                {user?.role === "CUSTOMER" && <Button
-                  color="primary"
-                  onClick={() => router.push("/checkout")}
-                >
-                  Proceed to Checkout
-                </Button>}
+                {user?.role === "CUSTOMER" && (
+                  <Button
+                    color="primary"
+                    onClick={() => router.push("/checkout")}
+                  >
+                    Proceed to Checkout
+                  </Button>
+                )}
               </DrawerFooter>
             </>
           )}

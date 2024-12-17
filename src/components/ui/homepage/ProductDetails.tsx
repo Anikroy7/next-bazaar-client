@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
+import Image from "next/image";
+
+import ProductReview from "../../products/ProductReview";
 
 import { useCart } from "@/src/context/cart.provider";
 import { useGetSingleProduct } from "@/src/hooks/product.hook";
-import Image from "next/image";
-import ProductReview from "../../products/ProductReview";
 import { useGetMyOrderInfo } from "@/src/hooks/order.hook";
 import { useUser } from "@/src/context/user.prodvier";
 import { TOrderedProduct } from "@/src/types";
@@ -22,10 +23,14 @@ const DynamicLoading = dynamic(
 const ProductDetails = ({ id }: { id: string }) => {
   const { user } = useUser();
   const { data, isPending } = useGetSingleProduct(id);
-  const { data: myOrders, isPending: oPPending, isSuccess } = useGetMyOrderInfo()
+  const {
+    data: myOrders,
+    isPending: oPPending,
+    isSuccess,
+  } = useGetMyOrderInfo();
   const [displayImage, setDisplayImage] = useState<null | string>(null);
   const { dispatch, cart } = useCart();
-  const [orderedProduct, setOrderedProduct] = useState<TOrderedProduct[]>([])
+  const [orderedProduct, setOrderedProduct] = useState<TOrderedProduct[]>([]);
 
   const addToCartHandler = () => {
     if (cart.length === 0) {
@@ -82,30 +87,34 @@ const ProductDetails = ({ id }: { id: string }) => {
     }
   };
 
-
-
   useEffect(() => {
     if (!oPPending && myOrders && isSuccess) {
       myOrders?.data?.forEach((element: any) => {
-        setOrderedProduct([...orderedProduct, ...element.products])
+        setOrderedProduct([...orderedProduct, ...element.products]);
       });
-
     }
   }, [oPPending, isSuccess, myOrders]);
 
   if (isPending) return <DynamicLoading />;
-
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="flex flex-col md:flex-row -mx-4">
         <div className="md:flex-1 p-6">
           <div className="h-64 md:h-80 w-56 rounded-lg mb-4 flex items-center justify-center">
-            <Image height={400} width={400} alt="" src={displayImage || "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"} />
+            <Image
+              alt=""
+              height={400}
+              src={
+                displayImage ||
+                "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"
+              }
+              width={400}
+            />
           </div>
 
           <div className="flex mb-4 gap-3 mt-10">
-            {data?.data?.images.map((image: string,index:number) => (
+            {data?.data?.images.map((image: string, index: number) => (
               <Avatar
                 key={index}
                 className="w-20 h-20 text-large cursor-pointer"
@@ -155,17 +164,23 @@ const ProductDetails = ({ id }: { id: string }) => {
 
           <p className="text-gray-500">{data?.data?.description}</p>
 
-          {user?.role == "CUSTOMER" &&  <div className="flex py-4 space-x-4">
-            <Button
-              className="my-3 rounded-md bg-default-900 text-default"
-              onClick={addToCartHandler}
-            >
-              Add to Cart
-            </Button>
-          </div>}
+          {user?.role == "CUSTOMER" && (
+            <div className="flex py-4 space-x-4">
+              <Button
+                className="my-3 rounded-md bg-default-900 text-default"
+                onClick={addToCartHandler}
+              >
+                Add to Cart
+              </Button>
+            </div>
+          )}
         </div>
       </div>
-      {(user?.email && orderedProduct.length > 0 && orderedProduct.find((pd: TOrderedProduct) => pd.id === data?.data?.id)) && < ProductReview productId={data?.data?.id} />}
+      {user?.email &&
+        orderedProduct.length > 0 &&
+        orderedProduct.find(
+          (pd: TOrderedProduct) => pd.id === data?.data?.id,
+        ) && <ProductReview productId={data?.data?.id} />}
       {user?.role === "VENDOR" && <ProductReview productId={data?.data?.id} />}
     </div>
   );

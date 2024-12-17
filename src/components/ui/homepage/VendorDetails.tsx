@@ -3,13 +3,21 @@
 import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { AiFillCheckCircle } from 'react-icons/ai';
+import { AiFillCheckCircle } from "react-icons/ai";
+import { Button } from "@nextui-org/button";
+
 import ProductCard from "../../products/ProductCard";
 
 import { TProduct } from "@/src/types";
-import { useGetLoogedUserInfo, useGetSingleVendor } from "@/src/hooks/user.hook";
-import { Button } from "@nextui-org/button";
-import { useCreateVendorFollow, useIsVendorFollow, useRemoveVendorFollow } from "@/src/hooks/vendorFollow.hook";
+import {
+  useGetLoogedUserInfo,
+  useGetSingleVendor,
+} from "@/src/hooks/user.hook";
+import {
+  useCreateVendorFollow,
+  useIsVendorFollow,
+  useRemoveVendorFollow,
+} from "@/src/hooks/vendorFollow.hook";
 import { useUser } from "@/src/context/user.prodvier";
 
 const DynamicLoading = dynamic(
@@ -21,14 +29,20 @@ const DynamicLoading = dynamic(
 
 const VendorDetails = ({ id }: { id: string }) => {
   const { user } = useUser();
-  const { data: loogedUser, isPending: loogedUserPending } = useGetLoogedUserInfo()
+  const { data: loogedUser, isPending: loogedUserPending } =
+    useGetLoogedUserInfo();
   const { data, isPending } = useGetSingleVendor(id);
   const [isFollowed, setIsFollowed] = React.useState(false);
-  const { mutate: handleCreateVFHandler, isError: isErrorCVF } = useCreateVendorFollow()
-  const { mutate: handleRemoveVFHandler, isError: isErrorRVF } = useRemoveVendorFollow()
+  const { mutate: handleCreateVFHandler, isError: isErrorCVF } =
+    useCreateVendorFollow();
+  const { mutate: handleRemoveVFHandler, isError: isErrorRVF } =
+    useRemoveVendorFollow();
 
-  const { mutate: handleIsFollwed, data: isFollowedData, isPending: isFollwedPending } = useIsVendorFollow();
-
+  const {
+    mutate: handleIsFollwed,
+    data: isFollowedData,
+    isPending: isFollwedPending,
+  } = useIsVendorFollow();
 
   useEffect(() => {
     if (data?.data?.id && loogedUser?.data?.id) {
@@ -38,35 +52,33 @@ const VendorDetails = ({ id }: { id: string }) => {
       });
     }
     if (isErrorCVF || isErrorRVF) {
-      setIsFollowed(!isFollowed)
+      setIsFollowed(!isFollowed);
     }
   }, [data, loogedUser, handleIsFollwed]);
 
   useEffect(() => {
     if (isFollowedData?.data) {
-      setIsFollowed(true)
+      setIsFollowed(true);
     }
-  }, [isFollwedPending, isFollowedData])
+  }, [isFollwedPending, isFollowedData]);
 
   const handleCreateVF = () => {
     if (isFollowed) {
       handleRemoveVFHandler({
         vendorId: data?.data?.id,
-        customerId: loogedUser?.data?.id
-      })
+        customerId: loogedUser?.data?.id,
+      });
     } else {
       handleCreateVFHandler({
         vendorId: data?.data?.id,
-        customerId: loogedUser?.data?.id
-      })
+        customerId: loogedUser?.data?.id,
+      });
     }
-    setIsFollowed(!isFollowed)
-
-  }
-
-
+    setIsFollowed(!isFollowed);
+  };
 
   if (isPending || loogedUserPending) return <DynamicLoading />;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className=" shadow rounded-lg p-6">
@@ -82,43 +94,48 @@ const VendorDetails = ({ id }: { id: string }) => {
           <div className="ml-4">
             <h1 className="text-2xl font-bold">{data?.data?.name}</h1>
             <p className="text-gray-400">{data?.data?.location}</p>
-            {user?.role === "CUSTOMER" && isFollowed && <div className="flex items-center space-x-2">
-              <AiFillCheckCircle className="h-5 w-5 text-green-600" />
-              <span className="text-sm text-green-600">Following</span>
-            </div>}
+            {user?.role === "CUSTOMER" && isFollowed && (
+              <div className="flex items-center space-x-2">
+                <AiFillCheckCircle className="h-5 w-5 text-green-600" />
+                <span className="text-sm text-green-600">Following</span>
+              </div>
+            )}
           </div>
-          {user?.role === "CUSTOMER" && <div className="ml-4">
-            {
-              isFollowed ? <section className="flex items-center gap-3">
-                <div>
-                  <Button
-                    className={"bg-transparent text-foreground border-default-200"}
-                    color="primary"
-                    radius="full"
-                    size="lg"
-                    variant={"faded"}
-                    onClick={() => handleCreateVF()}
+          {user?.role === "CUSTOMER" && (
+            <div className="ml-4">
+              {isFollowed ? (
+                <section className="flex items-center gap-3">
+                  <div>
+                    <Button
+                      className={
+                        "bg-transparent text-foreground border-default-200"
+                      }
+                      color="primary"
+                      radius="full"
+                      size="lg"
+                      variant={"faded"}
+                      onClick={() => handleCreateVF()}
+                      // onPress={() => setIsFollowed(!isFollowed)}
+                    >
+                      Unfollow
+                    </Button>
+                  </div>
+                </section>
+              ) : (
+                <Button
+                  className={""}
+                  color="primary"
+                  radius="full"
+                  size="lg"
+                  variant={"solid"}
+                  onClick={() => handleCreateVF()}
                   // onPress={() => setIsFollowed(!isFollowed)}
-                  >
-                    Unfollow
-                  </Button>
-                </div>
-
-              </section> : <Button
-                className={""}
-                color="primary"
-                radius="full"
-                size="lg"
-                variant={"solid"}
-                onClick={() => handleCreateVF()}
-              // onPress={() => setIsFollowed(!isFollowed)}
-              >
-                Follow
-              </Button>
-            }
-
-
-          </div>}
+                >
+                  Follow
+                </Button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Vendor Details Section */}
@@ -139,7 +156,6 @@ const VendorDetails = ({ id }: { id: string }) => {
             </ul>
           </div>
         </div>
-
 
         {/* Vendor Products Section */}
         <div className="mt-8">

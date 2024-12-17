@@ -21,7 +21,7 @@ const loadCartFromLocalStorage = (): CartItem[] => {
 
     return storedCart ? JSON.parse(storedCart) : initialCartState;
   } catch (error) {
-    return initialCartState;
+    return initialCartState || error;
   }
 };
 

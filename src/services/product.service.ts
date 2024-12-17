@@ -11,9 +11,11 @@ export const createProduct = async (productData: FieldValues) => {
     throw new Error(error.response?.data?.message || error.message);
   }
 };
-export const getAllProducts = async () => {
+export const getAllProducts = async (filters: FieldValues) => {
   try {
-    const { data } = await axiosInstance.get("/products");
+    const { data } = await axiosInstance.get(
+      `/products?searchTerm=${filters.searchTerm || ""}&priceRange=${filters.priceRange || ""}&categoryId=${filters.categoryId || ""}`,
+    );
 
     return data;
   } catch (error: any) {

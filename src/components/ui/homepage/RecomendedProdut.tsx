@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 
 import ProductCard from "../../products/ProductCard";
 
@@ -15,14 +14,12 @@ const DynamicLoading = dynamic(
   },
 );
 
-
 export default function RecomendedProduct() {
   const { data, isPending } = useGetAllProducts();
 
-
   if (isPending) return <DynamicLoading />;
 
-  const products = data?.data || [];
+  const products = data?.data?.data || [];
 
   return (
     <div className=" py-10">

@@ -13,9 +13,11 @@ import {
 import { Tooltip } from "@nextui-org/tooltip";
 
 import { DeleteIcon } from "@/src/components/icons";
-import { useCancelPaymentByAdmin, useGetAllPaymentInfo } from "@/src/hooks/payment.hook";
+import {
+  useCancelPaymentByAdmin,
+  useGetAllPaymentInfo,
+} from "@/src/hooks/payment.hook";
 import { TPayment } from "@/src/types";
-
 
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
@@ -24,24 +26,21 @@ const DynamicLoading = dynamic(
 
 export default function Page() {
   const { data, isPending } = useGetAllPaymentInfo();
-  const { mutate: cancelPaymentHandler, data: cancelPaymentData, isPending: cancelPaymentPending } = useCancelPaymentByAdmin();
+  const { mutate: cancelPaymentHandler } = useCancelPaymentByAdmin();
   const handleCancelPayment = (orderId: number) => {
-    const isConfirm = confirm("Payment and order will be deelted?")
+    const isConfirm = confirm("Payment and order will be deelted?");
+
     if (isConfirm) {
       cancelPaymentHandler({
-        id: orderId
-      })
+        id: orderId,
+      });
     }
+  };
 
-  }
-
-
-  if (isPending) return <DynamicLoading />
-  console.log('cljags', cancelPaymentData, cancelPaymentPending)
+  if (isPending) return <DynamicLoading />;
 
   return (
     <>
-
       <Table aria-label="Order Payment Information Table">
         <TableHeader>
           <TableColumn>Payment Id</TableColumn>
@@ -66,14 +65,12 @@ export default function Page() {
               <TableCell>{item.transactionId}</TableCell>
               <TableCell>{new Date(item.createdAt).toLocaleString()}</TableCell>
               <TableCell>
-                <Button
-                  isIconOnly
-                  className="bg-transparent"
-
-                >
+                <Button isIconOnly className="bg-transparent">
                   <Tooltip color="danger" content="Cancel Payment">
                     <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                      <DeleteIcon onClick={() => handleCancelPayment(item?.order?.id)} />
+                      <DeleteIcon
+                        onClick={() => handleCancelPayment(item?.order?.id)}
+                      />
                     </span>
                   </Tooltip>
                 </Button>
@@ -82,7 +79,6 @@ export default function Page() {
           ))}
         </TableBody>
       </Table>
-
     </>
   );
 }

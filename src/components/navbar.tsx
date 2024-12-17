@@ -1,11 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-
-const DynamicLoading = dynamic(() => import("./ui/shared/Loading"), {
-  ssr: false,
-});
-
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -30,12 +25,16 @@ import NavbarDropdown from "./ui/NavbarDropdown";
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 
+const DynamicLoading = dynamic(() => import("./ui/shared/Loading"), {
+  ssr: false,
+});
+
 export const Navbar = () => {
   const router = useRouter();
   const { user, isLoading, setIsLoading } = useUser();
 
   if (isLoading) return <DynamicLoading />;
-  console.log(user) 
+
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -53,7 +52,6 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
-         
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -96,18 +94,20 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           )}
-           {user?.role === "CUSTOMER" && <NavbarItem>
-            <NextLink
-              className={clsx(
-                linkStyles({ color: "foreground" }),
-                "data-[active=true]:text-primary data-[active=true]:font-medium",
-              )}
-              color="foreground"
-              href={"/order-history"}
-            >
-              Order History
-            </NextLink>
-          </NavbarItem>}
+          {user?.role === "CUSTOMER" && (
+            <NavbarItem>
+              <NextLink
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                )}
+                color="foreground"
+                href={"/order-history"}
+              >
+                Order History
+              </NextLink>
+            </NavbarItem>
+          )}
         </ul>
       </NavbarContent>
 
@@ -129,7 +129,7 @@ export const Navbar = () => {
                 variant="flat"
                 className="text-sm font-normal text-default-600 bg-default-100 me-3"
                 // href={siteConfig.links.sponsor}
-                onClick={() => router.push('/signup')}
+                onClick={() => router.push("/signup")}
               >
                 Signup
               </Button>
@@ -139,7 +139,7 @@ export const Navbar = () => {
                 variant="flat"
                 className="text-sm font-normal text-default-600 bg-default-100"
                 // href={siteConfig.links.sponsor}
-                onClick={() => router.push('/login')}
+                onClick={() => router.push("/login")}
               >
                 Login
               </Button>

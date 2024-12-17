@@ -25,13 +25,13 @@ export interface ITextArea {
 }
 export type TCategory = {
   name: string;
-  id: number
-}
+  id: number;
+};
 export type TProduct = {
   id: number;
   name: string;
   categoryId: number;
-  category:TCategory;
+  category: TCategory;
   description: string;
   vendorId: number;
   images: string[];
@@ -100,8 +100,6 @@ export type TOrderedProduct = {
   quantity: number;
 };
 
-
-
 export type TOrder = {
   id: number;
   customerId: number;
@@ -117,7 +115,6 @@ export type TOrder = {
   payment: TPayment;
 };
 
-
 export type TVendorOrder = {
   id: number;
   orderId: number;
@@ -128,22 +125,32 @@ export type TVendorOrder = {
   order: TOrder;
 };
 
-
-
-
 export interface TPayment {
   id: number;
   orderId: number;
   createdAt: string;
   updatedAt: string;
-  order: TOrder
+  order: TOrder;
   transactionId: string;
   paymentStatus: string;
-
 }
 
-
 export type TReview = {
+  review: {
+    id: number;
+    description: string;
+    ratings: number;
+    customerId: number;
+    customer: Customer;
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+
+
+export type TReviewTwo = {
+
   id: number;
   description: string;
   ratings: number;
@@ -152,4 +159,5 @@ export type TReview = {
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
+
 };

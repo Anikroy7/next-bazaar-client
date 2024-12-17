@@ -1,10 +1,11 @@
 "use client";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { useGetAllCategories } from "@/src/hooks/category.hook";
 import { ICategory } from "@/src/types";
-import Image from "next/image";
 
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
@@ -13,40 +14,8 @@ const DynamicLoading = dynamic(
   },
 );
 
-const categories = [
-  {
-    id: 1,
-    name: "Electronics",
-    image:
-      "https://img.drz.lazcdn.com/static/bd/p/f4d41b2adf02766c2042b1cd6d476e73.png_170x170q80.png",
-  },
-  {
-    id: 2,
-    name: "Fashion",
-    image:
-      "https://img.drz.lazcdn.com/static/bd/p/6492e773a7ab9006ffff8fb076bce885.jpg_170x170q80.jpg",
-  },
-  {
-    id: 3,
-    name: "Home Appliances",
-    image:
-      "https://img.drz.lazcdn.com/static/bd/p/f767676addab269e9f508f6ce8cedc91.jpg_170x170q80.jpg",
-  },
-  {
-    id: 4,
-    name: "Beauty",
-    image:
-      "https://img.drz.lazcdn.com/static/bd/p/85b978e52489d46bda36545e4b11f411.jpg_170x170q80.jpg",
-  },
-  {
-    id: 5,
-    name: "Toys",
-    image:
-      "https://img.drz.lazcdn.com/static/bd/p/bb1ac16d158408b17b6c246636aeffd1.jpg_170x170q80.jpg",
-  },
-];
-
 export default function Category() {
+  const router = useRouter();
   const { data, isPending } = useGetAllCategories();
 
   if (isPending) return <DynamicLoading />;
@@ -58,30 +27,30 @@ export default function Category() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
           {data?.data && data?.data.length
             ? data?.data.map((category: ICategory) => (
-              <Card
-                key={category.id}
-                isPressable
-                className=" hover:scale-105 transition-transform rounded-none p-3"
-              >
-                <CardHeader className="p-0 flex justify-center items-center">
-                  <Image
-                    height={80}
-                    width={80}
-                    alt={category.name}
-                    className="w-20 h-20 object-cover  border-gray-300"
-                    src={category.image}
-                  />
-                </CardHeader>
-                <CardBody className="flex flex-col items-center">
-                  <h3 className="text-md font-semibold text-center">
-                    {category.name}
-                  </h3>
-                  {/*  <p className="text-sm text-gray-500 text-center mt-1">
-                                    Explore our best collection
-                                </p> */}
-                </CardBody>
-              </Card>
-            ))
+                <Card
+                  key={category.id}
+                  isPressable
+                  className=" hover:scale-105 transition-transform rounded-none p-3"
+                  onClick={() =>
+                    router.push(`/all-products/?categoryId=${category.id}`)
+                  }
+                >
+                  <CardHeader className="p-0 flex justify-center items-center">
+                    <Image
+                      alt={category.name}
+                      className="w-20 h-20 object-cover  border-gray-300"
+                      height={80}
+                      src={category.image}
+                      width={80}
+                    />
+                  </CardHeader>
+                  <CardBody className="flex flex-col items-center">
+                    <h3 className="text-md font-semibold text-center">
+                      {category.name}
+                    </h3>
+                  </CardBody>
+                </Card>
+              ))
             : ""}
         </div>
       </div>
