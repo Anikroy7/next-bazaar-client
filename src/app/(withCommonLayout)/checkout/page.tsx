@@ -7,6 +7,8 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Input } from "@nextui-org/input";
+import { toast } from "sonner";
 
 import NBForm from "@/src/components/ui/form/NBForm";
 import NBInput from "@/src/components/ui/form/NBInput";
@@ -16,8 +18,6 @@ import { useGetLoogedUserInfo } from "@/src/hooks/user.hook";
 import { useCreateOrder } from "@/src/hooks/order.hook";
 import { useGetAllCupons } from "@/src/hooks/cupon.hook";
 import { TCupon } from "@/src/types";
-import { Input } from "@nextui-org/input";
-import { toast } from "sonner";
 
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
@@ -29,9 +29,9 @@ const CheckoutPage = () => {
   const router = useRouter();
   const { data: loogedUser, isLoading } = useGetLoogedUserInfo();
   const { cart: cartItems } = useCart();
-  const [totalAmount, setTotalAmount] = useState(0)
-  const [userCupon, setUserCupon] = useState('')
-  const [cuponUsed, setCuponUsed] = useState(false)
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [userCupon, setUserCupon] = useState("");
+  const [cuponUsed, setCuponUsed] = useState(false);
   const { data: cuponData, isPending: cuponDataPending } = useGetAllCupons();
   const {
     mutate: handleCreateOrder,
@@ -41,16 +41,16 @@ const CheckoutPage = () => {
   } = useCreateOrder();
   let totalDiscountAmount = 0;
 
-
   useEffect(() => {
     if (cartItems.length > 0) {
       const total = cartItems.reduce(
         (total, item) => total + item.price * item.quantity,
         0,
       );
-      setTotalAmount(total)
+
+      setTotalAmount(total);
     }
-  }, [])
+  }, []);
   const totalQuantity = cartItems.reduce((acc, curr) => {
     acc += curr.quantity;
 
@@ -91,28 +91,25 @@ const CheckoutPage = () => {
             if (item.id === product.id) {
               if (userCupon === cupon.code) {
                 if (!cuponUsed) {
-                  totalDiscountAmount += cupon.discountAmount * item.quantity
-                  setTotalAmount(totalAmount - totalDiscountAmount)
-                  setCuponUsed(true)
-                  toast.success("Congrate's cupon applied")
+                  totalDiscountAmount += cupon.discountAmount * item.quantity;
+                  setTotalAmount(totalAmount - totalDiscountAmount);
+                  setCuponUsed(true);
+                  toast.success("Congrate's cupon applied");
                 } else {
-                  toast.error("Cupon already used!!!")
+                  toast.error("Cupon already used!!!");
                 }
               } else {
-                toast.error("Invalid cupon")
+                toast.error("Invalid cupon");
               }
             }
-          })
-        })
+          });
+        });
       });
     }
+  };
 
-  }
-
-
-
-  if (isLoading || createOrderPending || cuponDataPending) return <DynamicLoading />;
-
+  if (isLoading || createOrderPending || cuponDataPending)
+    return <DynamicLoading />;
 
   return (
     <div className="min-h-screen p-4">
@@ -128,13 +125,13 @@ const CheckoutPage = () => {
               size="sm"
               type="text"
               onChange={(e) => setUserCupon(e.target.value)}
-            // placeholder="Enter your coupon"
+              // placeholder="Enter your coupon"
             />
             <Button
               className="rounded-md bg-blue-600 text-white hover:bg-blue-700"
               size="sm"
-              onClick={() => handleApplyCupon()}
               type="button"
+              onClick={() => handleApplyCupon()}
             >
               Apply Coupon
             </Button>
@@ -177,7 +174,6 @@ const CheckoutPage = () => {
               Checkout
             </Button>
           </NBForm>
-
         </div>
 
         {/* Right Side: Cart Items */}

@@ -6,7 +6,7 @@ import React from "react";
 
 import { IInput } from "@/src/types";
 
-interface IProps extends IInput { }
+interface IProps extends IInput {}
 const NBInput = React.memo(function NBInput({
   variant = "bordered",
   size = "md",
@@ -17,17 +17,16 @@ const NBInput = React.memo(function NBInput({
   disabled = false,
 }: IProps) {
   const {
-    register,
     formState: { errors },
-    control
+    control,
   } = useFormContext();
 
   const errorMessage = errors?.[name]?.message as string | undefined;
 
   return (
     <Controller
-      name={name}
       control={control}
+      name={name}
       render={({ field }) => (
         <Input
           {...field}
@@ -42,7 +41,6 @@ const NBInput = React.memo(function NBInput({
         />
       )}
     />
-
   );
 });
 

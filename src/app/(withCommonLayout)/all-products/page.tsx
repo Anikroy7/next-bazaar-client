@@ -128,7 +128,6 @@ function FilterPage() {
   );
 }
 
-
 const Page = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>

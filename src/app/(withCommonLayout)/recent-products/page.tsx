@@ -10,7 +10,10 @@ export default function Page() {
   const [products, setProducts] = useState<TProduct[]>([]);
 
   useEffect(() => {
-    const recentProducts = JSON.parse(localStorage.getItem("recentProducts") || "[]");
+    const recentProducts = JSON.parse(
+      localStorage.getItem("recentProducts") || "[]",
+    );
+
     setProducts(recentProducts);
   }, []);
 

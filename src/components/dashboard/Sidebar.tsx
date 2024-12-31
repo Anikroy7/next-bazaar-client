@@ -1,5 +1,5 @@
 "use client";
-import { FaHome, FaPlusCircle } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import React from "react";
@@ -34,31 +34,29 @@ const Sidebar = () => {
       </div>
       <nav className="flex-1 mt-4">
         <ul className="space-y-2">
-
           {user?.role === "ADMIN"
             ? adminMenuItems.map((item, index) => (
-              <li key={index}>
-                <Link
-                  className="flex items-center px-4 py-2 hover:bg-gray-700 ${paths.length===2&&'bg-slate-700'} transition-colors"
-                  href={`/dashboard/admin/${item.path}`}
-                >
-                  {item.icon}
-                  <span className="ml-2">{item.label}</span>
-                </Link>
-              </li>
-            ))
+                <li key={index}>
+                  <Link
+                    className="flex items-center px-4 py-2 hover:bg-gray-700 ${paths.length===2&&'bg-slate-700'} transition-colors"
+                    href={`/dashboard/admin/${item.path}`}
+                  >
+                    {item.icon}
+                    <span className="ml-2">{item.label}</span>
+                  </Link>
+                </li>
+              ))
             : vendorMenuItems.map((item, index) => (
-              <li key={index}>
-                <Link
-                  className={` flex items-center px-4 py-2 hover:bg-gray-700 transition-colors`}
-                  href={`/dashboard/vendor/${item.path}`}
-                >
-                  {item.icon}
-                  <span className="ml-2">{item.label}</span>
-                </Link>
-              </li>
-            ))}
-          
+                <li key={index}>
+                  <Link
+                    className={` flex items-center px-4 py-2 hover:bg-gray-700 transition-colors`}
+                    href={`/dashboard/vendor/${item.path}`}
+                  >
+                    {item.icon}
+                    <span className="ml-2">{item.label}</span>
+                  </Link>
+                </li>
+              ))}
         </ul>
       </nav>
       <div className="p-4 border-t border-gray-700">

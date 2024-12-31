@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 interface formConfig {
@@ -13,12 +13,7 @@ interface IProps extends formConfig {
   onSubmit: SubmitHandler<any>;
 }
 
-export default function NBForm({
-  children,
-  onSubmit,
-  defaultValues,
-  resolver,
-}: IProps) {
+export default function NBForm({ children, onSubmit, defaultValues }: IProps) {
   const formConfig: formConfig = {};
   const methods = useForm(formConfig);
 

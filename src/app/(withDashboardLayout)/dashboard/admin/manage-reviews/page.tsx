@@ -13,7 +13,7 @@ import {
 import dynamic from "next/dynamic";
 import React from "react";
 
-import {  TReviewTwo } from "@/src/types";
+import { TReviewTwo } from "@/src/types";
 import {
   useDeleteProductReview,
   useGetAllProductReviews,

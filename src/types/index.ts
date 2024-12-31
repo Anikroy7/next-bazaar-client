@@ -12,7 +12,7 @@ export interface IInput {
   label: string;
   name: string;
   disabled?: boolean;
-  defaultValue?: string
+  defaultValue?: string;
 }
 export interface ITextArea {
   variant?: "flat" | "bordered" | "faded" | "underlined";
@@ -149,9 +149,7 @@ export type TReview = {
   };
 };
 
-
 export type TReviewTwo = {
-
   id: number;
   description: string;
   ratings: number;
@@ -160,9 +158,7 @@ export type TReviewTwo = {
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
-
 };
-
 
 export type TCupon = {
   id: number;

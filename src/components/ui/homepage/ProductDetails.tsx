@@ -28,7 +28,9 @@ const ProductDetails = ({ id }: { id: string }) => {
     isPending: oPPending,
     isSuccess,
   } = useGetMyOrderInfo();
-  const [displayImage, setDisplayImage] = useState<null | string>(data?.data?.images[0]||null);
+  const [displayImage, setDisplayImage] = useState<null | string>(
+    data?.data?.images[0] || null,
+  );
   const { dispatch, cart } = useCart();
   const [orderedProduct, setOrderedProduct] = useState<TOrderedProduct[]>([]);
 
@@ -164,7 +166,7 @@ const ProductDetails = ({ id }: { id: string }) => {
 
           <p className="text-gray-500">{data?.data?.description}</p>
 
-          {user?.role !== "ADMIN" &&user?.role !== "VENDOR" && (
+          {user?.role !== "ADMIN" && user?.role !== "VENDOR" && (
             <div className="flex py-4 space-x-4">
               <Button
                 className="my-3 rounded-md bg-default-900 text-default"

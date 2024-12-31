@@ -68,12 +68,12 @@ export default function GetProductBYSearch() {
             {suggestions.map((product) => (
               <div
                 key={product.id}
+                className="flex items-center p-3 bg-gray-50 rounded-lg shadow-md hover:bg-gray-100 cursor-pointer"
                 role="button"
                 tabIndex={0}
-                className="flex items-center p-3 bg-gray-50 rounded-lg shadow-md hover:bg-gray-100 cursor-pointer"
                 onClick={() => router.push(`/product/${product.id}`)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
+                  if (e.key === "Enter" || e.key === " ") {
                     router.push(`/product/${product.id}`);
                   }
                 }}

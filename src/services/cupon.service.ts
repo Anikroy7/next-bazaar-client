@@ -1,4 +1,5 @@
 import { FieldValues } from "react-hook-form";
+
 import axiosInstance from "../libs/AxiosInstance";
 
 export const getAllCupons = async () => {
@@ -23,6 +24,7 @@ export const deleteCupon = async (id: string) => {
 export const updateCupon = async (id: string, cuponData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(`/cupons/${id}`, cuponData);
+
     return data;
   } catch (error: any) {
     throw new Error(error);
@@ -31,6 +33,7 @@ export const updateCupon = async (id: string, cuponData: FieldValues) => {
 export const createCupon = async (cuponData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(`/cupons`, cuponData);
+
     return data;
   } catch (error: any) {
     throw new Error(error);

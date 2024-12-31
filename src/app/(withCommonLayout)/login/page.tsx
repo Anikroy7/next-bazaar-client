@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 import { loginValidationSchema } from "@/src/validation/auth.validation";
 import { useUserLogin } from "@/src/hooks/auth.hook";
@@ -14,7 +14,7 @@ import NBForm from "@/src/components/ui/form/NBForm";
 import { useUser } from "@/src/context/user.prodvier";
 
 export default function Page() {
-  const [creadiantialType, setCrediantialsType] = useState('');
+  const [creadiantialType, setCrediantialsType] = useState("");
   const [defaultValues, setDefaultValues] = useState({
     email: "",
     password: "",
@@ -41,7 +41,6 @@ export default function Page() {
   };
 
   useEffect(() => {
-  
     const newDefaultValues = {
       email:
         creadiantialType === "user"
@@ -67,31 +66,31 @@ export default function Page() {
       <div className="flex gap-3 w-[50%] mt-6">
         <Button
           className="w-full rounded-md bg-default-900 text-default"
-          onClick={() => handleCredentials('admin')}
+          onClick={() => handleCredentials("admin")}
         >
           Admin Credentials
         </Button>
         <Button
           className="w-full rounded-md bg-default-900 text-default"
-          onClick={() => handleCredentials('vendor')}
+          onClick={() => handleCredentials("vendor")}
         >
           Vendor Credentials
         </Button>
         <Button
           className="w-full rounded-md bg-default-900 text-default"
-          onClick={() => handleCredentials('user')}
+          onClick={() => handleCredentials("user")}
         >
           User Credentials
         </Button>
       </div>
       <div className="w-[50%]">
         <NBForm
+          defaultValues={defaultValues}
           resolver={zodResolver(loginValidationSchema)}
           onSubmit={onSubmit}
-          defaultValues={defaultValues}
         >
           <div className="py-3">
-            <NBInput label="Email" name="email" size="sm" type="email"/>
+            <NBInput label="Email" name="email" size="sm" type="email" />
           </div>
 
           <div className="py-3 relative">

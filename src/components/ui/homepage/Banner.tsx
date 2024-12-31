@@ -16,13 +16,13 @@ export default function Banner() {
     <>
       <Swiper
         className="mySwiper"
+        loop={true}
         modules={[Parallax, Pagination, Navigation]}
         pagination={{
           clickable: true,
         }}
         parallax={true}
         speed={600}
-        loop={true}
       >
         <div
           className="parallax-bg h-[70vh] bg-cover bg-center"
@@ -87,7 +87,7 @@ export default function Banner() {
                 className=" text-gray-400 leading-relaxed text-center mb-4"
                 data-swiper-parallax="-100"
               >
-<p className="text-center">
+                <p className="text-center">
                   Explore our handpicked collection of the latest styles and
                   must-have products. Upgrade your wardrobe and gadgets today!
                 </p>

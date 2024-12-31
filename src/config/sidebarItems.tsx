@@ -47,11 +47,11 @@ export const adminMenuItems = [
     label: "Manage Product",
     icon: <FaPlusCircle className="h-5 w-5" />,
   },
-  {
+  /* {
     path: "manage-cupons",
     label: "Manage Cupon",
     icon: <FaPlusCircle className="h-5 w-5" />,
-  },
+  }, */
   {
     path: "manage-transactions",
     label: "Manage Transactions",

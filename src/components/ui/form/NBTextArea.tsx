@@ -5,7 +5,7 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import { ITextArea } from "@/src/types";
 
-interface IProps extends ITextArea { }
+interface IProps extends ITextArea {}
 
 export default function NBTextArea({
   variant = "bordered",
@@ -25,8 +25,8 @@ export default function NBTextArea({
 
   return (
     <Controller
-      name={name}
       control={control}
+      name={name}
       render={({ field }) => (
         <Textarea
           disableAnimation
@@ -48,6 +48,5 @@ export default function NBTextArea({
         />
       )}
     />
-
   );
 }
