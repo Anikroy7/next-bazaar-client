@@ -12,6 +12,7 @@ export interface IInput {
   label: string;
   name: string;
   disabled?: boolean;
+  defaultValue?: string
 }
 export interface ITextArea {
   variant?: "flat" | "bordered" | "faded" | "underlined";
@@ -160,4 +161,15 @@ export type TReviewTwo = {
   createdAt: string;
   updatedAt: string;
 
+};
+
+
+export type TCupon = {
+  id: number;
+  code: string;
+  discountAmount: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  appliedProducts: TProduct[];
 };

@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { loginValidationSchema } from "@/src/validation/auth.validation";
 import { useUserLogin } from "@/src/hooks/auth.hook";
@@ -14,7 +14,12 @@ import NBForm from "@/src/components/ui/form/NBForm";
 import { useUser } from "@/src/context/user.prodvier";
 
 export default function Page() {
-  // Renamed from `page` to `Page`
+  const [creadiantialType, setCrediantialsType] = useState('');
+  const [defaultValues, setDefaultValues] = useState({
+    email: "",
+    password: "",
+  });
+
   const router = useRouter();
   const {
     mutate: handleLoginUser,
@@ -35,16 +40,58 @@ export default function Page() {
     handleLoginUser(data);
   };
 
+  useEffect(() => {
+  
+    const newDefaultValues = {
+      email:
+        creadiantialType === "user"
+          ? "anikkumeroy7@gmail.com"
+          : creadiantialType === "vendor"
+            ? "shop@gmail.com"
+            : creadiantialType === "admin"
+              ? "admin@gmail.com"
+              : "",
+      password: "123456",
+    };
+
+    setDefaultValues(newDefaultValues);
+  }, [creadiantialType]);
+
+  const handleCredentials = (type: string) => {
+    setCrediantialsType(type);
+  };
+
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <h1 className="text-3xl font-semibold mb-6">Login</h1>
+      <div className="flex gap-3 w-[50%] mt-6">
+        <Button
+          className="w-full rounded-md bg-default-900 text-default"
+          onClick={() => handleCredentials('admin')}
+        >
+          Admin Credentials
+        </Button>
+        <Button
+          className="w-full rounded-md bg-default-900 text-default"
+          onClick={() => handleCredentials('vendor')}
+        >
+          Vendor Credentials
+        </Button>
+        <Button
+          className="w-full rounded-md bg-default-900 text-default"
+          onClick={() => handleCredentials('user')}
+        >
+          User Credentials
+        </Button>
+      </div>
       <div className="w-[50%]">
         <NBForm
           resolver={zodResolver(loginValidationSchema)}
           onSubmit={onSubmit}
+          defaultValues={defaultValues}
         >
           <div className="py-3">
-            <NBInput label="Email" name="email" size="sm" type="email" />
+            <NBInput label="Email" name="email" size="sm" type="email"/>
           </div>
 
           <div className="py-3 relative">

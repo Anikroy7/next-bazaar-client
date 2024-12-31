@@ -185,10 +185,11 @@ export default function Cart() {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                {user?.role === "CUSTOMER" && (
+                {user?.role !== "ADMIN" && user?.role !== "VENDOR" && (
                   <Button
                     color="primary"
                     onClick={() => router.push("/checkout")}
+                    onPress={onClose}
                   >
                     Proceed to Checkout
                   </Button>

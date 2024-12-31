@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 interface formConfig {
@@ -20,17 +20,13 @@ export default function NBForm({
   resolver,
 }: IProps) {
   const formConfig: formConfig = {};
-
-  if (!!defaultValues) {
-    formConfig["defaultValues"] = defaultValues;
-  }
-
-  if (!!resolver) {
-    formConfig["resolver"] = resolver;
-  }
-
   const methods = useForm(formConfig);
 
+  useEffect(() => {
+    if (defaultValues) {
+      methods.reset(defaultValues, { keepDefaultValues: false });
+    }
+  }, [defaultValues]);
   const submitHandler = methods.handleSubmit;
 
   return (

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import { FieldValues } from "react-hook-form";
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -14,6 +14,10 @@ import { useCart } from "@/src/context/cart.provider";
 import { createOrderValidationSchema } from "@/src/validation/order.validation";
 import { useGetLoogedUserInfo } from "@/src/hooks/user.hook";
 import { useCreateOrder } from "@/src/hooks/order.hook";
+import { useGetAllCupons } from "@/src/hooks/cupon.hook";
+import { TCupon } from "@/src/types";
+import { Input } from "@nextui-org/input";
+import { toast } from "sonner";
 
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
@@ -25,18 +29,28 @@ const CheckoutPage = () => {
   const router = useRouter();
   const { data: loogedUser, isLoading } = useGetLoogedUserInfo();
   const { cart: cartItems } = useCart();
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [userCupon, setUserCupon] = useState('')
+  const [cuponUsed, setCuponUsed] = useState(false)
+  const { data: cuponData, isPending: cuponDataPending } = useGetAllCupons();
   const {
     mutate: handleCreateOrder,
     data: createdData,
     isPending: createOrderPending,
     isSuccess,
   } = useCreateOrder();
-  const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0,
-    );
-  };
+  let totalDiscountAmount = 0;
+
+
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      const total = cartItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0,
+      );
+      setTotalAmount(total)
+    }
+  }, [])
   const totalQuantity = cartItems.reduce((acc, curr) => {
     acc += curr.quantity;
 
@@ -59,7 +73,7 @@ const CheckoutPage = () => {
       customerId: loogedUser?.data?.id,
       vendorId: cartItems[0].vendorId,
       totalQunatity: totalQuantity,
-      totalPrice: calculateTotal(),
+      totalPrice: totalAmount,
       customerName: data.customerName,
       customerEmail: loogedUser?.data?.email,
       customerAddress: data.customerAddress,
@@ -69,7 +83,36 @@ const CheckoutPage = () => {
     handleCreateOrder({ orderData, productData });
   };
 
-  if (isLoading || createOrderPending) return <DynamicLoading />;
+  const handleApplyCupon = () => {
+    if (cuponData?.data) {
+      cuponData?.data?.forEach((cupon: TCupon) => {
+        cupon?.appliedProducts?.forEach((product) => {
+          cartItems.forEach((item) => {
+            if (item.id === product.id) {
+              if (userCupon === cupon.code) {
+                if (!cuponUsed) {
+                  totalDiscountAmount += cupon.discountAmount * item.quantity
+                  setTotalAmount(totalAmount - totalDiscountAmount)
+                  setCuponUsed(true)
+                  toast.success("Congrate's cupon applied")
+                } else {
+                  toast.error("Cupon already used!!!")
+                }
+              } else {
+                toast.error("Invalid cupon")
+              }
+            }
+          })
+        })
+      });
+    }
+
+  }
+
+
+
+  if (isLoading || createOrderPending || cuponDataPending) return <DynamicLoading />;
+
 
   return (
     <div className="min-h-screen p-4">
@@ -78,6 +121,24 @@ const CheckoutPage = () => {
         <div className="p-6 rounded-lg shadow-lg">
           <p className="font-medium text-xl mb-4">Customer Information</p>
 
+          <div className="py-3 flex items-center gap-3">
+            <Input
+              label="Coupon Code"
+              name="couponCode"
+              size="sm"
+              type="text"
+              onChange={(e) => setUserCupon(e.target.value)}
+            // placeholder="Enter your coupon"
+            />
+            <Button
+              className="rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              size="sm"
+              onClick={() => handleApplyCupon()}
+              type="button"
+            >
+              Apply Coupon
+            </Button>
+          </div>
           <NBForm
             defaultValues={{
               customerEmail: loogedUser?.data?.email,
@@ -106,14 +167,17 @@ const CheckoutPage = () => {
               />
             </div>
 
+            {/* Coupon Section */}
+
             <Button
               className="my-3 w-full rounded-md bg-default-900 text-default"
               size="lg"
               type="submit"
             >
-              Chekout
+              Checkout
             </Button>
           </NBForm>
+
         </div>
 
         {/* Right Side: Cart Items */}
@@ -156,7 +220,7 @@ const CheckoutPage = () => {
           {/* Cart Summary */}
           <div className="flex justify-between mt-4">
             <p className="font-medium text-lg">Total</p>
-            <p className="text-xl font-semibold">${calculateTotal()}</p>
+            <p className="text-xl font-semibold">${totalAmount}</p>
           </div>
         </div>
       </div>

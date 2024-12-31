@@ -14,11 +14,11 @@ export const vendorMenuItems = [
     label: "Add Product",
     icon: <FaPlusCircle className="h-5 w-5" />,
   },
-  /*  {
-    path: "customer-review",
-    label: "Customer Reviews",
-    icon: <FaStar className="h-5 w-5" />,
-  }, */
+  {
+    path: "manage-cupons",
+    label: "Manage Cupon",
+    icon: <FaPlusCircle className="h-5 w-5" />,
+  },
   {
     path: "order-history",
     label: "Order History",
@@ -45,6 +45,11 @@ export const adminMenuItems = [
   {
     path: "manage-products",
     label: "Manage Product",
+    icon: <FaPlusCircle className="h-5 w-5" />,
+  },
+  {
+    path: "manage-cupons",
+    label: "Manage Cupon",
     icon: <FaPlusCircle className="h-5 w-5" />,
   },
   {
