@@ -4,39 +4,155 @@ import dynamic from "next/dynamic";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
-  NavbarBrand,
   NavbarItem,
-  NavbarMenuItem,
 } from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
-import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
-import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { FiMail } from "react-icons/fi";
+import { useEffect, useState } from "react";
 
 import { useUser } from "../context/user.prodvier";
 
-import NavbarDropdown from "./ui/NavbarDropdown";
+import Cart from "./ui/cart/Cart";
+import ShopDropDown from "./ui/homepage/dropdown/ShopDropDown";
+import CategoriesDropDown from "./ui/homepage/dropdown/CategoriesDropDown";
 
-import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
+import GetProductBYSearch from "./ui/shared/GetProductBYSearch";
 
 const DynamicLoading = dynamic(() => import("./ui/shared/Loading"), {
   ssr: false,
 });
 
 export const Navbar = () => {
-  const router = useRouter();
-  const { user, isLoading, setIsLoading } = useUser();
+  const { user, isLoading } = useUser();
+  const [isFixed, setIsFixed] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   if (isLoading) return <DynamicLoading />;
 
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
+    <>
+      <header className="">
+        <div className="container mx-auto px-6 py-3 ">
+          {/* Top Section */}
+          <div className="flex items-center justify-between">
+            {/* Location Icon */}
+            {user && (
+              <div className="hidden w-full  md:flex md:items-center">
+                <div className="flex items-center space-x-1">
+                  <FiMail className="h-5 w-5" />
+                  <span className="text-sm">{user.email}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Brand Logo */}
+            <div className="flex justify-start items-center gap-1">
+              <Link href={"/"}>
+                <Image
+                  alt={"NEXT BAZAR"}
+                  height={50}
+                  src={
+                    "https://pbs.twimg.com/profile_images/1565710214019444737/if82cpbS_400x400.jpg"
+                  }
+                  width={50}
+                />
+                <p className="font-bold text-inherit">BAZAR</p>
+              </Link>
+            </div>
+
+            {/* Cart & Menu */}
+            <div className="flex items-center justify-end w-full ">
+              {/* Cart Icon */}
+              <div className="flex items-center gap-5">
+                <ThemeSwitch />
+                <Cart />
+              </div>
+
+              {/* Mobile Menu */}
+              <div className="flex sm:hidden">
+                <button
+                  aria-label="toggle menu"
+                  className=" hover:text-gray-500 focus:outline-none"
+                  type="button"
+                >
+                  <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Navbar Links */}
+          <NextUINavbar
+            className={`${isFixed ? "fixed top-0 left-0 w-full shadow z-50" : "relative"} transition-all duration-300`}
+          >
+            <NavbarContent
+              className="basis-1/5 sm:basis-full flex justify-center"
+              justify="center"
+            >
+              <div className="flex flex-col sm:flex-row items-center justify-center space-x-0 sm:space-x-6 mt-3 sm:mt-0">
+                <Link className="hover:underline sm:mx-3 text-[16px]" href="/">
+                  Home
+                </Link>
+                <ShopDropDown />
+                <CategoriesDropDown />
+
+                <Link className="hover:underline sm:mx-3" href="about">
+                  About Us
+                </Link>
+                <Link className="hover:underline sm:mx-3" href="contact">
+                  Contact
+                </Link>
+                {user?.role === "CUSTOMER" && (
+                  <NavbarItem>
+                    <NextLink
+                      className="data-[active=true]:text-primary data-[active=true]:font-medium"
+                      href={"/order-history"}
+                    >
+                      Order History
+                    </NextLink>
+                  </NavbarItem>
+                )}
+              </div>
+            </NavbarContent>
+          </NextUINavbar>
+
+          {/* Search Bar */}
+          <div className="relative max-w-lg mx-auto">
+            <GetProductBYSearch />
+
+          </div>
+        </div>
+      </header>
+    </>
+  );
+};
+
+/* 
+
+
+<NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -145,36 +261,37 @@ export const Navbar = () => {
               </Button>
             </>
           )}
-          {/* <NavbarDropdown/> */}
-        </NavbarItem>
-      </NavbarContent>
+          {/* <NavbarDropdown/>
+          </NavbarItem>
+          </NavbarContent>
+    
+          <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+            <ThemeSwitch />
+            <NavbarMenuToggle />
+          </NavbarContent>
+    
+          <NavbarMenu>
+            <div className="mx-4 mt-2 flex flex-col gap-2">
+              {siteConfig.navMenuItems.map((item, index) => (
+                <NavbarMenuItem key={`${item}-${index}`}>
+                  <Link
+                    color={
+                      index === 2
+                        ? "primary"
+                        : index === siteConfig.navMenuItems.length - 1
+                          ? "danger"
+                          : "foreground"
+                    }
+                    href="#"
+                    size="lg"
+                  >
+                    {item.label}
+                  </Link>
+                </NavbarMenuItem>
+              ))}
+            </div>
+          </NavbarMenu>
+        </NextUINavbar>
 
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <ThemeSwitch />
-        <NavbarMenuToggle />
-      </NavbarContent>
 
-      <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-        </div>
-      </NavbarMenu>
-    </NextUINavbar>
-  );
-};
+*/

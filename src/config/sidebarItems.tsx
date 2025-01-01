@@ -6,6 +6,7 @@ import {
   FaPlusCircle,
   FaUserTie,
   FaListAlt,
+  FaEnvelope,
 } from "react-icons/fa";
 
 export const vendorMenuItems = [
@@ -46,6 +47,12 @@ export const adminMenuItems = [
     path: "manage-products",
     label: "Manage Product",
     icon: <FaPlusCircle className="h-5 w-5" />,
+  },
+
+  {
+    path: "manage-newLetters",
+    label: "Manage News Letter",
+    icon: <FaEnvelope className="h-5 w-5" />,
   },
   /* {
     path: "manage-cupons",

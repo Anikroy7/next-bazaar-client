@@ -1,19 +1,75 @@
 "use client";
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import Image from "next/image";
 
-// import required modules
-import { Parallax, Pagination, Navigation } from "swiper/modules";
+import BannerSwiper from "./Swiper";
+
 
 export default function Banner() {
   return (
     <>
+      <div className="grid grid-cols-12 lg:gap-2 gap-4 mt-5">
+        {/* Left Section */}
+        <div className="lg:col-span-7 col-span-12">
+
+          <BannerSwiper />
+        </div>
+
+        {/* Right Section */}
+        <div className="lg:col-span-5 col-span-12 grid lg:grid-rows-2 gap-4 lg:px-2 px-0">
+          {/* Row 1 */}
+          <div className="flex lg:gap-2 gap-4 lg:flex-row">
+            <Image
+              alt="Banner 31"
+              className="lg:w-1/2 w-full h-auto object-cover"
+              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-31.jpg"
+              width={600} 
+              height={400} 
+              priority
+            />
+            <Image
+              alt="Banner 32"
+              className="lg:w-1/2 w-full h-auto object-cover"
+              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-32.jpg"
+              width={600} 
+              height={400}
+              priority
+            />
+          </div>
+
+          {/* Row 2 */}
+          <div className="flex lg:gap-2 gap-4 lg:flex-row">
+            <Image
+              alt="Banner 33"
+              className="lg:w-1/2 w-full h-auto object-cover"
+              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-31.jpg"
+              width={600} 
+              height={400}
+              priority
+            />
+            <Image
+              alt="Banner 34"
+              className="lg:w-1/2 w-full h-auto object-cover"
+              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-32.jpg"
+              width={600} 
+              height={400}
+              priority
+            />
+          </div>
+
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* 
+
+
+
       <Swiper
         className="mySwiper"
         loop={true}
@@ -36,7 +92,7 @@ export default function Banner() {
 
         <SwiperSlide>
           <div className="relative h-[70vh] bg-cover bg-center text-white">
-            <div className="absolute bottom-0 w-full mx-auto p-6 bg-black/50 rounded-lg">
+            <div className="absolute bottom-0 w-full mx-auto p-6 bg-black/50 ">
               <div
                 className="title text-4xl font-bold mb-4 text-center"
                 data-swiper-parallax="-300"
@@ -70,7 +126,7 @@ export default function Banner() {
 
         <SwiperSlide>
           <div className="relative h-[70vh] bg-cover bg-center text-white">
-            <div className="absolute bottom-0 w-full  mx-auto p-6 bg-black/50 rounded-lg">
+            <div className="absolute bottom-0 w-full  mx-auto p-6 bg-black/50 ">
               <div
                 className="title text-4xl font-bold mb-4 text-center"
                 data-swiper-parallax="-300"
@@ -103,7 +159,7 @@ export default function Banner() {
 
         <SwiperSlide>
           <div className="relative h-[70vh] bg-cover bg-center text-white">
-            <div className="absolute bottom-0 w-full mx-auto p-6 bg-black/50 rounded-lg">
+            <div className="absolute bottom-0 w-full mx-auto p-6 bg-black/50 ">
               <div
                 className="title text-4xl font-bold mb-4 text-center"
                 data-swiper-parallax="-300"
@@ -134,6 +190,5 @@ export default function Banner() {
           </div>
         </SwiperSlide>
       </Swiper>
-    </>
-  );
-}
+
+*/

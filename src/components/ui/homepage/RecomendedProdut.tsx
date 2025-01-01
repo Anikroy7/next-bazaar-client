@@ -24,7 +24,7 @@ export default function RecomendedProduct() {
   return (
     <div className=" py-10">
       <div className="container mx-auto px-6">
-        <h2 className="text-2xl font-semibold mb-6">Recommend For You</h2>
+        <h2 className="text-2xl font-semibold mb-8">Recommend For You</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           {products.length &&
             products.map((product: TProduct) => (

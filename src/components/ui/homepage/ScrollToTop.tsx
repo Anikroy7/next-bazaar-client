@@ -31,7 +31,7 @@ const ScrollToTop = () => {
       {isVisible && (
         <Button
           className="shadow-lg rounded-full font-bold text-xl"
-          color="warning"
+          color="default"
           variant="faded"
           onClick={scrollToTops}
         >

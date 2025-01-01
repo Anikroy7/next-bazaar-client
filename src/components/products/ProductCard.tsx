@@ -197,9 +197,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <Image
             alt={product.name}
             className="w-full h-40 object-cover"
-            height={160}
             src={product.images[0]}
-            width={100}
+            width={400}
+            height={160}
+            priority
           />
         </CardHeader>
         <CardBody className="p-4">

@@ -19,11 +19,14 @@ export default function Category() {
   const { data, isPending } = useGetAllCategories();
 
   if (isPending) return <DynamicLoading />;
+  const handleNaviagte = (id: number) => {
+    router.push(`/all-products/?categoryId=${id}`);
+  };
 
   return (
     <div className="py-10">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-8">Shop by Category</h2>
+        <h2 className="text-2xl font-bold mb-8">Shop by Category</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
           {data?.data && data?.data.length
             ? data?.data.map((category: ICategory) => (
@@ -31,9 +34,7 @@ export default function Category() {
                   key={category.id}
                   isPressable
                   className=" hover:scale-105 transition-transform rounded-none p-3"
-                  onClick={() =>
-                    router.push(`/all-products/?categoryId=${category.id}`)
-                  }
+                  onClick={() => handleNaviagte(category.id)}
                 >
                   <CardHeader className="p-0 flex justify-center items-center">
                     <Image
