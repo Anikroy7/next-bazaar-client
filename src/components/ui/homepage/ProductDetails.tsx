@@ -99,9 +99,9 @@ const ProductDetails = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (data && !isPending) {
-      setDisplayImage(data?.data?.images[0])
+      setDisplayImage(data?.data?.images[0]);
     }
-  }, [data, isPending])
+  }, [data, isPending]);
 
   if (isPending) return <DynamicLoading />;
 
@@ -113,16 +113,15 @@ const ProductDetails = ({ id }: { id: string }) => {
           <div className="h-64 md:h-80 w-full rounded-lg mb-4 flex items-center justify-center overflow-hidden">
             <Image
               alt=""
+              className="w-full h-full object-cover"
+              height={500}
               src={
                 displayImage ||
                 "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"
               }
-              width={800} 
-              height={500} 
-              className="w-full h-full object-cover"
+              width={800}
             />
           </div>
-
 
           <div className="flex mb-4 gap-3 mt-10">
             {data?.data?.images.map((image: string, index: number) => (
@@ -192,13 +191,11 @@ const ProductDetails = ({ id }: { id: string }) => {
       {/* Conditional Rendering for Reviews */}
       {user?.email &&
         orderedProduct.length > 0 &&
-        orderedProduct.find((pd: TOrderedProduct) => pd.id === data?.data?.id) && (
-          <ProductReview productId={data?.data?.id} />
-        )}
+        orderedProduct.find(
+          (pd: TOrderedProduct) => pd.id === data?.data?.id,
+        ) && <ProductReview productId={data?.data?.id} />}
       {user?.role === "VENDOR" && <ProductReview productId={data?.data?.id} />}
     </div>
-
-
   );
 };
 

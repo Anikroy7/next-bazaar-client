@@ -16,6 +16,14 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { FiRefreshCcw } from "react-icons/fi";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTruck,
+  FaTwitter,
+} from "react-icons/fa";
 
 import { useUser } from "../context/user.prodvier";
 
@@ -23,13 +31,11 @@ import NavbarDropdown from "./ui/NavbarDropdown";
 import ShopDropDown from "./ui/homepage/dropdown/ShopDropDown";
 import CategoriesDropDown from "./ui/homepage/dropdown/CategoriesDropDown";
 import Cart from "./ui/cart/Cart";
+import PagesDropDown from "./ui/homepage/dropdown/PagesDropDown";
+import GetProductBYSearch from "./ui/shared/GetProductBYSearch";
 
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import { siteConfig } from "@/src/config/site";
-import { FiRefreshCcw } from "react-icons/fi";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTruck, FaTwitter } from "react-icons/fa";
-import PagesDropDown from "./ui/homepage/dropdown/PagesDropDown";
-import GetProductBYSearch from "./ui/shared/GetProductBYSearch";
 
 const DynamicLoading = dynamic(() => import("./ui/shared/Loading"), {
   ssr: false,
@@ -44,8 +50,6 @@ export const Navbar = () => {
   return (
     <>
       <div className="border-b py-2 text-sm text-gray-500 flex justify-between items-center px-4 md:px-7 z-50 w-full hidden sm:flex">
-
-
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-3">
             <FaTruck className="h-4 w-4" />
@@ -59,40 +63,54 @@ export const Navbar = () => {
             <span>Follow Us</span>
             <div className="flex items-center gap-4">
               {/* Social Media Icons */}
-              <a href="#" aria-label="Facebook" className="text-gray-600 hover:text-gray-600">
+              <a
+                aria-label="Facebook"
+                className="text-gray-600 hover:text-gray-600"
+                href="https://www.facebook.com/anik.roy.56100"
+              >
                 <FaFacebookF className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Twitter" className="text-gray-600 hover:text-gray-600">
+              <a
+                aria-label="Twitter"
+                className="text-gray-600 hover:text-gray-600"
+                href="www.twitter.com"
+              >
                 <FaTwitter className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="Instagram" className="text-gray-600 hover:text-gray-600">
+              <a
+                aria-label="Instagram"
+                className="text-gray-600 hover:text-gray-600"
+                href="www.instagram.com"
+              >
                 <FaInstagram className="h-4 w-4" />
               </a>
-              <a href="#" aria-label="LinkedIn" className="text-gray-600 hover:text-gray-600">
+              <a
+                aria-label="LinkedIn"
+                className="text-gray-600 hover:text-gray-600"
+                href="https://www.linkedin.com/in/anik-roy-a14185241"
+              >
                 <FaLinkedinIn className="h-4 w-4" />
               </a>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-4">
-
           <>
             <Button
               isExternal
               as={Link}
-              size="sm"
               className="text-sm font-normal text-default-900 bg-default-100 me-3"
+              size="sm"
               variant="light"
-            // href={siteConfig.links.sponsor}
-
+              // href={siteConfig.links.sponsor}
             >
               Signup
             </Button>
             <Button
               isExternal
               as={Link}
-              size="sm"
               className="text-sm font-normal text-default-900 bg-default-100"
+              size="sm"
               variant="light"
               // href={siteConfig.links.sponsor}
               onClick={() => router.push("/login")}
@@ -103,7 +121,6 @@ export const Navbar = () => {
           {/* <span>Login</span>
           <span>Signup</span> */}
           <ThemeSwitch />
-
         </div>
       </div>
       <NextUINavbar maxWidth="full">
@@ -194,11 +211,10 @@ export const Navbar = () => {
           className="hidden sm:flex basis-1/5 sm:basis-full"
           justify="end"
         >
-
           <NavbarItem className="sm:hidden">
-            {user && user.email &&
+            {user && user.email && (
               <NavbarDropdown setIsLoading={setIsLoading} user={user} />
-            }
+            )}
             {/* <NavbarDropdown/> */}
           </NavbarItem>
           <NavbarItem>
@@ -234,11 +250,6 @@ export const Navbar = () => {
         </NavbarMenu>
       </NextUINavbar>
       <GetProductBYSearch />
-
     </>
   );
 };
-
-
-
-
