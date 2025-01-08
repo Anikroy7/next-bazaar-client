@@ -68,6 +68,7 @@ export interface Admin {
 }
 
 export interface Vendor {
+  id: string;
   email: string;
   password: string;
   name: string;

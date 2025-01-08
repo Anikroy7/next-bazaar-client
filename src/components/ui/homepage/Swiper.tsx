@@ -33,12 +33,12 @@ export default function BannerSwiper() {
       >
         <SwiperSlide>
           <Image
-            alt="Slide 1"
-            src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/07/slider-31.jpg"
-            width={1920} 
-            height={500} 
-            className="object-cover"
             priority
+            alt="Slide 1"
+            className="object-cover"
+            height={500}
+            src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/07/slider-31.jpg"
+            width={1920}
           />
         </SwiperSlide>
         <SwiperSlide>

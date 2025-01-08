@@ -73,7 +73,7 @@ export default function Cart() {
       {/* Floating Add to Cart Button */}
       <div className="">
         <Button
-          className="relative flex items-center justify-center space-x-2  text-white font-semibold px-6 py-3 rounded-full shadow-lg"
+          className="relative flex items-center justify-center space-x-2  text-default-900 font-semibold px-6 py-3 rounded-full shadow-lg"
           onPress={onOpen}
         >
           {/* Cart Icon */}

@@ -7,14 +7,12 @@ import Image from "next/image";
 
 import BannerSwiper from "./Swiper";
 
-
 export default function Banner() {
   return (
     <>
       <div className="grid grid-cols-12 lg:gap-2 gap-4 mt-5">
         {/* Left Section */}
         <div className="lg:col-span-7 col-span-12">
-
           <BannerSwiper />
         </div>
 
@@ -23,43 +21,42 @@ export default function Banner() {
           {/* Row 1 */}
           <div className="flex lg:gap-2 gap-4 lg:flex-row">
             <Image
+              priority
               alt="Banner 31"
               className="lg:w-1/2 w-full h-auto object-cover"
+              height={400}
               src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-31.jpg"
-              width={600} 
-              height={400} 
-              priority
+              width={600}
             />
             <Image
+              priority
               alt="Banner 32"
               className="lg:w-1/2 w-full h-auto object-cover"
-              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-32.jpg"
-              width={600} 
               height={400}
-              priority
+              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-32.jpg"
+              width={600}
             />
           </div>
 
           {/* Row 2 */}
           <div className="flex lg:gap-2 gap-4 lg:flex-row">
             <Image
+              priority
               alt="Banner 33"
               className="lg:w-1/2 w-full h-auto object-cover"
-              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-31.jpg"
-              width={600} 
               height={400}
-              priority
+              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-31.jpg"
+              width={600}
             />
             <Image
+              priority
               alt="Banner 34"
               className="lg:w-1/2 w-full h-auto object-cover"
-              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-32.jpg"
-              width={600} 
               height={400}
-              priority
+              src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/baner-32.jpg"
+              width={600}
             />
           </div>
-
         </div>
       </div>
     </>

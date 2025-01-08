@@ -29,12 +29,9 @@ const FlashSaleProducts = () => {
             ?.slice(0, 4)
             .map(({ id, name, price, discount, images }) => (
               <Link key={id} href={`/product/${id}`}>
-                <Card
-                  key={name}
-                  className="py-4 cursor-pointer w-full h-72" // Fixed height and width
-                >
+                <Card key={name} className="py-4 cursor-pointer">
                   <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                    <p className="text-tiny uppercase font-bold">{name}</p>
+                    <h3 className="text-sm font-semibold">{name.length > 40 ? `${name.slice(0, 40)}...` : name}</h3>
                     <small className="text-default-500">$ {price}</small>
                     <h4 className="font-bold text-large">{discount}%</h4>
                   </CardHeader>
@@ -42,22 +39,31 @@ const FlashSaleProducts = () => {
                     <Image
                       alt="Card background"
                       className="rounded-xl object-cover"
-                      height={120} // Consistent height for the image
-                      width={120}  // Consistent width for the image
-                      src={images[0] || "https://nextui.org/images/hero-card-complete.jpeg"}
+                      height={150}
+                      src={
+                        images[0] ||
+                        "https://nextui.org/images/hero-card-complete.jpeg"
+                      }
+                      width={150}
                     />
                   </CardBody>
                 </Card>
               </Link>
             ))}
         </div>
-        <div className="text-center py-6 mt-5">
+        <div className="text-center py-6">
           <Link
             className="my-10 p-3 bg-default-900 text-default rounded-md"
             color="primary"
             href={"/all-flash-products"}
           >
+            {/* <Link
+              isExternal
+              showAnchorIcon
+              href="https://github.com/nextui-org/nextui"
+            > */}
             Visit All
+            {/* </Link> */}
           </Link>
         </div>
       </div>

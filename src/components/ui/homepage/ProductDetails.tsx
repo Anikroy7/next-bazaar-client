@@ -97,23 +97,32 @@ const ProductDetails = ({ id }: { id: string }) => {
     }
   }, [oPPending, isSuccess, myOrders]);
 
+  useEffect(() => {
+    if (data && !isPending) {
+      setDisplayImage(data?.data?.images[0])
+    }
+  }, [data, isPending])
+
   if (isPending) return <DynamicLoading />;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="flex flex-col md:flex-row -mx-4">
-        <div className="md:flex-1 p-6">
-          <div className="h-64 md:h-80 w-56 rounded-lg mb-4 flex items-center justify-center">
+        {/* Left Section: Image */}
+        <div className="md:w-1/2 p-2">
+          <div className="h-64 md:h-80 w-full rounded-lg mb-4 flex items-center justify-center overflow-hidden">
             <Image
               alt=""
-              height={400}
               src={
                 displayImage ||
                 "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"
               }
-              width={400}
+              width={800} 
+              height={500} 
+              className="w-full h-full object-cover"
             />
           </div>
+
 
           <div className="flex mb-4 gap-3 mt-10">
             {data?.data?.images.map((image: string, index: number) => (
@@ -129,7 +138,8 @@ const ProductDetails = ({ id }: { id: string }) => {
           </div>
         </div>
 
-        <div className="md:flex-1 px-4">
+        {/* Right Section: Product Info */}
+        <div className="md:w-1/2 px-4">
           <h2 className="mb-2 leading-tight tracking-tight font-bold text-2xl md:text-3xl">
             {data?.data.name}
           </h2>
@@ -178,13 +188,17 @@ const ProductDetails = ({ id }: { id: string }) => {
           )}
         </div>
       </div>
+
+      {/* Conditional Rendering for Reviews */}
       {user?.email &&
         orderedProduct.length > 0 &&
-        orderedProduct.find(
-          (pd: TOrderedProduct) => pd.id === data?.data?.id,
-        ) && <ProductReview productId={data?.data?.id} />}
+        orderedProduct.find((pd: TOrderedProduct) => pd.id === data?.data?.id) && (
+          <ProductReview productId={data?.data?.id} />
+        )}
       {user?.role === "VENDOR" && <ProductReview productId={data?.data?.id} />}
     </div>
+
+
   );
 };
 

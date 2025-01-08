@@ -8,10 +8,20 @@ import {
 } from "@nextui-org/dropdown";
 import { NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import { ChevronDown } from "@/src/components/icons";
+import { useAllVendorInfo } from "@/src/hooks/user.hook";
+import { User as UserType } from "@/src/types";
 
 export default function ShopDropDown() {
+  const router = useRouter();
+  const { data, isPending } = useAllVendorInfo();
+
+  if (isPending) return <p>Loading...</p>;
+
+  const shops = data?.data || [];
+
   return (
     <>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -36,41 +46,21 @@ export default function ShopDropDown() {
               base: "gap-4",
             }}
           >
-            <DropdownItem
-              key="autoscaling"
-              description="ACME scales apps to meet user demand, automagically, based on load."
-              // startContent={icons.scale}
-            >
-              Autoscaling
-            </DropdownItem>
-            <DropdownItem
-              key="usage_metrics"
-              description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
-              // startContent={icons.activity}
-            >
-              Usage Metrics
-            </DropdownItem>
-            <DropdownItem
-              key="production_ready"
-              description="ACME runs on ACME, join us and others serving requests at web scale."
-              // startContent={icons.flash}
-            >
-              Production Ready
-            </DropdownItem>
-            <DropdownItem
-              key="99_uptime"
-              description="Applications stay on the grid with high availability and high uptime guarantees."
-              // startContent={icons.server}
-            >
-              +99% Uptime
-            </DropdownItem>
-            <DropdownItem
-              key="supreme_support"
-              description="Overcome any challenge with a supporting team ready to respond."
-              // startContent={icons.user}
-            >
-              +Supreme Support
-            </DropdownItem>
+            {shops.map((user: UserType) => (
+              <DropdownItem
+                key={user?.id}
+                onClick={() => router.push(`/vendor/${user?.vendor?.id}`)}
+              >
+                {/*  <User
+                  avatarProps={{
+                    src: `${user?.vendor?.logo}`,
+                  }}
+                  name={user?.vendor?.name}
+                />
+ */}
+                {user?.vendor?.name}
+              </DropdownItem>
+            ))}
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>

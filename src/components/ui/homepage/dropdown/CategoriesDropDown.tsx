@@ -8,10 +8,22 @@ import {
 } from "@nextui-org/dropdown";
 import { NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import { ChevronDown } from "@/src/components/icons";
+import { useGetAllCategories } from "@/src/hooks/categories.hook";
+import { TCategory } from "@/src/types";
 
 export default function CategoriesDropDown() {
+  const { data, isPending: categoriesPending } = useGetAllCategories();
+  const router = useRouter();
+  const handleNaviagte = (id: number) => {
+    router.push(`/all-products/?categoryId=${id}`);
+  };
+
+  if (categoriesPending) return <p>Loading...</p>;
+  const categories = data?.data || [];
+
   return (
     <>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -36,41 +48,14 @@ export default function CategoriesDropDown() {
               base: "gap-4",
             }}
           >
-            <DropdownItem
-              key="autoscaling"
-              description="ACME scales apps to meet user demand, automagically, based on load."
-              // startContent={icons.scale}
-            >
-              Autoscaling
-            </DropdownItem>
-            <DropdownItem
-              key="usage_metrics"
-              description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
-              // startContent={icons.activity}
-            >
-              Usage Metrics
-            </DropdownItem>
-            <DropdownItem
-              key="production_ready"
-              description="ACME runs on ACME, join us and others serving requests at web scale."
-              // startContent={icons.flash}
-            >
-              Production Ready
-            </DropdownItem>
-            <DropdownItem
-              key="99_uptime"
-              description="Applications stay on the grid with high availability and high uptime guarantees."
-              // startContent={icons.server}
-            >
-              +99% Uptime
-            </DropdownItem>
-            <DropdownItem
-              key="supreme_support"
-              description="Overcome any challenge with a supporting team ready to respond."
-              // startContent={icons.user}
-            >
-              +Supreme Support
-            </DropdownItem>
+            {categories.map((category: TCategory) => (
+              <DropdownItem
+                key={category.id}
+                onClick={() => handleNaviagte(category.id)}
+              >
+                {category.name}
+              </DropdownItem>
+            ))}
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
