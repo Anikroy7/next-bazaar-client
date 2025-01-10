@@ -39,11 +39,23 @@ const NavbarDropdown: React.FC<INavbarDropdown> = ({ user, setIsLoading }) => {
           <p className="font-semibold">{user?.email}</p>
         </DropdownItem>
         <DropdownItem
-          key="settings"
-          className={`${user?.role !== "CUTOMER" && "hidden"}`}
+          key="profle"
+          // className={`${user?.role !== "CUTOMER" && "hidden"}`}
           onClick={() => router.push("/profile")}
         >
           My Profile
+        </DropdownItem>
+
+        <DropdownItem
+          key="order_history"
+          className={`${user?.role !== "CUSTOMER" && "hidden"}`}
+          onClick={() => router.push("/order-history")}
+        >
+          Order history
+        </DropdownItem>
+        <DropdownItem className={`${user && user?.role !== "VENDOR" && user?.role !== "ADMIN" && "hidden"}`}
+          onClick={() => router.push(`/dashboard/${user.role.toLowerCase()}`)} key={'vendor_dashboard'} hidden={!user}>
+          Dashbaord
         </DropdownItem>
         <DropdownItem
           key="logout"

@@ -367,16 +367,16 @@ export default function Footer() {
         <div className="pt-6 mt-12 border-t border-gray-800">
           <div className="text-center sm:flex sm:justify-between sm:text-left">
             <p className="text-sm text-gray-400">
-              <span className="block sm:inline">All rights reserved.</span>
+              <span className="block sm:inline mr-1">All rights reserved.</span>
 
               <Link
-                className="inline-block text-teal-500 underline transition hover:text-teal-500/75"
+                className="inline-block text-teal-500 underline transition hover:text-teal-500/75 mr-1"
                 href="/"
               >
                 Terms & Conditions
+              <span>&middot;</span>
               </Link>
 
-              <span>&middot;</span>
 
               <Link
                 className="inline-block text-teal-500 underline transition hover:text-teal-500/75"

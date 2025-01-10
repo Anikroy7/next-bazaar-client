@@ -42,14 +42,14 @@ export default function UserRegisterPage() {
 
   return (
     <div className="w-[100%]">
-      <div className="text-center">
+     {/*  <div className="text-center">
         <Chip
           avatar={<Avatar getInitials={() => "U"} name="JW" size="sm" />}
           variant="dot"
         >
           Become a user
         </Chip>
-      </div>
+      </div> */}
       <NBForm
         resolver={zodResolver(signupValidationSchema)}
         onSubmit={onSubmit}

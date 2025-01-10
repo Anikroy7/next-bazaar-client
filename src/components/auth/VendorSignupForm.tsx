@@ -41,14 +41,14 @@ export default function VendorRegisterPage() {
 
   return (
     <div className="w-[100%]">
-      <div className="text-center">
+      {/* <div className="text-center">
         <Chip
           avatar={<Avatar getInitials={() => "V"} name="JW" size="sm" />}
           variant="dot"
         >
           Become a vendor
         </Chip>
-      </div>
+      </div> */}
       <NBForm
         resolver={zodResolver(vendorSignupValidationSchema)}
         onSubmit={onSubmit}

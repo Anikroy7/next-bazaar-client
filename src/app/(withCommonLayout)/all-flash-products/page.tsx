@@ -31,7 +31,9 @@ const FlashSaleProducts = () => {
             <Link key={id} href={`/product/${id}`}>
               <Card key={name} className="py-4 cursor-pointer">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                  <p className="text-tiny uppercase font-bold">{name}</p>
+                  <p className="text-tiny uppercase font-bold">
+                    {name.length > 40 ? `${name.slice(0, 40)}...` : name}
+                  </p>
                   <small className="text-default-500">$ {price}</small>
                   <h4 className="font-bold text-large">{discount}%</h4>
                 </CardHeader>

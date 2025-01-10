@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Input } from "@nextui-org/input";
 import { toast } from "sonner";
-
 import NBForm from "@/src/components/ui/form/NBForm";
 import NBInput from "@/src/components/ui/form/NBInput";
 import { useCart } from "@/src/context/cart.provider";
@@ -84,27 +83,34 @@ const CheckoutPage = () => {
   };
 
   const handleApplyCupon = () => {
+console.log('asdf', cuponData)
     if (cuponData?.data) {
-      cuponData?.data?.forEach((cupon: TCupon) => {
-        cupon?.appliedProducts?.forEach((product) => {
-          cartItems.forEach((item) => {
-            if (item.id === product.id) {
-              if (userCupon === cupon.code) {
-                if (!cuponUsed) {
-                  totalDiscountAmount += cupon.discountAmount * item.quantity;
-                  setTotalAmount(totalAmount - totalDiscountAmount);
-                  setCuponUsed(true);
-                  toast.success("Congrate's cupon applied");
+      if(cuponData.length>0){
+        cuponData?.data?.forEach((cupon: TCupon) => {
+          cupon?.appliedProducts?.forEach((product) => {
+            cartItems.forEach((item) => {
+              if (item.id === product.id) {
+                if (userCupon === cupon.code) {
+                  if (!cuponUsed) {
+                    totalDiscountAmount += cupon.discountAmount * item.quantity;
+                    setTotalAmount(totalAmount - totalDiscountAmount);
+                    setCuponUsed(true);
+                    toast.success("Congrate's cupon applied");
+                  } else {
+                    toast.error("Cupon already used!!!");
+                  }
                 } else {
-                  toast.error("Cupon already used!!!");
+                  toast.error("Invalid cupon");
                 }
-              } else {
-                toast.error("Invalid cupon");
               }
-            }
+            });
           });
         });
-      });
+      }else{
+        toast.error("No cupon available!")
+      }
+    }else{
+      toast.error("Something went wrong!")
     }
   };
 
@@ -131,7 +137,7 @@ const CheckoutPage = () => {
               className="rounded-md bg-blue-600 text-white hover:bg-blue-700"
               size="sm"
               type="button"
-              onClick={() => handleApplyCupon()}
+              onClick={handleApplyCupon}
             >
               Apply Coupon
             </Button>

@@ -66,10 +66,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   const handleToNavigateProductDetails = () => {
-    if (user?.role !== "VENDOR") {
       handleAddProductToLs(product);
       router.push(`/product/${product.id}`);
-    }
   };
 
   return (
@@ -77,7 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <Card
         key={product.id}
         isPressable
-        className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px] relative"
+        className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px] w-[230px] relative"
         role="button"
         tabIndex={0}
         onClick={() => handleToNavigateProductDetails()}

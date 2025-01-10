@@ -13,7 +13,7 @@ import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { FiRefreshCcw } from "react-icons/fi";
@@ -44,49 +44,52 @@ const DynamicLoading = dynamic(() => import("./ui/shared/Loading"), {
 export const Navbar = () => {
   const router = useRouter();
   const { user, isLoading, setIsLoading } = useUser();
+  const pathname = usePathname()
 
   if (isLoading) return <DynamicLoading />;
 
   return (
     <>
-      <div className="border-b py-2 text-sm text-gray-500 flex justify-between items-center px-4 md:px-7 z-50 w-full hidden sm:flex">
+      <div className="border-b py-1 text-sm text-gray-600 flex justify-between items-center px-4 md:px-7 z-50 w-full hidden sm:flex bg-white">
         <div className="flex items-center gap-8">
-          <div className="flex items-center gap-3">
-            <FaTruck className="h-4 w-4" />
+          <div className="flex items-center gap-3 text-gray-700">
+            <FaTruck className="h-4 w-4 text-blue-500" />
             <span>Free Delivery</span>
           </div>
-          <div className="flex items-center gap-3">
-            <FiRefreshCcw className=" h-4 w-4" />
+          
+
+          <div className="flex items-center gap-3 text-gray-700">
+            <FiRefreshCcw className="h-4 w-4 text-blue-500" />
             <span>Returns Policy</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 text-gray-700">
             <span>Follow Us</span>
             <div className="flex items-center gap-4">
               {/* Social Media Icons */}
               <a
                 aria-label="Facebook"
-                className="text-gray-600 hover:text-gray-600"
+                className="text-gray-600 hover:text-blue-600"
                 href="https://www.facebook.com/anik.roy.56100"
               >
                 <FaFacebookF className="h-4 w-4" />
               </a>
               <a
                 aria-label="Twitter"
-                className="text-gray-600 hover:text-gray-600"
+                className="text-gray-600 hover:text-blue-400"
                 href="www.twitter.com"
               >
                 <FaTwitter className="h-4 w-4" />
               </a>
               <a
                 aria-label="Instagram"
-                className="text-gray-600 hover:text-gray-600"
+                className="text-gray-600 hover:text-pink-500"
                 href="www.instagram.com"
               >
                 <FaInstagram className="h-4 w-4" />
               </a>
               <a
                 aria-label="LinkedIn"
-                className="text-gray-600 hover:text-gray-600"
+                className="text-gray-600 hover:text-blue-700"
                 href="https://www.linkedin.com/in/anik-roy-a14185241"
               >
                 <FaLinkedinIn className="h-4 w-4" />
@@ -94,32 +97,29 @@ export const Navbar = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <>
+        <div className="flex items-center gap">
+          {!user && <>
             <Button
               isExternal
               as={Link}
-              className="text-sm font-normal text-default-900 bg-default-100 me-3"
+              className="text-sm font-normal text-gray-900 bg-gray-100 bg-transparent"
               size="sm"
               variant="light"
-              // href={siteConfig.links.sponsor}
+              onClick={() => router.push("/signup")}
             >
               Signup
             </Button>
             <Button
               isExternal
               as={Link}
-              className="text-sm font-normal text-default-900 bg-default-100"
+              className="text-sm font-normal text-gray-900 bg-gray-100 bg-transparent"
               size="sm"
               variant="light"
-              // href={siteConfig.links.sponsor}
               onClick={() => router.push("/login")}
             >
               Login
             </Button>
-          </>
-          {/* <span>Login</span>
-          <span>Signup</span> */}
+          </>}
           <ThemeSwitch />
         </div>
       </div>
@@ -134,7 +134,7 @@ export const Navbar = () => {
               }
               width={50}
             />
-            <p className="font-bold text-inherit">BAZAR</p>
+            <p className="font-bold">BAZAR</p>
           </NextLink>
         </NavbarBrand>
         <NavbarContent className="basis-1/5 sm:basis-full" justify="center">
@@ -144,7 +144,7 @@ export const Navbar = () => {
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium",
+                    "data-[active=true]:text-blue-600 data-[active=true]:font-medium"
                   )}
                   color="foreground"
                   href={item.href}
@@ -153,12 +153,12 @@ export const Navbar = () => {
                 </NextLink>
               </NavbarItem>
             ))}
-            {user?.role === "VENDOR" && (
+       {/*      {user?.role === "VENDOR" && (
               <NavbarItem>
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium",
+                    "data-[active=true]:text-blue-600 data-[active=true]:font-medium"
                   )}
                   color="foreground"
                   href={"/dashboard/vendor"}
@@ -166,13 +166,13 @@ export const Navbar = () => {
                   Vendor Dashboard
                 </NextLink>
               </NavbarItem>
-            )}
-            {user?.role === "ADMIN" && (
+            )} */}
+          {/*   {user?.role === "ADMIN" && (
               <NavbarItem>
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium",
+                    "data-[active=true]:text-blue-600 data-[active=true]:font-medium"
                   )}
                   color="foreground"
                   href={"/dashboard/admin"}
@@ -180,13 +180,13 @@ export const Navbar = () => {
                   Admin Dashboard
                 </NextLink>
               </NavbarItem>
-            )}
-            {user?.role === "CUSTOMER" && (
+            )} */}
+       {/*      {user?.role === "CUSTOMER" && (
               <NavbarItem>
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium",
+                    "data-[active=true]:text-blue-600 data-[active=true]:font-medium"
                   )}
                   color="foreground"
                   href={"/order-history"}
@@ -194,7 +194,7 @@ export const Navbar = () => {
                   Order History
                 </NextLink>
               </NavbarItem>
-            )}
+            )} */}
           </ul>
           <NavbarItem>
             <ShopDropDown />
@@ -211,11 +211,10 @@ export const Navbar = () => {
           className="hidden sm:flex basis-1/5 sm:basis-full"
           justify="end"
         >
-          <NavbarItem className="sm:hidden">
+          <NavbarItem className="">
             {user && user.email && (
               <NavbarDropdown setIsLoading={setIsLoading} user={user} />
             )}
-            {/* <NavbarDropdown/> */}
           </NavbarItem>
           <NavbarItem>
             <Cart />
@@ -241,6 +240,7 @@ export const Navbar = () => {
                   }
                   href="#"
                   size="lg"
+                  className="text-gray-600 hover:text-blue-600"
                 >
                   {item.label}
                 </Link>
@@ -249,7 +249,9 @@ export const Navbar = () => {
           </div>
         </NavbarMenu>
       </NextUINavbar>
-      <GetProductBYSearch />
+
+      {pathname === '/' && <GetProductBYSearch />}
+
     </>
   );
 };
