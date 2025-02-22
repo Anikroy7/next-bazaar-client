@@ -50,28 +50,28 @@ function AddProductForm() {
     isSuccess: createProductSuccess,
   } = useCreateProduct();
 
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const allFiles = e.target.files;
+    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const allFiles = e.target.files;
 
-    if (allFiles?.length) {
-      for (let i = 0; i < allFiles.length; i++) {
-        const reader = new FileReader();
+      if (allFiles?.length) {
+        for (let i = 0; i < allFiles.length; i++) {
+          const reader = new FileReader();
 
-        reader.onloadend = () => {
-          setAvatarPreview((prev) => [...prev, reader.result as string]);
-          setImages((prev) => [...prev, allFiles[i] as File]);
-        };
-        reader.readAsDataURL(allFiles[i]);
+          reader.onloadend = () => {
+            setAvatarPreview((prev) => [...prev, reader.result as string]);
+            setImages((prev) => [...prev, allFiles[i] as File]);
+          };
+          reader.readAsDataURL(allFiles[i]);
+        }
       }
-    }
-  };
+    };
 
-  const handleRemoveImage = (ind: number) => {
-    setAvatarPreview([
-      ...avatarPreview.filter((image, index) => index !== ind),
-    ]);
-    setImages([...images.filter((image, index) => index !== ind)]);
-  };
+    const handleRemoveImage = (ind: number) => {
+      setAvatarPreview([
+        ...avatarPreview.filter((image, index) => index !== ind),
+      ]);
+      setImages([...images.filter((image, index) => index !== ind)]);
+    };
 
   useEffect(() => {
     if (!createProductPending && createdProduct && createProductSuccess) {

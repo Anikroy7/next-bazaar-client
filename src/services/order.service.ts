@@ -21,6 +21,15 @@ export const getMyOrderInfo = async () => {
     throw new Error(error.response?.data?.message || error.message);
   }
 };
+export const getAllOrderedProducts = async () => {
+  try {
+    const { data } = await axiosInstance.get("/orders/all-orderedProduct");
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || error.message);
+  }
+};
 
 export const getOrdersForVendor = async (id: string) => {
   try {

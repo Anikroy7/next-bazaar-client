@@ -53,8 +53,12 @@ const NavbarDropdown: React.FC<INavbarDropdown> = ({ user, setIsLoading }) => {
         >
           Order history
         </DropdownItem>
-        <DropdownItem className={`${user && user?.role !== "VENDOR" && user?.role !== "ADMIN" && "hidden"}`}
-          onClick={() => router.push(`/dashboard/${user.role.toLowerCase()}`)} key={'vendor_dashboard'} hidden={!user}>
+        <DropdownItem
+          key={"vendor_dashboard"}
+          className={`${user && user?.role !== "VENDOR" && user?.role !== "ADMIN" && "hidden"}`}
+          hidden={!user}
+          onClick={() => router.push(`/dashboard/${user.role.toLowerCase()}`)}
+        >
           Dashbaord
         </DropdownItem>
         <DropdownItem

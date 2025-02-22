@@ -170,3 +170,13 @@ export type TCupon = {
   updatedAt: string;
   appliedProducts: TProduct[];
 };
+
+export type TOPData = {
+  id: number;
+  orderId: number;
+  productId: number;
+  product: {
+    name: string;
+  };
+  quantity: number;
+};

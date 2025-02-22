@@ -4,6 +4,7 @@ import { toast } from "sonner";
 
 import {
   createOrder,
+  getAllOrderedProducts,
   getMyOrderInfo,
   getOrdersForVendor,
 } from "../services/order.service";
@@ -30,6 +31,16 @@ export const useGetMyOrderInfo = () => {
     queryKey: ["GET_MY_ORDER_INFO"],
     queryFn: async () => {
       const response = await getMyOrderInfo();
+
+      return response;
+    },
+  });
+};
+export const useGetAllOrderedProducdts = () => {
+  return useQuery({
+    queryKey: ["GET_ALL_ORDERED_PRODUCTS"],
+    queryFn: async () => {
+      const response = await getAllOrderedProducts();
 
       return response;
     },

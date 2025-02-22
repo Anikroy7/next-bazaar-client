@@ -374,9 +374,8 @@ export default function Footer() {
                 href="/"
               >
                 Terms & Conditions
-              <span>&middot;</span>
+                <span>&middot;</span>
               </Link>
-
 
               <Link
                 className="inline-block text-teal-500 underline transition hover:text-teal-500/75"

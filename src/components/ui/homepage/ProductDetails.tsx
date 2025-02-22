@@ -110,11 +110,12 @@ const ProductDetails = ({ id }: { id: string }) => {
       <div className="flex flex-col md:flex-row -mx-4">
         {/* Left Section: Image */}
         <div className="md:w-1/2 p-2">
-          <div className="h-64 md:h-80 w-full rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+          <div className="h-72 md:h-96 w-full rounded-lg mb-4 flex items-center justify-center overflow-hidden bg-gray-100">
             <Image
-              alt=""
+              alt="Product Image"
               className="w-full h-full object-cover"
-              height={500}
+              height={600}
+              quality={100}
               src={
                 displayImage ||
                 "https://tse3.mm.bing.net/th?id=OIP.AhRqkCZNh-f7x1ZEE3G34QHaFj&pid=Api&P=0&h=220"
@@ -127,7 +128,7 @@ const ProductDetails = ({ id }: { id: string }) => {
             {data?.data?.images.map((image: string, index: number) => (
               <Avatar
                 key={index}
-                className="w-20 h-20 text-large cursor-pointer"
+                className="w-20 h-20 text-large cursor-pointer border-2 border-gray-200 hover:border-indigo-500 transition"
                 isBordered={image === displayImage}
                 radius="sm"
                 src={image}

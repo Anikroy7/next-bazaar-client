@@ -4,8 +4,6 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Chip } from "@nextui-org/chip";
-import { Avatar } from "@nextui-org/avatar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 

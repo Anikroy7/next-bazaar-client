@@ -23,6 +23,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  
+
   if (user.role === "CUSTOMER") {
     if (
       pathname.includes("/dashboard/admin") ||

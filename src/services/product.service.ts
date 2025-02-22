@@ -14,7 +14,7 @@ export const createProduct = async (productData: FieldValues) => {
 export const getAllProducts = async (filters: FieldValues) => {
   try {
     const { data } = await axiosInstance.get(
-      `/products?searchTerm=${filters.searchTerm || ""}&priceRange=${filters.priceRange || ""}&categoryId=${filters.categoryId || ""}`,
+      `/products?searchTerm=${filters.searchTerm || ""}&priceRange=${filters.priceRange || ""}&categoryId=${filters.categoryId || ""}&page=${filters.page || ""}`,
     );
 
     return data;

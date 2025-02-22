@@ -12,7 +12,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function BannerSwiper() {
-  const router = useRouter()
+  const router = useRouter();
+
   return (
     <>
       <Swiper
@@ -52,7 +53,6 @@ export default function BannerSwiper() {
             src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/07/slider-32.jpg"
             width={1920}
             onClick={() => router.push(`all-products?categoryId=1`)}
-
           />
         </SwiperSlide>
         <SwiperSlide>

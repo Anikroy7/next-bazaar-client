@@ -3,8 +3,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function CurrentOffers() {
-
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div className="container mx-auto px-6 py-10">
@@ -17,7 +16,6 @@ export default function CurrentOffers() {
           src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/banner3.jpg"
           width={400}
           onClick={() => router.push(`all-products?categoryId=5`)}
-
         />
         <Image
           alt="Banner 4"
@@ -26,7 +24,6 @@ export default function CurrentOffers() {
           src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/banner4.jpg"
           width={400}
           onClick={() => router.push(`all-products?categoryId=5`)}
-
         />
         <Image
           alt="Banner 5"
@@ -35,7 +32,6 @@ export default function CurrentOffers() {
           src="https://demo2.wpthemego.com/themes/sw_topdeal/layout3/wp-content/uploads/2017/06/banner5.jpg"
           width={400}
           onClick={() => router.push(`all-products?categoryId=5`)}
-
         />
       </div>
     </div>

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Input } from "@nextui-org/input";
 import { toast } from "sonner";
+
 import NBForm from "@/src/components/ui/form/NBForm";
 import NBInput from "@/src/components/ui/form/NBInput";
 import { useCart } from "@/src/context/cart.provider";
@@ -83,9 +84,8 @@ const CheckoutPage = () => {
   };
 
   const handleApplyCupon = () => {
-console.log('asdf', cuponData)
     if (cuponData?.data) {
-      if(cuponData.length>0){
+      if (cuponData.length > 0) {
         cuponData?.data?.forEach((cupon: TCupon) => {
           cupon?.appliedProducts?.forEach((product) => {
             cartItems.forEach((item) => {
@@ -106,11 +106,11 @@ console.log('asdf', cuponData)
             });
           });
         });
-      }else{
-        toast.error("No cupon available!")
+      } else {
+        toast.error("No cupon available!");
       }
-    }else{
-      toast.error("Something went wrong!")
+    } else {
+      toast.error("Something went wrong!");
     }
   };
 

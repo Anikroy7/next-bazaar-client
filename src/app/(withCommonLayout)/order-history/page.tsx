@@ -71,19 +71,19 @@ const OrderHistoryPage = () => {
                     </span>{" "}
                     <span
                       className={`${
-                        order.payment.paymentStatus === "SUCCESS"
+                        order?.payment?.paymentStatus === "SUCCESS"
                           ? "text-green-500"
                           : "text-red-500"
                       } font-semibold`}
                     >
-                      {order.payment.paymentStatus}
+                      {order?.payment?.paymentStatus}
                     </span>
                   </p>
                   <p className="text-gray-600">
                     <span className="font-semibold text-gray-800">
                       Transaction ID:
                     </span>{" "}
-                    {order.payment.transactionId}
+                    {order?.payment?.transactionId}
                   </p>
                 </div>
               </div>
@@ -108,7 +108,7 @@ const OrderHistoryPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {order.products.map((product: TOrderedProduct) => (
+                    {order?.products.map((product: TOrderedProduct) => (
                       <tr key={product.id} className="hover:bg-gray-50">
                         <td className="border border-gray-200 px-4 py-2 text-gray-700">
                           {product.name}

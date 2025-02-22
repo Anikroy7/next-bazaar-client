@@ -12,6 +12,7 @@ import { TCategory, TProduct } from "@/src/types";
 import { useGetAllCategories } from "@/src/hooks/categories.hook";
 import ProductCard from "@/src/components/products/ProductCard";
 import GetProductBYSearch from "@/src/components/ui/shared/GetProductBYSearch";
+import PaginationComponent from "@/src/components/ui/shared/Pagination";
 
 const DynamicLoading = dynamic(
   () => import("@/src/components/ui/shared/Loading"),
@@ -22,14 +23,14 @@ const DynamicLoading = dynamic(
 
 function FilterPage() {
   const searchParams = useSearchParams();
-
+  const [selectedPageNumber, setSelectedPageNumber] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
   const search = searchParams.get("categoryId");
   const [priceRange, setPriceRange] = useState<number | number[]>(0);
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState<string>(search || "");
   const { data: categories, isPending: categoriesPending } =
     useGetAllCategories();
-
   const {
     mutate: handleGetS,
     data: sData,
@@ -40,14 +41,18 @@ function FilterPage() {
   useEffect(() => {
     if (!spending && sData && isSuccess) {
       setProducts(sData?.data?.data || []);
+      setTotalPage(
+        Math.ceil(sData?.data?.meta?.total / sData?.data?.meta?.limit),
+      );
     }
   }, [isSuccess, sData, spending]);
 
   useEffect(() => {
     handleGetS({
       categoryId: category,
+      page: selectedPageNumber,
     });
-  }, []);
+  }, [selectedPageNumber]);
 
   const handleApplyFilters = () => {
     handleGetS({
@@ -59,14 +64,15 @@ function FilterPage() {
   if (categoriesPending) return <DynamicLoading />;
 
   return (
-    <div className="min-h-screen  flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <GetProductBYSearch />
-      <div className="container mx-auto flex flex-col lg:flex-row gap-8 py-10 ">
-        <div className="lg:w-1/3 shadow-md px-6 rounded-lg sticky top-6">
-          <div className="">
+      <div className="container mx-auto flex flex-col lg:flex-row gap-8 py-10">
+        {/* Filter Section */}
+        <div className="lg:w-1/3 w-full shadow-md px-6 py-4 rounded-lg sticky top-6 bg-white">
+          <div>
             <Select
               fullWidth
-              label="Select an Category"
+              label="Select a Category"
               placeholder="Select Category"
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -88,7 +94,7 @@ function FilterPage() {
 
           <div className="mt-6">
             <Slider
-              className="max-w-md"
+              className="w-full"
               color="foreground"
               defaultValue={200}
               label="Price Range"
@@ -97,30 +103,42 @@ function FilterPage() {
               step={200}
               onChange={(e) => setPriceRange(e)}
             />
-            <div className="flex justify-between text-sm my-3">
+            <div className="flex justify-between text-sm mt-3">
               <span>$200</span>
-              <span>$1000</span>
+              <span>$10000</span>
             </div>
           </div>
 
           <div className="mt-6">
             <Button
-              className="my-3 w-full rounded-md bg-default-900 text-default"
+              className="my-3 w-full rounded-md bg-default-900 text-white"
               onClick={() => handleApplyFilters()}
             >
               Apply Filters
             </Button>
           </div>
         </div>
+
+        {/* Product Listing Section */}
         {sData?.data && products.length ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {products.map((product: TProduct) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <section className="lg:w-2/3 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {products.map((product: TProduct) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+            {/* Pagination */}
+            <div className="flex justify-center items-center w-full my-9">
+              <PaginationComponent
+                selectedPageNumber={selectedPageNumber}
+                setSelectedPageNumber={setSelectedPageNumber}
+                total={totalPage}
+              />
+            </div>
+          </section>
         ) : (
           <p className="text-center text-xl text-gray-600">
-            No products found!!
+            No products found!
           </p>
         )}
       </div>

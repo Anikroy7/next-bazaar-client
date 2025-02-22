@@ -12,6 +12,9 @@ import { TProduct } from "@/src/types";
 import { useUser } from "@/src/context/user.prodvier";
 import { useDeleteProduct } from "@/src/hooks/product.hook";
 import handleAddProductToLs from "@/src/helpers/handleAddProductToLS";
+import { FiShoppingCart } from "react-icons/fi";
+import { Button } from "@nextui-org/button";
+import { useCart } from "@/src/context/cart.provider";
 
 type ProductCardProps = {
   product: TProduct;
@@ -20,6 +23,8 @@ type ProductCardProps = {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { user } = useUser();
   const router = useRouter();
+  const { dispatch, cart } = useCart();
+
   let totalPrice = product.price;
   const {
     data,
@@ -65,9 +70,64 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }
   };
 
-  const handleToNavigateProductDetails = () => {
-      handleAddProductToLs(product);
-      router.push(`/product/${product.id}`);
+  /*  const handleToNavigateProductDetails = () => {
+     handleAddProductToLs(product);
+     router.push(`/product/${product.id}`);
+   }; */
+
+  const addToCartHandler = () => {
+    if (cart.length === 0) {
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: {
+          id: product?.id,
+          name: product?.name,
+          price: product?.price,
+          quantity: 1,
+          image: product?.images[0],
+          vendorId: product?.vendorId,
+        },
+      });
+    } else {
+      const cartVendorId = cart[0].vendorId;
+
+      if (product?.vendorId !== cartVendorId) {
+        const isConfirm = confirm(
+          "Replace the cart with the new product(s). Retain the current cart and cancel the addition.",
+        );
+
+        if (isConfirm) {
+          dispatch({
+            type: "CLEAR_CART",
+          });
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: {
+              id: product?.id,
+              name: product?.name,
+              price: product?.price,
+              quantity: 1,
+              image: product?.images[0],
+              vendorId: product?.vendorId,
+            },
+          });
+        }
+
+        return;
+      } else {
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: {
+            id: product?.id,
+            name: product?.name,
+            price: product?.price,
+            quantity: 1,
+            image: product?.images[0],
+            vendorId: product?.vendorId,
+          },
+        });
+      }
+    }
   };
 
   return (
@@ -75,18 +135,60 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <Card
         key={product.id}
         isPressable
-        className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px] w-[230px] relative"
+        className="shadow-lg hover:shadow-xl transition-shadow rounded-none h-[270px] w-auto relative"
         role="button"
         tabIndex={0}
-        onClick={() => handleToNavigateProductDetails()}
+        // onClick={() => handleToNavigateProductDetails()}
         onKeyDown={handleKeyPress}
       >
         <CardHeader className="p-0">
+          <div>
+            <Link href={`/product/${product.id}`}>
+              <span
+                className="absolute top-2 right-28 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
+                role="button"
+                tabIndex={0}
+                title="View product details"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-.274.871-.682 1.701-1.208 2.458C18.268 16.057 14.477 19 12 19s-6.268-2.943-7.542-6A10.94 10.94 0 012.458 12z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </Link>
+            {/* <Link> */}
+
+            <span
+              className="absolute bg-transparent top-2 right-36 bg-white  text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
+              role="button"
+              tabIndex={0}
+              title="View product details"
+              onClick={addToCartHandler}
+            >
+              <FiShoppingCart className="h-5 w-5" />
+            </span>
+          </div>
+          {/* </Link> */}
           {(user?.role === "VENDOR" || user?.role === "ADMIN") &&
             product.vendor?.email === user.email && (
               <>
                 {/* View Details Button */}
-                <Link href={`/product/${product.id}`}>
+                {/* <Link href={`/product/${product.id}`}>
                   <span
                     className="absolute top-2 right-28 bg-white text-black p-1 rounded-full shadow-md hover:bg-gray-200 transition"
                     role="button"
@@ -113,7 +215,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                       />
                     </svg>
                   </span>
-                </Link>
+                </Link> */}
                 {/* Duplicate Button */}
                 <Link
                   href={`/dashboard/vendor/add-product?productLike=${product.id}`}

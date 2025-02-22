@@ -44,7 +44,7 @@ const DynamicLoading = dynamic(() => import("./ui/shared/Loading"), {
 export const Navbar = () => {
   const router = useRouter();
   const { user, isLoading, setIsLoading } = useUser();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   if (isLoading) return <DynamicLoading />;
 
@@ -56,7 +56,6 @@ export const Navbar = () => {
             <FaTruck className="h-4 w-4 text-blue-500" />
             <span>Free Delivery</span>
           </div>
-          
 
           <div className="flex items-center gap-3 text-gray-700">
             <FiRefreshCcw className="h-4 w-4 text-blue-500" />
@@ -98,28 +97,30 @@ export const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center gap">
-          {!user && <>
-            <Button
-              isExternal
-              as={Link}
-              className="text-sm font-normal text-gray-900 bg-gray-100 bg-transparent"
-              size="sm"
-              variant="light"
-              onClick={() => router.push("/signup")}
-            >
-              Signup
-            </Button>
-            <Button
-              isExternal
-              as={Link}
-              className="text-sm font-normal text-gray-900 bg-gray-100 bg-transparent"
-              size="sm"
-              variant="light"
-              onClick={() => router.push("/login")}
-            >
-              Login
-            </Button>
-          </>}
+          {!user && (
+            <>
+              <Button
+                isExternal
+                as={Link}
+                className="text-sm font-normal text-gray-900 bg-gray-100 bg-transparent"
+                size="sm"
+                variant="light"
+                onClick={() => router.push("/signup")}
+              >
+                Signup
+              </Button>
+              <Button
+                isExternal
+                as={Link}
+                className="text-sm font-normal text-gray-900 bg-gray-100 bg-transparent"
+                size="sm"
+                variant="light"
+                onClick={() => router.push("/login")}
+              >
+                Login
+              </Button>
+            </>
+          )}
           <ThemeSwitch />
         </div>
       </div>
@@ -144,7 +145,7 @@ export const Navbar = () => {
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-blue-600 data-[active=true]:font-medium"
+                    "data-[active=true]:text-blue-600 data-[active=true]:font-medium",
                   )}
                   color="foreground"
                   href={item.href}
@@ -153,7 +154,7 @@ export const Navbar = () => {
                 </NextLink>
               </NavbarItem>
             ))}
-       {/*      {user?.role === "VENDOR" && (
+            {/*      {user?.role === "VENDOR" && (
               <NavbarItem>
                 <NextLink
                   className={clsx(
@@ -167,7 +168,7 @@ export const Navbar = () => {
                 </NextLink>
               </NavbarItem>
             )} */}
-          {/*   {user?.role === "ADMIN" && (
+            {/*   {user?.role === "ADMIN" && (
               <NavbarItem>
                 <NextLink
                   className={clsx(
@@ -181,7 +182,7 @@ export const Navbar = () => {
                 </NextLink>
               </NavbarItem>
             )} */}
-       {/*      {user?.role === "CUSTOMER" && (
+            {/*      {user?.role === "CUSTOMER" && (
               <NavbarItem>
                 <NextLink
                   className={clsx(
@@ -231,6 +232,7 @@ export const Navbar = () => {
             {siteConfig.navMenuItems.map((item, index) => (
               <NavbarMenuItem key={`${item}-${index}`}>
                 <Link
+                  className="text-gray-600 hover:text-blue-600"
                   color={
                     index === 2
                       ? "primary"
@@ -240,7 +242,6 @@ export const Navbar = () => {
                   }
                   href="#"
                   size="lg"
-                  className="text-gray-600 hover:text-blue-600"
                 >
                   {item.label}
                 </Link>
@@ -250,8 +251,7 @@ export const Navbar = () => {
         </NavbarMenu>
       </NextUINavbar>
 
-      {pathname === '/' && <GetProductBYSearch />}
-
+      {pathname === "/" && <GetProductBYSearch />}
     </>
   );
 };

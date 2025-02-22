@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { MdDashboard } from "react-icons/md";
 
 import { useUser } from "@/src/context/user.prodvier";
 import { adminMenuItems, vendorMenuItems } from "@/src/config/sidebarItems";
@@ -34,6 +35,17 @@ const Sidebar = () => {
       </div>
       <nav className="flex-1 mt-4">
         <ul className="space-y-2">
+          {user?.role === "ADMIN" && (
+            <li>
+              <Link
+                className={`flex items-center px-4 py-2 hover:bg-gray-700`}
+                href={`/dashboard/admin`}
+              >
+                <MdDashboard className="text-xl" />
+                <span className="ml-2">Dashboard</span>
+              </Link>
+            </li>
+          )}
           {user?.role === "ADMIN"
             ? adminMenuItems.map((item, index) => (
                 <li key={index}>

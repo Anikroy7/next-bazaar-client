@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import Image from "next/image";
 
 import { loginValidationSchema } from "@/src/validation/auth.validation";
 import { useUserLogin } from "@/src/hooks/auth.hook";
@@ -46,7 +47,7 @@ export default function Page() {
         creadiantialType === "user"
           ? "anikkumerroy7@gmail.com"
           : creadiantialType === "vendor"
-            ? "shop@gmail.com"
+            ? "store@gmail.com"
             : creadiantialType === "admin"
               ? "admin@gmail.com"
               : "",
@@ -63,13 +64,16 @@ export default function Page() {
   return (
     <div className="flex w-full flex-col items-center justify-center py-4">
       <div className="flex justify-center items-center gap-6">
-        <div className="  flex-1 ">
-          <img
-            src="https://i.ibb.co.com/yq6LxnG/Online-world.gif"
+        <div className="flex-1">
+          <Image
             alt="Login illustration"
             className="w-full max-w-md object-cover"
+            height={400}
+            src="https://i.ibb.co.com/yq6LxnG/Online-world.gif"
+            width={600}
           />
         </div>
+
         <div className="flex-1">
           <h1 className="text-2xl font-semibold">Login</h1>
 

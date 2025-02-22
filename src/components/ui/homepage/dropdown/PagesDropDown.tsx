@@ -8,10 +8,13 @@ import {
 } from "@nextui-org/dropdown";
 import { NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import { ChevronDown } from "@/src/components/icons";
 
 export default function PagesDropDown() {
+  const router = useRouter();
+
   return (
     <>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -31,14 +34,32 @@ export default function PagesDropDown() {
           </NavbarItem>
           <DropdownMenu
             aria-label="ACME features"
-            className="w-[340px]"
+            className=""
             itemClasses={{
               base: "gap-4",
             }}
           >
-            <DropdownItem key="recentproducts">Recenct Products</DropdownItem>
-            <DropdownItem key="about">About</DropdownItem>
-            <DropdownItem key="conatact">Contact</DropdownItem>
+            <DropdownItem
+              key="recentproducts"
+              onClick={() => router.push("/all-products")}
+            >
+              All Products
+            </DropdownItem>
+            <DropdownItem
+              key="recentproducts"
+              onClick={() => router.push("/recent-products")}
+            >
+              Recenct Products
+            </DropdownItem>
+            <DropdownItem key="about" onClick={() => router.push("/about")}>
+              About
+            </DropdownItem>
+            <DropdownItem
+              key="conatact"
+              onClick={() => router.push("/contact")}
+            >
+              Contact
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>

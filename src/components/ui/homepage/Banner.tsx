@@ -4,12 +4,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
-
-import BannerSwiper from "./Swiper";
 import { useRouter } from "next/navigation";
 
+import BannerSwiper from "./Swiper";
+
 export default function Banner() {
-  const router = useRouter()
+  const router = useRouter();
+
   return (
     <>
       <div className="grid grid-cols-12 lg:gap-2 gap-4 mt-5">
@@ -23,16 +24,17 @@ export default function Banner() {
           {/* Row 1 */}
           <div className="flex lg:gap-2 gap-4 lg:flex-row">
             <div className="relative lg:w-1/2 w-full">
-              <div className="pt-[65%] relative w-full h-0"> {/* Aspect Ratio 16:9 */}
+              <div className="pt-[65%] relative w-full h-0">
+                {" "}
+                {/* Aspect Ratio 16:9 */}
                 <Image
                   priority
                   alt="Banner 31"
                   className="absolute inset-0 w-full h-full object-fill cursor-pointer"
-                  src="https://www.banglashoppers.com/pub/media/wysiwyg/banner/home-right/abny-300X170.jpg"
                   height={170}
+                  src="https://www.banglashoppers.com/pub/media/wysiwyg/banner/home-right/abny-300X170.jpg"
                   width={300}
                   onClick={() => router.push(`all-products?categoryId=5`)}
-
                 />
               </div>
             </div>
@@ -42,11 +44,10 @@ export default function Banner() {
                   priority
                   alt="Banner 32"
                   className="absolute inset-0 w-full h-full object-fill cursor-pointer"
-                  src="https://www.banglashoppers.com/pub/media/wysiwyg/banner/home-right/simple-300-X-170.jpg"
                   height={170}
+                  src="https://www.banglashoppers.com/pub/media/wysiwyg/banner/home-right/simple-300-X-170.jpg"
                   width={300}
                   onClick={() => router.push(`all-products?categoryId=5`)}
-
                 />
               </div>
             </div>
@@ -60,11 +61,10 @@ export default function Banner() {
                   priority
                   alt="Banner 33"
                   className="absolute inset-0 w-full h-full object-fill cursor-pointer"
-                  src="https://www.banglashoppers.com/pub/media/wysiwyg/banner/home-right/boots-300-x-170.jpg"
                   height={170}
+                  src="https://www.banglashoppers.com/pub/media/wysiwyg/banner/home-right/boots-300-x-170.jpg"
                   width={300}
                   onClick={() => router.push(`all-products?categoryId=5`)}
-
                 />
               </div>
             </div>
@@ -74,20 +74,16 @@ export default function Banner() {
                   priority
                   alt="Banner 34"
                   className="absolute inset-0 w-full h-full object-fill cursor-pointer"
-                  src="https://dropshop.com.bd/wp-content/uploads/2024/12/WGP-Banner-Design_BDSHOP.jpg"
                   height={170}
+                  src="https://dropshop.com.bd/wp-content/uploads/2024/12/WGP-Banner-Design_BDSHOP.jpg"
                   width={300}
                   onClick={() => router.push(`all-products?categoryId=1`)}
-
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
     </>
   );
 }
-
